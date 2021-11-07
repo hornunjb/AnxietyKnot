@@ -14,11 +14,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 Technologies used:
 - Angular (javascript framework)
 - Angular Material (component library)
-- Bootstrap (CSS framework)
 
 ## Back-End Guide
 
-Run `npm run start:server` for a dev server. Navigate to `http://localhost:3000/api/posts`.
+Run `npm run start:server` for a dev server. Navigate to `http://localhost:3000/`.
 
 Technolgies used:
 - Node.js (server)

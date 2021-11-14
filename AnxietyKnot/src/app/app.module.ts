@@ -29,7 +29,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSliderModule} from '@angular/material/slider'; 
 import {MatDialogModule} from '@angular/material/dialog'; 
-import { NgRatingBarModule } from 'ng-rating-bar';
+import {NgRatingBarModule } from 'ng-rating-bar';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { NgRatingBarModule } from 'ng-rating-bar';
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
-    EntryComponent
+    EntryComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

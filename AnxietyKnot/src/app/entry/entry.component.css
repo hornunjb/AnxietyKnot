@@ -20,35 +20,7 @@
   width: 300px;
 }
 
-.ratemood{
-  margin-top: 10%;
-text-align: center;
-font-size: x-large;
-}
 
-section.text{
-  font-family: Tahoma; 
-  font-size: 26px; 
-  font-style: normal; 
-  font-variant: normal; 
-  font-weight: 700; 
-  line-height: 26px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 3em 0;
-  color:cornflowerblue;
-}
-
-section.bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 3em 0;
-  scale: 200%;
-}
 
 
 

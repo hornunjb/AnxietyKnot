@@ -28,20 +28,7 @@
             <p [innerHtml]="editorText"></p>
         </div>
     </div>
-    <button mat-flat-button class="save-button" color="warn" type="submit">Save</button>
-
-
-    <div>
-        <div class="ratemood">
-            <section class="bar">
-                <ng-rating-bar [(value)]="value" [ratingCount]="ratingCount" [resetAble]="true" colorActive="purple"
-                    colorDefault="gray"></ng-rating-bar>
-            </section>
-            <section class="text">
-                {{response[value]}}
-            </section>
-        </div>
-    </div>
+    <button mat-flat-button (click)="openDialog()" class="save-button" color="primary" type="submit" >Save</button>
 
 
 </div>

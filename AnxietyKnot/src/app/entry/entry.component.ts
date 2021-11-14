@@ -1,22 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
 import 'quill-emoji/dist/quill-emoji.js'
-
-
+import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent } from '../popup/popup.component';
 @Component({
   selector: 'app-entry',
   templateUrl: './entry.component.html',
   styleUrls: ['./entry.component.css']
 })
 export class EntryComponent {
+  //var for rating bar 
   value = 0;
   ratingCount = 10;
   response = ["Rate your mood?",
     "Really?", "Hang on", "It can be better", "I've been worse", "Not much", "Getting better", "Pretty good", "Lets go", "I feel good", "Yesir"]
 
+  //var for quill editor
   blured = false
   focused = false
   editorText = '';
+
+  constructor(private dialogRef: MatDialog){}
+  
+  openDialog(){
+    this.dialogRef.open(PopupComponent);
+  }
 
   created(event: any) {
     console.log('editor-created', event)

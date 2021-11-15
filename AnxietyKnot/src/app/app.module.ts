@@ -31,6 +31,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatDialogModule} from '@angular/material/dialog'; 
 import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
+import { ChartsComponent } from './charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PopupComponent } from './popup/popup.component';
     ResourceComponent,
     TrackerComponent,
     EntryComponent,
-    PopupComponent
+    PopupComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,

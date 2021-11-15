@@ -1,27 +1,27 @@
 <mat-card>
-  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+  <form (submit)="onSavePost(postForm)" #postForm="ngForm">
     <mat-form-field>
       <input
         matInput
         type="text"
         name="title"
-        ngModel
+        [ngModel]="post?.title"
         required
         minlength="3"
         placeholder="Journal Title"
         #title="ngModel">
-      <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
+      <mat-error *ngIf="title.invalid">Please enter a journal title.</mat-error>
     </mat-form-field>
     <mat-form-field>
       <textarea
+        id="quillEditor"
         matInput
         rows="4"
         name="content"
-        ngModel
+        [ngModel]="post?.content"
         required
-        placeholder="Journal Entry"
         #content="ngModel"></textarea>
-      <mat-error *ngIf="content.invalid">Please enter a post title.</mat-error>
+      <mat-error *ngIf="content.invalid">Please enter your journal content!.</mat-error>
     </mat-form-field>
     <button
       mat-raised-button
@@ -29,3 +29,7 @@
       type="submit">Save Entry</button>
   </form>
 </mat-card>
+
+
+
+

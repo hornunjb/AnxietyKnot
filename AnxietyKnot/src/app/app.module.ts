@@ -66,9 +66,16 @@ import {MatSelectModule} from '@angular/material/select';
     MatMenuModule,
     CommonModule,
     NgxChartsModule,
-    QuillModule.forRoot(),
+
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    QuillModule.forRoot({
+      modules: {
+        syntax: true,
+      }
+    })
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

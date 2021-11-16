@@ -29,6 +29,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QuillModule } from 'ngx-quill';
 import { NewEditComponent } from './new-edit/new-edit.component';
 import { EditorModule } from "@tinymce/tinymce-angular";
+import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
+//imports for prompted page
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,8 @@ import { EditorModule } from "@tinymce/tinymce-angular";
     ResourceComponent,
     TrackerComponent,
     EntryComponent,
-    NewEditComponent
+    NewEditComponent,
+    PromptedEntryComponent
   ],
   imports: [
     BrowserModule,
@@ -64,11 +69,14 @@ import { EditorModule } from "@tinymce/tinymce-angular";
     NgxChartsModule,
     ReactiveFormsModule,
     EditorModule,
+    MatCheckboxModule,
+    MatSelectModule,
     QuillModule.forRoot({
       modules: {
         syntax: true,
       }
     })
+
 
   ],
   providers: [],

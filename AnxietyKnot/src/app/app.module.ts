@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,6 +27,8 @@ import { EntryComponent } from './entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QuillModule } from 'ngx-quill';
+import { NewEditComponent } from './new-edit/new-edit.component';
+import { EditorModule } from "@tinymce/tinymce-angular";
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { QuillModule } from 'ngx-quill';
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
-    EntryComponent
+    EntryComponent,
+    NewEditComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,8 @@ import { QuillModule } from 'ngx-quill';
     MatMenuModule,
     CommonModule,
     NgxChartsModule,
+    ReactiveFormsModule,
+    EditorModule,
     QuillModule.forRoot({
       modules: {
         syntax: true,

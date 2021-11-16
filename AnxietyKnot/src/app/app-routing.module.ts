@@ -6,6 +6,7 @@ import { ResourceComponent } from './resource/resource.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { PostCreateComponent } from './post-create/post-create.component';
 import { PostListComponent } from './post-list/post-list.component';
+import { NewEditComponent } from './new-edit/new-edit.component';
 
 const routes: Routes = [
   {path:'journalBook', component:JournalBookComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path:'entry', component:EntryComponent},
   {path:'list', component:PostListComponent},
   {path:'create', component:PostCreateComponent},
-  {path:'edit/:postId', component:PostCreateComponent}
+  {path:'edit/:postId', component:NewEditComponent},
+  {path:'newEdit', component:NewEditComponent}
 ];
 
 @NgModule({

@@ -16,6 +16,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   //   { title: "Third Post", content: "This is the third post's content" }
   // ];
   posts: Post[] = [];
+  public noHtmlContent: string[] = [];
   private postsSub: Subscription = new Subscription;
 
   constructor(public postsService: PostsService) {}
@@ -26,6 +27,11 @@ export class PostListComponent implements OnInit, OnDestroy {
       .subscribe((posts: Post[]) => {
         this.posts = posts;
       });
+    }
+
+  replace(content: any) {
+    var parsedContent = content.replace(/<[^>]+>/g, '');
+    return parsedContent;
   }
 
   onDelete(postId: string) {

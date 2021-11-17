@@ -23,7 +23,7 @@ textarea {
   text-align: center;
 }
 
-html, body { height: 100%; }
+html, body, main { height: 100%; }
 body { margin: 0; font-family: 'lato', Roboto, "Helvetica Neue", sans-serif !important;}
 
 .grid-container {

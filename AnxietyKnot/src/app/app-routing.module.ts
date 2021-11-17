@@ -7,14 +7,16 @@ import { ResourceComponent } from './resource/resource.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { PostCreateComponent } from './post-create/post-create.component';
 import { PostListComponent } from './post-list/post-list.component';
+import { EntryListComponent } from './entry-list/entry-list.component';
 
 const routes: Routes = [
-  {path:'journalBook', component:JournalBookComponent},
+  {path:'journalBook', component:EntryListComponent},
   {path:'resource', component:ResourceComponent},
   {path:'tracker', component:TrackerComponent},
   {path:'entry', component:EntryComponent},
 
   {path: 'prompted-entry', component:PromptedEntryComponent},
+  {path: 'entry-list', component:EntryListComponent},
 
   {path:'list', component:PostListComponent},
   {path:'create', component:PostCreateComponent},

@@ -32,6 +32,7 @@ import { PromptedEntryComponent } from './prompted-entry/prompted-entry.componen
 //imports for prompted page
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import { EntryListComponent } from './entry-list/entry-list.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {MatSelectModule} from '@angular/material/select';
     ResourceComponent,
     TrackerComponent,
     EntryComponent,
-    PromptedEntryComponent
+    PromptedEntryComponent,
+    EntryListComponent
   ],
   imports: [
     BrowserModule,

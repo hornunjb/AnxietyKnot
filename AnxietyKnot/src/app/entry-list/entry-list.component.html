@@ -1,0 +1,23 @@
+<div class="grid-container">
+<h1 class="mat-h1">Journal Book
+
+  <div id="btn-group" style="float: right;">
+    <button mat-raised-button color="accent" type="submit" ><a routerLink="/entry">Add new Journal</a></button>
+    <button mat-raised-button color="accent" type="submit" ><a routerLink="/prompted-entry">Add prompted Journal</a></button>
+  </div>
+
+</h1>
+<mat-accordion multi="true" *ngIf="entries.length > 0">
+  <mat-expansion-panel *ngFor="let entry of entries">
+    <mat-expansion-panel-header>
+      {{ entry.title }}
+    </mat-expansion-panel-header>
+    <p>{{ entry.what_happened }}</p>
+    <mat-action-row>
+      <button mat-button color="primary" [routerLink]="['/edit', entry.id]">EDIT</button>
+      <button mat-button color="warn" (click)="onDelete(entry.id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="entries.length <= 0">No journal entries added yet!</p>
+</div>

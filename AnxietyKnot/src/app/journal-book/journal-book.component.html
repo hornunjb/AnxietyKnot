@@ -1,30 +1,21 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Journal Book
+  <h1 style="padding-bottom: 30px;" class="mat-h1">Journal Book
     <div id="btn-group" style="float: right;">
-      <button mat-raised-button color="accent" type="submit" ><a routerLink="/entry">Add Journal Entry</a></button>
+      <button mat-raised-button color="accent" type="submit" ><a routerLink="/newEdit">Add Journal Entry</a></button>
       <button mat-raised-button color="accent" type="submit" ><a routerLink="/prompted-entry">Guided Journaling</a></button>
     </div>
   </h1>
-  <mat-grid-list cols="2" rowHeight="500px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>View</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>Journal Content</div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <router-outlet></router-outlet>
+  <mat-accordion multi="true" *ngIf="posts.length > 0">
+    <mat-expansion-panel *ngFor="let post of posts">
+      <mat-expansion-panel-header>
+        {{ post.title }}
+      </mat-expansion-panel-header>
+      <p>{{ replace(post.content) }}</p>
+      <mat-action-row>
+        <button mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</button>
+        <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <p class="info-text mat-body-1" *ngIf="posts.length <= 0">No journal entries added yet!</p>
 </div>

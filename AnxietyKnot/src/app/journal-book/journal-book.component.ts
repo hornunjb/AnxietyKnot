@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Subscription } from 'rxjs';
+import { Post } from "../post.model";
+import { PostsService } from "../posts.service";
+
 
 @Component({
   selector: 'app-journal-book',
@@ -8,26 +10,30 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./journal-book.component.css']
 })
 export class JournalBookComponent {
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Journal 1', cols: 2, rows: 1 },
-          { title: 'Journal 2', cols: 2, rows: 1 },
-          { title: 'Journal 3', cols: 2, rows: 1 },
-          { title: 'Journal 4', cols: 2, rows: 1 }
-        ];
-      }
+  posts: Post[] = [];
+  public noHtmlContent: string[] = [];
+  private postsSub: Subscription = new Subscription;
 
-      return [
-        { title: 'Journal 1', cols: 1, rows: 1 },
-        { title: 'Journal 2', cols: 1, rows: 1 },
-        { title: 'Journal 3', cols: 1, rows: 1 },
-        { title: 'Journal 4', cols: 1, rows: 1 }
-      ];
-    })
-  );
+  constructor(public postsService: PostsService) {}
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  ngOnInit() {
+    this.postsService.getPosts();
+    this.postsSub = this.postsService.getPostUpdateListener()
+      .subscribe((posts: Post[]) => {
+        this.posts = posts;
+      });
+    }
+
+  replace(content: any) {
+    var parsedContent = content.replace(/<[^>]+>/g, '');
+    return parsedContent;
+  }
+
+  onDelete(postId: string) {
+    this.postsService.deletePost(postId);
+  }
+
+  ngOnDestroy() {
+    this.postsSub.unsubscribe();
+  }
 }

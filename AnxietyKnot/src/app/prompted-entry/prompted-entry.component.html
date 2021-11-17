@@ -1,0 +1,171 @@
+<mat-card>
+  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+    <label for="title">Title</label>
+    <mat-form-field>
+
+      <input
+        matInput
+        type="text"
+        name="title"
+        ngModel
+        required
+        minlength="3"
+        placeholder="Journal Title"
+        #title="ngModel">
+      <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
+    </mat-form-field>
+    <label for="what_happened">What Happened?</label>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        name="what_happened"
+        ngModel
+        required
+        placeholder="Describe the situation"
+        #what_happened="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please describe what happened.</mat-error>
+    </mat-form-field>
+    <label for="going_through_mind">What is going through your mind?</label>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        name="going_through_mind"
+        ngModel
+        required
+        placeholder="Describe your thoughts."
+        #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please describe your thoughts on the situation.</mat-error>
+    </mat-form-field>
+    <label for="emotion1">What emotions are you feeling?</label>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        name="emotion1"
+        ngModel
+        required
+        placeholder="An emotion you are feeling"
+        #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please enter an emotion.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+      <mat-label>Intensity of emotion</mat-label>
+    <mat-select name="intensity1">
+      <mat-option *ngFor="let intensity of intensities" [value]="intensity">
+
+        {{intensity}}
+      </mat-option>
+
+    </mat-select>
+  </mat-form-field>
+      <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        name="emotion2"
+        ngModel
+        required
+        placeholder="An emotion you are feeling"
+        #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please enter an emotion.</mat-error>
+</mat-form-field>
+        <mat-form-field>
+        <mat-label>Intensity of emotion</mat-label>
+        <mat-select name="intensity2">
+          <mat-option *ngFor="let intensity of intensities" [value]="intensity">
+            {{intensity}}
+          </mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [hidden]="true">
+
+      <mat-card-content>
+        <h3>What thought patterns do you recognize?</h3>
+        <section>
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="all_or_nothing">All or nothing</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="fortune_telling">Fortune telling</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="minimizing_the_positive">Minimizing the positive</mat-checkbox>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="blaming_others">Blaming others</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="labeling">Labeling</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="overgeneralization">Overgeneralization</mat-checkbox>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="catastrophizing">Catastrophizing</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="magnifying_the_negative">Magnifying the negative</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="self_blaming">Self-blaming</mat-checkbox>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="emotional_reasoning">Emotional reasoning</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="mind_reading">Mind reading</mat-checkbox>
+            </div>
+            <div class="col-sm-4">
+              <mat-checkbox class="thought-patterns" value="should_statements">Should statements</mat-checkbox>
+            </div>
+          </div>
+        </section>
+      </mat-card-content>
+    </mat-form-field>
+    <label for="custom_thought_patterns">What thought patterns aren't listed?</label>
+    <mat-form-field>
+
+
+      <textarea
+        matInput
+        rows="4"
+        name="custom_thought_patterns"
+        ngModel
+        placeholder="Thought patterns not listed"
+        #content="ngModel"></textarea>
+
+    </mat-form-field>
+    <label for="thinking_differently">How can you think about the situation differently?</label>
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        name="thinking_differently"
+        ngModel
+        required
+        placeholder="Change your thoughts"
+        #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please describe how you can think differently.</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit">Save Entry</button>
+  </form>
+</mat-card>

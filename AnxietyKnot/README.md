@@ -14,6 +14,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 Technologies used:
 - Angular (javascript framework)
 - Angular Material (component library)
+- Bootstrap (CSS framework)
 
 ## Back-End Guide
 

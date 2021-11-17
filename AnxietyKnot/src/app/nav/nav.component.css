@@ -19,3 +19,18 @@
 .menuIcon{
   margin-left: 1em;
 }
+
+button {
+  margin-right: 5%;
+  font-size: medium;
+}
+
+.active-list-item {
+  color: #673ab7 !important;
+  font-weight: bold;
+}
+
+.mat-list-item {
+  margin-top: 15% !important;
+  margin-left: 5% !important;
+}

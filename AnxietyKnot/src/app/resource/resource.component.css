@@ -23,3 +23,17 @@
 .dashboard-card-content {
   text-align: center;
 }
+
+.example-card {
+  max-width: 400px;
+}
+
+.mat-cards {
+  display: flex;
+  padding-top: 5%;
+  justify-content: space-around;
+}
+
+mat-card-header {
+  margin: 0 !important;
+}

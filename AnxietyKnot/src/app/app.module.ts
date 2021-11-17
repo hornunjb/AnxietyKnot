@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
+import { PostCreateComponent } from './post-create/post-create.component';
+import { PostListComponent } from './post-list/post-list.component';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -33,10 +35,17 @@ import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
 import { ChartsComponent } from './charts/charts.component';
 import { HomeComponent } from './home/home.component';
+import { NewEditComponent } from './new-edit/new-edit.component';
+import { EditorModule } from "@tinymce/tinymce-angular";
+import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PostCreateComponent,
+    PostListComponent,
     NavComponent,
     JournalBookComponent,
     ResourceComponent,
@@ -44,7 +53,9 @@ import { HomeComponent } from './home/home.component';
     EntryComponent,
     PopupComponent,
     ChartsComponent,
-    HomeComponent
+    HomeComponent,
+    NewEditComponent,
+    PromptedEntryComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +83,16 @@ import { HomeComponent } from './home/home.component';
     MatSnackBarModule,
     MatSliderModule,
     MatDialogModule,
-    NgRatingBarModule
+    NgRatingBarModule,
+    ReactiveFormsModule,
+    EditorModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    QuillModule.forRoot({
+      modules: {
+        syntax: true,
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

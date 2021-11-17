@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EntryComponent } from './entry/entry.component';
+import { HomeComponent } from './home/home.component';
 import { JournalBookComponent } from './journal-book/journal-book.component';
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import { ResourceComponent } from './resource/resource.component';
@@ -10,7 +11,7 @@ import { PostListComponent } from './post-list/post-list.component';
 import { NewEditComponent } from './new-edit/new-edit.component';
 
 const routes: Routes = [
-  {path: '', component:JournalBookComponent},
+  {path:'home', component:HomeComponent},
   {path:'journalBook', component:JournalBookComponent},
   {path:'resource', component:ResourceComponent},
   {path:'tracker', component:TrackerComponent},

@@ -16,6 +16,10 @@
   z-index: 1;
 }
 
+.menuIcon{
+  margin-left: 1em;
+}
+
 button {
   margin-right: 5%;
   font-size: medium;
@@ -30,6 +34,3 @@ button {
   margin-top: 15% !important;
   margin-left: 5% !important;
 }
-
-
-

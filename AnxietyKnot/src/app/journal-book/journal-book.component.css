@@ -20,6 +20,10 @@
   text-align: center;
 }
 
+.mat-h1{
+  margin-left: 1em;
+}
+
 button {
   margin: 5px;
 }
@@ -29,4 +33,3 @@ button {
 }
 
 a { color: #673ab7; }
-

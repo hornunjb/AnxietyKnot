@@ -32,6 +32,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
 import { ChartsComponent } from './charts/charts.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ChartsComponent } from './charts/charts.component';
     TrackerComponent,
     EntryComponent,
     PopupComponent,
-    ChartsComponent
+    ChartsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

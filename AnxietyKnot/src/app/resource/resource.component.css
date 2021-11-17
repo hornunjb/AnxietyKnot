@@ -2,6 +2,10 @@
   margin: 20px;
 }
 
+.mat-h1{
+  margin-left: 1em;
+}
+
 .dashboard-card {
   position: absolute;
   top: 15px;

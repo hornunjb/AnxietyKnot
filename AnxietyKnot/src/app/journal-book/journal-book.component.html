@@ -1,6 +1,6 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Journal Book 
-    <button mat-raised-button color="accent" type="submit" style="float: right;"><a routerLink="/entry">Add new Journal</a></button>
+  <h1 class="mat-h1">Journal Book
+    <button mat-raised-button color="accent" type="submit" style="float: right; margin-right: 1em;"><a routerLink="/entry">Add new Journal</a></button>
   </h1>
   <mat-grid-list cols="2" rowHeight="500px">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">

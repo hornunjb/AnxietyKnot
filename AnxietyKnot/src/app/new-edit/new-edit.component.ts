@@ -4,6 +4,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'app-new-edit',
@@ -11,7 +13,10 @@ import { PostsService } from '../posts.service';
   styleUrls: ['./new-edit.component.css']
 })
 export class NewEditComponent implements OnInit {
-
+  value = 0;
+  ratingCount = 10;
+  response = ["Rate your mood?",
+    "Really?", "Hang on", "It can be better", "I've been worse", "Not much", "Getting better", "Pretty good", "Lets go", "I feel good", "Yesir"]
   enteredTitle = "";
   enteredContent = "";
   private mode = 'create';
@@ -25,12 +30,16 @@ export class NewEditComponent implements OnInit {
     body: new FormControl("", Validators.required)
   });
 
+  openDialog(){
+    this.dialogRef.open(PopupComponent);
+  }
+
   handleEditorInit(e) {
     this.editorSubject.next(e.editor);
     this.editorSubject.complete();
   }
 
-  constructor(public postsService: PostsService, public route: ActivatedRoute) {}
+  constructor(public postsService: PostsService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -47,6 +56,7 @@ export class NewEditComponent implements OnInit {
 
 
     onSubmit() {
+      this.openDialog();
       if (this.myForm.invalid) {
         return;
       }

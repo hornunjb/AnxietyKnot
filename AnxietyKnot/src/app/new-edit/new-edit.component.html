@@ -1,9 +1,17 @@
+<div class="grid-container">
 <mat-card class="blog mat-elevation-z3">
-  <mat-card-title>Journal Entry</mat-card-title>
-
+  <h3 style="text-align: center;">Journal Entry</h3>
+  <form class="datepicker">
+        <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="myDatePicker">
+            <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker touchUi #myDatePicker></mat-datepicker>
+        </mat-form-field>
+    </form>
   <mat-card-content>
     <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
-      <mat-form-field class="title">
+      <mat-form-field style="padding-bottom: 20px;" class="title">
         <input
           matInput
           [formControl]="myForm.controls.title"
@@ -52,3 +60,4 @@
     </button>
   </mat-card-actions>
 </mat-card>
+</div>

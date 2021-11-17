@@ -15,19 +15,14 @@ textarea {
   text-align: center;
 }
 
-main {
-  width: 80%;
-  margin: 1rem auto;
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.grid-container {
+  margin-right: 100px !important;
+  margin-left: 100px !important;
 }
 
-body { margin: 0; }
-
-html, body { height: 100%; }
-
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.example-spacer {
+  flex: 1 1 auto;
+}

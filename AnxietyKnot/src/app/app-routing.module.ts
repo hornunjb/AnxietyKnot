@@ -11,6 +11,7 @@ import { PostListComponent } from './post-list/post-list.component';
 import { NewEditComponent } from './new-edit/new-edit.component';
 
 const routes: Routes = [
+  {path: '', component:HomeComponent},
   {path:'home', component:HomeComponent},
   {path:'journalBook', component:JournalBookComponent},
   {path:'resource', component:ResourceComponent},

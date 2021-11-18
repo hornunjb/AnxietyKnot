@@ -1,0 +1,20 @@
+.save-button {
+  margin-top: 3em;
+  margin-right: 8px;
+  float: right;
+  color: rgb(241, 245, 245);
+}
+
+.datepicker{
+margin-left: 8px;
+font-size: small;
+width: 250px;
+}
+
+.mat-slider {
+width: 300px;
+}
+
+.grid-container {
+  margin: 20px;
+}

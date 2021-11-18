@@ -1,5 +1,14 @@
+<div class="grid-container">
 <mat-card>
-  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+  <form class="datepicker">
+    <mat-form-field appearance="outline">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="myDatePicker">
+        <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker touchUi #myDatePicker></mat-datepicker>
+    </mat-form-field>
+</form>
+  <form (submit)="onSavePost(postForm)" #postForm="ngForm">
     <label for="title">Title</label>
     <mat-form-field>
 
@@ -169,3 +178,4 @@
       type="submit">Save Entry</button>
   </form>
 </mat-card>
+</div>

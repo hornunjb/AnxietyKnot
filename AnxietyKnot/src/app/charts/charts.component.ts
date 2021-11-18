@@ -22,13 +22,13 @@ export class ChartsComponent implements OnInit {
       type: 'line',
       data:{
         datasets:[{
-          data:[12,65,44,56,42,59,80,61,77,54,76,100],
+          data:[2,5,4,5,4,6,8,6,8,5,7,10],
           label:'Mood Rate',
           backgroundColor: '#007bff',
           tension:0.2,
           borderColor: '#007bff',
         },
-      ],  
+      ],
       labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
 
       },
@@ -42,10 +42,32 @@ export class ChartsComponent implements OnInit {
               drawBorder:false,
             },
             beginAtZero:true,
+            title: {
+              display: true,
+              text: 'Happiness',
+              color: 'black',
+              font: {
+                family: 'lato',
+                size: 20,
+                weight: 'bold',
+                lineHeight: 1.2,
+              }
+            }
           },
           x:{
             grid:{
               drawBorder:false,
+            },
+            title: {
+              display: true,
+              text: 'Month',
+              color: 'black',
+              font: {
+                family: 'lato',
+                size: 20,
+                weight: 'bold',
+                lineHeight: 1.2,
+              }
             }
           }
         },

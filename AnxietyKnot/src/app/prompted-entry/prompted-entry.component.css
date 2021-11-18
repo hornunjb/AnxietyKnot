@@ -1,7 +1,6 @@
 .save-button {
   margin-top: 3em;
   margin-right: 8px;
-  float: right;
   color: rgb(241, 245, 245);
 }
 
@@ -17,4 +16,11 @@ width: 300px;
 
 .grid-container {
   margin: 20px;
+}
+
+.mat-raised-button {
+  background-color: #48A9A6;
+  color: white;
+  display: flex;
+  justify-content: flex-end;
 }

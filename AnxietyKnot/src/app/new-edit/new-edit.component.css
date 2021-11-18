@@ -19,3 +19,8 @@ width: 300px;
 .grid-container {
   margin: 20px;
 }
+
+.mat-raised-button {
+  background-color: #48A9A6;
+  color: white;
+}

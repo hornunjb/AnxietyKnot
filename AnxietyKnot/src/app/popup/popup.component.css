@@ -5,11 +5,11 @@
   }
 
   section.text{
-    font-family: Tahoma; 
-    font-size: 18px; 
-    font-style: normal; 
-    font-variant: normal; 
-    font-weight: 700; 
+    font-family: Tahoma;
+    font-size: 18px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
     line-height: 26px;
     display: flex;
     flex-direction: column;
@@ -31,6 +31,7 @@ section.bar {
     margin-top: 1em;
     float: left;
     width: 100px;
+    margin-right: 10px;
 }
 
 .cancelButton{

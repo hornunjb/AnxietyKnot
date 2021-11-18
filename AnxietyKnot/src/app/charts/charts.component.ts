@@ -22,8 +22,8 @@ export class ChartsComponent implements OnInit {
       type: 'line',
       data:{
         datasets:[{
-          data:[2,5,4,5,4,6,8,6,8,5,7,10],
-          label:'Mood Rate',
+          data:[2,3,3,4,2,3,4,4,2,3,4,5],
+          label:'Mood',
           backgroundColor: '#007bff',
           tension:0.2,
           borderColor: '#007bff',

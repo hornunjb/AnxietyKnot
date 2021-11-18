@@ -9,9 +9,9 @@ export class PopupComponent implements OnInit {
 
 
   value = 0;
-  ratingCount = 10;
-  response = ["Rate your mood?",
-    "Really?", "Hang on", "It can be better", "I've been worse", "Not much", "Getting better", "Pretty good", "Lets go", "I feel good", "Yesir"];
+  ratingCount = 5;
+  response = ["How're you feeling?",
+    "Very Sad", "Somewhat Sad", "Neutral", "Somewhat Happy", "Very Happy!"];
 
   constructor() { }
 

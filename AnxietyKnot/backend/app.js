@@ -10,12 +10,18 @@ const Post = require('./models/post')
 // we are using mongoose instead of mongodb's drivers to connect and interact with our database
 // mongoose also uses schemas, that will allow us to store structured data and fetch it easily
 const mongoose = require('mongoose');
+// imports user routes
+const userRoutes = require("./routes/user");
 
 // creating express app
 const app = express();
 
 // connecting our app to our mongodb database using my credentials
-mongoose.connect("mongodb+srv://hornunjb:UnOQUPwiXXaCz90a@cluster0.ltjdk.mongodb.net/AnxietyKnot?retryWrites=true&w=majority")
+mongoose.connect(
+  "mongodb+srv://hornunjb:" +
+    process.env.MONGO_ATLAS_PW +
+    "@cluster0.ltjdk.mongodb.net/AnxietyKnot?retryWrites=true&w=majority"
+  )
 .then(() => {
   console.log("Connected to database!");
 })
@@ -101,6 +107,8 @@ app.delete("/api/posts/:id", (req, res, next) => {
     res.status(200).json({message: "Post deleted!"});
   });
 });
+
+app.use("/api/user", userRoutes)
 
 // export our express app along with its middlewares
 module.exports = app;

@@ -10,9 +10,30 @@
 <mat-accordion multi="true" *ngIf="entries.length > 0">
   <mat-expansion-panel *ngFor="let entry of entries">
     <mat-expansion-panel-header>
-      {{ entry.title }}
+      <h2>{{ entry.title }}</h2>
     </mat-expansion-panel-header>
-    <p>{{ entry.what_happened }}</p>
+    <dl>
+      <dt>What Happened</dt>
+      <dd>{{ entry.what_happened }}</dd>
+
+      <dt>What Was Going Through My Mind</dt>
+      <dd>{{ entry.going_through_mind }}</dd>
+
+      <dt>First Emotion I Was Feeling</dt>
+      <dd>{{ entry.emotion1 }}, Intensity: {{entry.intensity1}}</dd>
+
+      <dt>Second Emotion I Was Feeling</dt>
+      <dd>{{ entry.emotion2 }}, Intensity: {{entry.intensity2}}</dd>
+
+      <!-- <dt>First Emotion I Was Feeling</dt>
+      <dd>{{ entry.emotion1 }}, Intensity: {{entry.intensity1}}</dd>
+
+      <dt>First Emotion I Was Feeling</dt>
+      <dd>{{ entry.emotion1 }}, Intensity: {{entry.intensity1}}</dd>
+
+      <dt>First Emotion I Was Feeling</dt>
+      <dd>{{ entry.emotion1 }}, Intensity: {{entry.intensity1}}</dd> -->
+    </dl>
     <mat-action-row>
       <button mat-button color="primary" [routerLink]="['/edit', entry.id]">EDIT</button>
       <button mat-button color="warn" (click)="onDelete(entry.id)">DELETE</button>

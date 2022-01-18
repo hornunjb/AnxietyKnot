@@ -20,7 +20,7 @@ const routes: Routes = [
 
   {path:'list', component:PostListComponent},
   {path:'create', component:PostCreateComponent},
-  {path:'edit/:postId', component:PostCreateComponent}
+  {path:'edit/:postId', component:PromptedEntryComponent}
 
 ];
 

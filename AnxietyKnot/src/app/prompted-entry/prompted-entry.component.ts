@@ -1,10 +1,12 @@
 import { Component, OnInit} from '@angular/core';
-import { NgForm } from "@angular/forms";
+import { NgForm, NgModel } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { PromptedEntry } from '../prompted-entry';
 
 import { EntryService } from "../entry.service";
 import { MatCheckbox } from '@angular/material/checkbox';
+
+// import { format } from 'path';
 
 
 @Component({

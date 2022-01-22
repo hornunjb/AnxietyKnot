@@ -9,20 +9,25 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { PostCreateComponent } from './post-create/post-create.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { NewEditComponent } from './new-edit/new-edit.component';
+import { LoginComponent } from './login/login.component';
+import { NavComponent } from './nav/nav.component';
 
 const routes: Routes = [
-  {path: '', component:HomeComponent},
-  {path:'home', component:HomeComponent},
-  {path:'journalBook', component:JournalBookComponent},
-  {path:'resource', component:ResourceComponent},
-  {path:'tracker', component:TrackerComponent},
-  {path:'entry', component:EntryComponent},
-  {path: 'prompted-entry', component:PromptedEntryComponent},
-  {path:'list', component:PostListComponent},
-  {path:'create', component:PostCreateComponent},
-  {path:'edit/:postId', component:NewEditComponent},
-  {path:'newEdit', component:NewEditComponent},
-  {path:'edit/:postId', component:PostCreateComponent}
+  {path:'', redirectTo:'login', pathMatch:'full'},
+  {path:'login', component: LoginComponent},
+  {path: '', component:NavComponent, children:[
+    {path:'home', component:HomeComponent,},
+    {path:'journalBook', component:JournalBookComponent},
+    {path:'resource', component:ResourceComponent},
+    {path:'tracker', component:TrackerComponent},
+    {path:'entry', component:EntryComponent},
+    {path:'prompted-entry', component:PromptedEntryComponent},
+    {path:'list', component:PostListComponent},
+    {path:'create', component:PostCreateComponent},
+    {path:'edit/:postId', component:NewEditComponent},
+    {path:'newEdit', component:NewEditComponent},
+    {path:'edit/:postId', component:PostCreateComponent},
+  ]},
 ];
 
 @NgModule({

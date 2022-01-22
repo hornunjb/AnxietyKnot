@@ -40,6 +40,7 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import { EntryListComponent } from './entry-list/entry-list.component';
 
 @NgModule({
   declarations: [
@@ -51,11 +52,16 @@ import {MatSelectModule} from '@angular/material/select';
     ResourceComponent,
     TrackerComponent,
     EntryComponent,
+
+   
+    EntryListComponent
+
     PopupComponent,
     ChartsComponent,
     HomeComponent,
     NewEditComponent,
     PromptedEntryComponent
+
   ],
   imports: [
     BrowserModule,

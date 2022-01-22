@@ -5,8 +5,15 @@
 const express = require('express');
 // parses incoming request bodies and extracts the stream of data
 const bodyParser = require('body-parser');
+
 // imports our Post model from our mongoose blueprint
-const Post = require('./models/post')
+////////////// const Post = require('./models/post')
+
+// imports our Entry model from our mongoose blueprint
+const Entry = require('./models/entry')
+
+
+
 // we are using mongoose instead of mongodb's drivers to connect and interact with our database
 // mongoose also uses schemas, that will allow us to store structured data and fetch it easily
 const mongoose = require('mongoose');
@@ -48,57 +55,73 @@ app.use((req, res, next) => {
 });
 
 // handle incoming post requests, passing a path argument all requests that target localhost:3000/api/posts will reach this middleware
-app.post("/api/posts", (req, res, next) => {
+app.post("/api/entries", (req, res, next) => {
   // using body parser we can access the 'body' field and create a post object that is managed by mongoose
-  const post = new Post({
+  const entry = new Entry({
     title: req.body.title,
-    content: req.body.content
+    what_happened: req.body.what_happened,
+    going_through_mind: req.body.going_through_mind,
+    emotion1: req.body.emotion1,
+    intensity1: req.body.intensity1,
+    emotion2: req.body.emotion2,
+    intensity2: req.body.intensity2,
+    thought_patterns: req.body.thought_patterns,
+    custom_thought_patterns: req.body.custom_thought_patterns,
+    thinking_differently: req.body.thinking_differently,
   });
   // 'save' method is provided by mongoose for each model created with it
   // mongoose will create the right query and will enter our data into the database
-  post.save().then(createdPost => {
+  entry.save().then(createdEntry => {
     // return data in a json format showing it was a sucesss with status code 201
     // also sends back postId field so we can use it in our app
     res.status(201).json({
-      message: "Post added successfully",
-      postId: createdPost._id
+      message: "Entry added successfully",
+      entryId: createdEntry._id
     });
   });
 });
 
-app.put("/api/posts/:id", (req, res, next) => {
-  const post = new Post({
+app.put("/api/entries/:id", (req, res, next) => {
+  const entry = new Entry({
     _id: req.body.id,
     title: req.body.title,
-    content: req.body.content
+    what_happened: req.body.what_happened,
+    going_through_mind: req.body.going_through_mind,
+    emotion1: req.body.emotion1,
+    intensity1: req.body.intensity1,
+    emotion2: req.body.emotion2,
+    intensity2: req.body.intensity2,
+    thought_patterns: req.body.thought_patterns,
+    custom_thought_patterns: req.body.custom_thought_patterns,
+    thinking_differently: req.body.thinking_differently,
   });
-  Post.updateOne({_id: req.params.id}, post).then(result => {
+  Entry.updateOne({_id: req.params.id}, post).then(result => {
     console.log(result);
     res.status(200).json({message: 'Update successful!'});
   });
 });
 
 // handle incoming get requests, passing a path argument, all requests that target localhost:3000/api/posts will reach this middleware
-app.get('/api/posts',(req, res, next) => {
+app.get('/api/entries',(req, res, next) => {
   // mongoose's 'find' method will return all entries in our specified collection
-  Post.find().then(documents => {
+  Entry.find().then(documents => {
     // return data in a json format showing it was a sucesss with status code 200
     res.status(200).json({
-      message: 'Posts fetched successfully!',
-      posts: documents
+      message: 'Entries fetched successfully!',
+      entries: documents
     });
   });
 });
 
 // handle incoming delete requests, passing a path argument, all requests that target localhost:3000/api/posts will reach this middleware
 // adding a ':' allows us to have a dynamic path segment, that we name id
-app.delete("/api/posts/:id", (req, res, next) => {
+app.delete("/api/entries/:id", (req, res, next) => {
   // for delete requests, we send the id as part of the url, we don't send the body
   // req.params gives us access to our encoded parameters (id)
   // mongoose's 'deleteOne' allows us to specify which entry we want to delete
-  Post.deleteOne({_id: req.params.id}).then(result => {
+  Entry.deleteOne({_id: req.params.id}).then(result => {
     console.log(result);
-    res.status(200).json({message: "Post deleted!"});
+    res.status(200).json({message: "Entry deleted!"});
   });
 });
 

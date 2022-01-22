@@ -1,5 +1,8 @@
 <div class="grid-container">
 <mat-card>
+
+ <!--  <form (submit)="onSaveEntry(entryForm)" #entryForm="ngForm"> -->
+
   <form class="datepicker">
     <mat-form-field appearance="outline">
         <mat-label>Choose a date</mat-label>
@@ -9,6 +12,7 @@
     </mat-form-field>
 </form>
   <form (submit)="onSavePost(postForm)" #postForm="ngForm">
+
     <label for="title">Title</label>
     <mat-form-field>
 
@@ -16,7 +20,7 @@
         matInput
         type="text"
         name="title"
-        ngModel
+        [ngModel]="entry?.title"
         required
         minlength="3"
         placeholder="Journal Title"
@@ -29,11 +33,11 @@
         matInput
         rows="4"
         name="what_happened"
-        ngModel
+        [ngModel]="entry?.what_happened"
         required
         placeholder="Describe the situation"
         #what_happened="ngModel"></textarea>
-      <mat-error *ngIf="content.invalid">Please describe what happened.</mat-error>
+      <mat-error *ngIf="what_happened.invalid">Please describe what happened.</mat-error>
     </mat-form-field>
     <label for="going_through_mind">What is going through your mind?</label>
     <mat-form-field>
@@ -41,11 +45,11 @@
         matInput
         rows="4"
         name="going_through_mind"
-        ngModel
+        [ngModel]="entry?.going_through_mind"
         required
         placeholder="Describe your thoughts."
-        #content="ngModel"></textarea>
-      <mat-error *ngIf="content.invalid">Please describe your thoughts on the situation.</mat-error>
+        #going_through_mind="ngModel"></textarea>
+      <mat-error *ngIf="going_through_mind.invalid">Please describe your thoughts on the situation.</mat-error>
     </mat-form-field>
     <label for="emotion1">What emotions are you feeling?</label>
     <mat-form-field>
@@ -53,17 +57,21 @@
         matInput
         rows="4"
         name="emotion1"
-        ngModel
+        [ngModel]="entry?.emotion1"
         required
         placeholder="An emotion you are feeling"
-        #content="ngModel"></textarea>
-      <mat-error *ngIf="content.invalid">Please enter an emotion.</mat-error>
+        #emotion1="ngModel"></textarea>
+      <mat-error *ngIf="emotion1.invalid">Please enter an emotion.</mat-error>
       </mat-form-field>
 
       <mat-form-field>
       <mat-label>Intensity of emotion</mat-label>
-    <mat-select name="intensity1">
-      <mat-option *ngFor="let intensity of intensities" [value]="intensity">
+    <mat-select >
+      <mat-option *ngFor="let intensity of intensities" [value]="intensity1"
+      ngDefaultControl
+      name="intensity1"
+      [ngModel]="entry?.intensity1"
+      #intensity1="ngModel">
 
         {{intensity}}
       </mat-option>
@@ -75,27 +83,54 @@
         matInput
         rows="4"
         name="emotion2"
-        ngModel
+        [ngModel]="entry?.emotion2"
         required
         placeholder="An emotion you are feeling"
-        #content="ngModel"></textarea>
-      <mat-error *ngIf="content.invalid">Please enter an emotion.</mat-error>
+        #emotion2="ngModel"></textarea>
+      <mat-error *ngIf="emotion2.invalid">Please enter an emotion.</mat-error>
 </mat-form-field>
         <mat-form-field>
         <mat-label>Intensity of emotion</mat-label>
-        <mat-select name="intensity2">
-          <mat-option *ngFor="let intensity of intensities" [value]="intensity">
+        <mat-select >
+          <mat-option *ngFor="let intensity of intensities" [value]="intensity2"
+          ngDefaultControl
+          name="intensity2"
+          [ngModel]="entry?.intensity2"
+      #intensity2="ngModel">
             {{intensity}}
           </mat-option>
 
         </mat-select>
 
     </mat-form-field>
-    <mat-form-field>
-      <input matInput [hidden]="true">
+    <mat-form-field name="thoughts">
+      <input matInput [hidden]="true"
+      name="thought-patterns"
+      [ngModel]="entry?.thought_patterns"
+      #thought_patterns="ngModel"
+      >
 
-      <mat-card-content>
-        <h3>What thought patterns do you recognize?</h3>
+
+        <ul class="checkbox-items">
+          <li *ngFor="let item of checkboxDataList">
+            <input type="checkbox" name="thought_patterns"
+            [(ngModel)]="item.isChecked" (change)="changeSelection()">
+            {{item.label}}
+          </li>
+        </ul>
+
+
+
+        <div class="col-md-4">
+
+
+      <h4>Array of IDs</h4>
+      <code>{{checkedIDs}}</code>
+    </div>
+
+
+        <!-- <mat-card-content>
+          <h3>What thought patterns do you recognize?</h3>
         <section>
           <div class="row">
             <div class="col-sm-4">
@@ -145,7 +180,7 @@
             </div>
           </div>
         </section>
-      </mat-card-content>
+      </mat-card-content> -->
     </mat-form-field>
     <label for="custom_thought_patterns">What thought patterns aren't listed?</label>
     <mat-form-field>
@@ -155,9 +190,9 @@
         matInput
         rows="4"
         name="custom_thought_patterns"
-        ngModel
+        [ngModel]="entry?.custom_thought_patterns"
         placeholder="Thought patterns not listed"
-        #content="ngModel"></textarea>
+        #custom_thought_patterns="ngModel"></textarea>
 
     </mat-form-field>
     <label for="thinking_differently">How can you think about the situation differently?</label>
@@ -166,11 +201,11 @@
         matInput
         rows="4"
         name="thinking_differently"
-        ngModel
+        [ngModel]="entry?.thinking_differently"
         required
         placeholder="Change your thoughts"
-        #content="ngModel"></textarea>
-      <mat-error *ngIf="content.invalid">Please describe how you can think differently.</mat-error>
+        #thinking_differently="ngModel"></textarea>
+      <mat-error *ngIf="thinking_differently.invalid">Please describe how you can think differently.</mat-error>
     </mat-form-field>
     <button
       mat-raised-button

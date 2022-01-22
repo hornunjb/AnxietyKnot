@@ -2,11 +2,16 @@
   margin: 20px;
 }
 
-.divChart{
-  display: block;
-  width: 400px;
-  height: 400px;
+.mat-h1{
+  margin-left: 1em;
+}
 
+.divChart{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3em;
 }
 
 .dashboard-card {
@@ -26,3 +31,8 @@
 .dashboard-card-content {
   text-align: center;
 }
+
+.grid-container {
+  margin: 20px;
+}
+

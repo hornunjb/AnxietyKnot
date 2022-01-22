@@ -19,6 +19,15 @@
 .dashboard-card-content {
   text-align: center;
 }
-button{
+
+.mat-h1{
+  margin-left: 1em;
+}
+
+button {
   margin: 5px;
+}
+
+.mat-raised-button {
+  background-color: #48A9A6;
 }

@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+@font-face {
+  font-family: lato;
+  src: url(assets/font/Lato/Lato-Regular.ttf) format("opentype");
+}
+* {
+  font-family: 'lato', Roboto, "Helvetica Neue", sans-serif ;
+}
 
 mat-form-field,
 textarea {
@@ -15,19 +22,14 @@ textarea {
   text-align: center;
 }
 
-main {
-  width: 80%;
-  margin: 1rem auto;
+html, body, main { height: 100%; }
+body { margin: 0; font-family: 'lato', Roboto, "Helvetica Neue", sans-serif !important;}
+
+.grid-container {
+  margin-right: 100px !important;
+  margin-left: 100px !important;
 }
 
-body { margin: 0; }
-
-html, body { height: 100%; }
-
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.example-spacer {
+  flex: 1 1 auto;
+}

@@ -15,8 +15,8 @@
       <h1>Anxiety Knot</h1>
       <div class="login-form">
         <form action="">
-          <input type="email" placeholder="E-mail Address">
-          <input type="password" placeholder="Password">
+          <input type="email" name="email" [(ngModel)]="loginObj.userName" placeholder="E-mail Address">
+          <input type="password" name="password" [(ngModel)]="loginObj.password" placeholder="Password">
 
           <div class="remember-form">
             <input type="checkbox">
@@ -26,7 +26,7 @@
             <a href="#">Forgot Password ?</a>
           </div>
           <div>
-            <button type="submit">LOG-IN</button>
+            <button type="submit" (click)="login()">LOG-IN</button>
             <button type="submit">Sign-Up</button>
           </div>
 

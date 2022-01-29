@@ -36,9 +36,10 @@ export class AppComponent {
   getEntries() {
     // send http request from angular app to our backend
 
-    //this.http.get<{message: string; entries: any}>('http://localhost:3000/api/entries')
+    this.http.get<{message: string; entries: any}>('http://localhost:3000/api/entries')
 
-    this.http.get<{message: string; posts: any}>('http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts')
+    // This will retrieve unprompted entries from the AWS server. Will need to be updated to also retrieve entries(prompted posts) once those are on the AWS server also
+    //this.http.get<{message: string; posts: any}>('http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts')
 
     // on the backend id is stored with an underscore, here we map it before we subscribe to it to change it to just id
     .pipe(map((entryData) => {
@@ -109,9 +110,9 @@ export class AppComponent {
     thinking_differently: thinking_differently, };
     this.http
 
-      //.post<{ message: string, entryId: string }>("http://localhost:3000/api/entries", entry)
+      .post<{ message: string, entryId: string }>("http://localhost:3000/api/entries", entry)
 
-      .post<{ message: string, postId: string }>("http://localhost:3000/api/posts/", post)
+      //.post<{ message: string, postId: string }>("http://localhost:3000/api/posts/", post)
 
       .subscribe(responseData => {
         const id = responseData.entryId;
@@ -149,9 +150,9 @@ export class AppComponent {
   deleteEntry(entryId: string) {
     // adds our dynamic parameter to use on the backend
 
-    //this.http.delete("http://localhost:3000/api/entries/" + entryId)
+    this.http.delete("http://localhost:3000/api/entries/" + entryId)
 
-    this.http.delete("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/" + postId)
+    //this.http.delete("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/" + postId)
 
     .subscribe(() => {
       // filters posts to make sure we keep all entries where the postIds are not equal (we want to delete the one that is)

@@ -15,11 +15,15 @@ import { EntryListComponent } from './entry-list/entry-list.component';
 //  {path:'journalBook', component:EntryListComponent},
 
 import { NewEditComponent } from './new-edit/new-edit.component';
+import { JournalHistoryComponent } from './journal-history/journal-history.component';
 
 const routes: Routes = [
   {path: '', component:HomeComponent},
   {path:'home', component:HomeComponent},
-  {path:'journalBook', component:JournalBookComponent},
+  //{path:'journalBook', component:JournalBookComponent},
+  //{path:'journalBook', component:EntryListComponent},
+  {path:'journalBook', component:JournalHistoryComponent},
+
 
   {path:'resource', component:ResourceComponent},
   {path:'tracker', component:TrackerComponent},

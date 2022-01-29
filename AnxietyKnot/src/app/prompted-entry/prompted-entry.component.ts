@@ -63,9 +63,10 @@ export class PromptedEntryComponent implements OnInit{
 
   public intensities: Array<number>= [1,2,3,4,5,6,7,8,9,10];
 
+  //adding editing capability
 
 
-constructor(public entryService: EntryService, public route: ActivatedRoute) {}
+constructor(public entryService: EntryService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
 
 ngOnInit() {
   this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -100,7 +101,7 @@ ngOnInit() {
     this.editorSubject.complete();
   }
 
-  constructor(public postsService: PostsService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
+//  constructor(public postsService: PostsService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
 
 
 // thoughtPatterner(form: NgForm){
@@ -190,6 +191,43 @@ fetchCheckedIDs() {
 onSaveEntry(form: NgForm) {
   if (form.invalid) {
     return;
+  }
+  else if (this.mode === 'create') {
+      this.entryService.addEntry(
+        form.value.title,
+        form.value.what_happened,
+        form.value.going_through_mind,
+        form.value.emotion1,
+        Number(form.value.intensity1),
+        form.value.emotion2,
+        Number(form.value.intensity2),
+        this.checkedIDs,
+        form.value.custom_thought_patterns,
+        form.value.thinking_differently,
+
+        );
+    }
+    else {
+      this.entryService.updateEntry(
+        this.entryId,
+        form.value.title,
+        form.value.what_happened,
+        form.value.going_through_mind,
+        form.value.emotion1,
+        form.value.intensity1,
+        form.value.emotion2,
+        form.value.intensity2,
+        this.checkedIDs,
+        form.value.custom_thought_patterns,
+        form.value.thinking_differently,
+        );
+    }
+    form.resetForm();
+  }
+  }
+
+
+
 
 /*  ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -224,36 +262,4 @@ onSaveEntry(form: NgForm) {
 
 
 
-  if (this.mode === 'create') {
-    this.entryService.addEntry(
-      form.value.title,
-      form.value.what_happened,
-      form.value.going_through_mind,
-      form.value.emotion1,
-      Number(form.value.intensity1),
-      form.value.emotion2,
-      Number(form.value.intensity2),
-      this.checkedIDs,
-      form.value.custom_thought_patterns,
-      form.value.thinking_differently,
 
-      );
-  }
-  else {
-    this.entryService.updateEntry(
-      this.entryId,
-      form.value.title,
-      form.value.what_happened,
-      form.value.going_through_mind,
-      form.value.emotion1,
-      form.value.intensity1,
-      form.value.emotion2,
-      form.value.intensity2,
-      this.checkedIDs,
-      form.value.custom_thought_patterns,
-      form.value.thinking_differently,
-      );
-  }
-  form.resetForm();
-}
-}

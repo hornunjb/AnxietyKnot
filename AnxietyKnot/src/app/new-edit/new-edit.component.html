@@ -14,7 +14,7 @@
       <mat-form-field style="padding-bottom: 20px;" class="title">
         <input
           matInput
-          [formControl]="myForm.controls.title"
+          [formControl]="$any(myForm.controls.title)"
           [ngModel]="post?.title"
           placeholder="Title"
           type="text"/>
@@ -27,7 +27,7 @@
       <div class="mat-form-field-wrapper">
         <editor
           apiKey="zha80xk6axec1522x463hmfjzs0iqway7q9933ypfm7qirvh"
-          [formControl]="myForm.controls.body"
+          [formControl]="$any(myForm.controls.body)"
           [ngModel]="post?.content"
           class="mat-elevation-z1"
           (onInit)="handleEditorInit($event)"

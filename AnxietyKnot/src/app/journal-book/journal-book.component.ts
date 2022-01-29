@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
+
+
 
 
 @Component({
@@ -10,6 +12,9 @@ import { PostsService } from "../posts.service";
   styleUrls: ['./journal-book.component.css']
 })
 export class JournalBookComponent {
+
+
+
   posts: Post[] = [];
   public noHtmlContent: string[] = [];
   private postsSub: Subscription = new Subscription;
@@ -37,3 +42,4 @@ export class JournalBookComponent {
     this.postsSub.unsubscribe();
   }
 }
+

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { PostCreateComponent } from './post-create/post-create.component';
@@ -27,10 +28,10 @@ import { EntryComponent } from './entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QuillModule } from 'ngx-quill';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSliderModule} from '@angular/material/slider'; 
-import {MatDialogModule} from '@angular/material/dialog'; 
+import {MatSliderModule} from '@angular/material/slider';
+import {MatDialogModule} from '@angular/material/dialog';
 import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
 import { ChartsComponent } from './charts/charts.component';
@@ -41,6 +42,8 @@ import { PromptedEntryComponent } from './prompted-entry/prompted-entry.componen
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { EntryListComponent } from './entry-list/entry-list.component';
+import { JournalHistoryComponent } from './journal-history/journal-history.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -53,14 +56,15 @@ import { EntryListComponent } from './entry-list/entry-list.component';
     TrackerComponent,
     EntryComponent,
 
-   
-    EntryListComponent
+
+    EntryListComponent,
 
     PopupComponent,
     ChartsComponent,
     HomeComponent,
     NewEditComponent,
-    PromptedEntryComponent
+    PromptedEntryComponent,
+    JournalHistoryComponent
 
   ],
   imports: [
@@ -70,8 +74,10 @@ import { EntryListComponent } from './entry-list/entry-list.component';
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
+    MatButtonToggleModule,
     MatButtonModule,
     MatToolbarModule,
+    MatTabsModule,
     MatExpansionModule,
     FormsModule,
     MatCommonModule,

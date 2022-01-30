@@ -11,10 +11,12 @@ import { PostListComponent } from './post-list/post-list.component';
 import { NewEditComponent } from './new-edit/new-edit.component';
 import { LoginComponent } from './login/login.component';
 import { NavComponent } from './nav/nav.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login', pathMatch:'full'},
   {path:'login', component: LoginComponent},
+  {path:'signup', component: SignupComponent},
   {path: '', component:NavComponent, children:[
     {path:'home', component:HomeComponent,},
     {path:'journalBook', component:JournalBookComponent},

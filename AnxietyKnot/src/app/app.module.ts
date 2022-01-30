@@ -41,6 +41,7 @@ import { PromptedEntryComponent } from './prompted-entry/prompted-entry.componen
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { LoginComponent } from './login/login.component';
     HomeComponent,
     NewEditComponent,
     PromptedEntryComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

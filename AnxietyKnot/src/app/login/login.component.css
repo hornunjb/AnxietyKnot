@@ -143,7 +143,7 @@ img {
   border: none;
   margin-right: 15px;
   margin-left: 0px;
-  margin-top: 124px;
+  margin-top: 80px;
   margin-bottom: 20px;
   width: 220px;
   height: 58px;
@@ -194,7 +194,12 @@ img {
 .login .container .forget-pass {
   position: absolute;
   right: 0;
-  margin-top: 189px;
+  margin-top: 200px;
+}
+
+.login .container .text-danger {
+  color:crimson;
+  margin-left: 1%;
 }
 .login .container .forget-pass a {
   font-size: 16px;

@@ -15,17 +15,19 @@
         <h1>Anxiety Knot</h1>
         <div class="login-form">
           <form action="">
-            <input type="username" name="username"  placeholder="Username">
-            <input type="email" name="email"  placeholder="E-mail Address">
-            <input type="password" name="password" placeholder="Password">
-            <input type="password" name="repassword" placeholder="Confirm Password">
-            
+            <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+            <input formControlName="username" type="username" name="username"  placeholder="Username">
+            <span class="text-danger" *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">*Username is required!</span>
+            <input formControlName="email" type="email" name="email"  placeholder="E-mail Address">
+            <span class="text-danger" *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email')">*Email is required!</span>
+            <input formControlName="password" type="password" name="password" placeholder="Password">
+            <span class="text-danger" *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required','password')">*Password is required!</span>
+            <input formControlName="repassword" type="password" name="password" placeholder="Password">
             <div>
-                <a routerLink="/login"><button type="submit">Generate</button></a>
-                
+              <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
             </div>
+          </form>
             <a routerLink="/login">Already have an account? Click to Login!</a>
-  
           </form>
   
         </div>

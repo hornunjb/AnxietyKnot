@@ -143,7 +143,7 @@
     border: none;
     margin-right: 15px;
     margin-left: 0px;
-    margin-top: 124px;
+    margin-top: 85px;
     margin-bottom: 20px;
     width: 220px;
     height: 58px;
@@ -191,6 +191,12 @@
     color: #3B3B3B;
     margin-left: 15px;
   }
+  
+  .login .container .text-danger {
+    color:crimson;
+    margin-left: 1%;
+  }
+
   .login .container .forget-pass {
     position: absolute;
     right: 0;

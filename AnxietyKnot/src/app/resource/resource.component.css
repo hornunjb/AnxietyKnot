@@ -37,3 +37,13 @@
 mat-card-header {
   margin: 0 !important;
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#feelings-wheel {
+  padding: 50px;
+}

@@ -41,6 +41,7 @@ import { PromptedEntryComponent } from './prompted-entry/prompted-entry.componen
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
+import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog
     HomeComponent,
     NewEditComponent,
     PromptedEntryComponent,
-    DistortionDialogComponent
+    DistortionDialogComponent,
+    FeelingsDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -9,12 +9,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
 import { MatIconModule } from '@angular/material/icon'
 import { DistortionDialogComponent } from '../distortion-dialog/distortion-dialog.component';
+import { FeelingsDialogComponent } from '../feelings-dialog/feelings-dialog.component';
+import {ViewEncapsulation} from '@angular/core';
+
 
 
 @Component({
   selector: 'app-prompted-entry',
   templateUrl: './prompted-entry.component.html',
-  styleUrls: ['./prompted-entry.component.css']
+  styleUrls: ['./prompted-entry.component.css'],
 })
 export class PromptedEntryComponent {
   value = 0;
@@ -58,6 +61,14 @@ export class PromptedEntryComponent {
   openDistortionDialog() {
     if(this.dialogRef.openDialogs.length == 0){
       this.dialogRef.open(DistortionDialogComponent, {
+        disableClose: false
+      });
+    }
+  }
+
+  openFeelingsDialog() {
+    if(this.dialogRef.openDialogs.length == 0){
+      this.dialogRef.open(FeelingsDialogComponent, {
         disableClose: false
       });
     }

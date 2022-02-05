@@ -47,7 +47,7 @@
         #content="ngModel"></textarea>
       <mat-error *ngIf="content.invalid">Please describe your thoughts on the situation.</mat-error>
     </mat-form-field>
-    <label for="emotion1">What emotions are you feeling?</label>
+    <label for="emotion1">What emotions are you feeling?<mat-icon mat-button (click)="openFeelingsDialog()">help_outline</mat-icon></label>
     <mat-form-field>
       <textarea
         matInput

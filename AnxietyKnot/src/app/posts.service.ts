@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
 import { map } from 'rxjs/operators';
-
+import { Router } from "@angular/router";
 import { Post } from "./post.model";
 
 @Injectable({ providedIn: "root" })
@@ -10,56 +10,101 @@ export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-  constructor(private http: HttpClient) {}
+  //private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
+
+  constructor(private http: HttpClient
+    , private router: Router
+    ) {}
 
   getPosts() {
     this.http
-      .get<{ message: string; posts: any }>(
-        "http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts"
+      .get<{ message: string; posts: any; maxPosts: number }>(
+        "http://localhost:3000/api/posts"
+        //"http://nodejsangular-env.eba-3fswygyg.us-east-2.elasticbeanstalk.com/api/posts"
       )
-      .pipe(map((postData) => {
-        return postData.posts.map(post => {
+      .pipe(
+        map((postData) => {
+        return{
+          posts: postData.posts.map(post => {
           return {
             title: post.title,
             content: post.content,
-            id: post._id
+            id: post._id,
+            creator: post.creator
           };
-        });
-      }))
-      .subscribe(transformedPosts => {
-        this.posts = transformedPosts;
+        }),
+        maxPosts: postData.maxPosts
+      };
+    })
+  )
+  .subscribe(transformedPostData => {
+        /// DISPLAY TRANSFOMRED POSTS INTO SCHEMA LIKE VIA BROWSER CONSOLE
+        // console.log(transformedPosts);
+        this.posts = transformedPostData.posts;
         this.postsUpdated.next([...this.posts]);
       });
-  }
+    }
 
   getPostUpdateListener() {
     return this.postsUpdated.asObservable();
   }
 
+
+ // getPost(id: string) {
+  //  return {...this.posts.find(p => p.id === id)}
+ // }
+
+//// THIS CODE AFFECTS 'GET POST' IN NEW-EDIT.COMPONENT.TS
+
   getPost(id: string) {
-    return {...this.posts.find(p => p.id === id)}
+    return this.http.get<{
+      _id: string;
+      title: string;
+      content: string;
+      creator: string;
+    }>("http://localhost:3000/api/posts/" + id);
   }
 
   addPost(title: string, content: string) {
-    const post: Post = { id: "", title: title, content: content };
+    const post: Post = {
+      id: "",
+      title: title,
+      content: content,
+      creator: null
+    };
     this.http
-      .post<{ message: string, postId: string }>("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/", post)
+      .post<{ message: string, postId: string }>(
+        "http://localhost:3000/api/posts/", post
+        )
       .subscribe(responseData => {
         const id = responseData.postId;
         post.id = id;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
+        // this.router.navigate(["/"]);
       });
   }
 
+  // POST UPDATE ON POST EDIT
   updatePost(id: string, title: string, content: string) {
-    const post: Post = { id: id, title: title, content: content};
-    this.http.put("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/" + id, post)
-    .subscribe(response => console.log(response));
-  }
+    const post: Post = {
+      id: id,
+      title: title,
+      content: content,
+      creator: null
+     };
+    this.http.put("http://localhost:3000/api/posts/" + id, post)
+    // OUTPUTS CONSOLE LOG OF SUCCESSFUL POST UPDATE
+      .subscribe(response =>
+       console.log(response)
+       // this.router.navigate(["/"]);
+       );
+   }
+
 
   deletePost(postId: string) {
-    this.http.delete("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/" + postId)
+    return this.http
+      .delete("http://localhost:3000/api/posts/" + postId)
       .subscribe(() => {
         const updatedPosts = this.posts.filter(post => post.id !== postId);
         this.posts = updatedPosts;

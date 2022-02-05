@@ -1,21 +1,28 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
 <div class="grid-container">
   <h1 style="padding-bottom: 30px;" class="mat-h1">Journal Book
+  <mat-action-row  *ngIf="userIsAuthenticated">
     <div id="btn-group" style="float: right;">
       <a routerLink="/newEdit"><button mat-raised-button color="accent" type="submit" >Add Journal Entry</button></a>
       <a routerLink="/prompted-entry"><button mat-raised-button color="accent" type="submit" >Guided Journaling</button></a>
     </div>
+  </mat-action-row>
   </h1>
-  <mat-accordion multi="true" *ngIf="posts.length > 0">
+  <mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
     <mat-expansion-panel *ngFor="let post of posts">
-      <mat-expansion-panel-header>
+      <mat-expansion-panel-header *ngIf="userIsAuthenticated && userId === post.creator" >  <!--  WILL ONLY SHOW POSTS CREATED BY THE CREATOR-->
+          <!-- TO DISPLAY ALL POSTS BY ALL USERS, REMOVE '&& userId === post.creator"  -->
         {{ post.title }}
       </mat-expansion-panel-header>
       <p>{{ replace(post.content) }}</p>
-      <mat-action-row>
-        <button mat-button color="warn" [routerLink]="['/edit', post.id]">EDIT</button>
+      <mat-action-row  *ngIf="userIsAuthenticated && userId === post.creator"  > <!--  WILL ONLY ALOW EDIT AND DELETE POSTS CREATED BY THE CREATOR-->
+          <!--   userId === post.creator"  -->
+        <button  mat-button color="warn" [routerLink]="['/edit', post.id]">EDIT</button>
         <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-  <p class="info-text mat-body-1" *ngIf="posts.length <= 0">No journal entries added yet!</p>
+
+  <p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No journal entries added yet!</p>
 </div>

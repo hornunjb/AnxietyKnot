@@ -8,6 +8,7 @@
         <mat-datepicker touchUi #myDatePicker></mat-datepicker>
     </mat-form-field>
 </form>
+
   <form (submit)="onSavePost(postForm)" #postForm="ngForm">
     <label for="title">Title</label>
     <mat-form-field>
@@ -172,7 +173,9 @@
         #content="ngModel"></textarea>
       <mat-error *ngIf="content.invalid">Please describe how you can think differently.</mat-error>
     </mat-form-field>
+    
     <button
+
       mat-raised-button
       type="submit">Save Entry</button>
   </form>

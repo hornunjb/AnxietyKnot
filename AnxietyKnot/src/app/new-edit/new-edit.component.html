@@ -10,7 +10,7 @@
         </mat-form-field>
     </form>
   <mat-card-content>
-    <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
+    <form ((click))="onSubmit()" [formGroup]="myForm">
       <mat-form-field style="padding-bottom: 20px;" class="title">
         <input
           matInput
@@ -55,9 +55,13 @@
   </mat-card-content>
 
   <mat-card-actions align="end">
+   <!-- <button mat-raised-button [disabled]="!myForm.valid">
+      Cancel
+    </button>-->
     <button mat-raised-button (click)="onSubmit()" [disabled]="!myForm.valid">
       Save Entry
     </button>
+
   </mat-card-actions>
 </mat-card>
 </div>

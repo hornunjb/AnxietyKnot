@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -11,8 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
-import { PostCreateComponent } from './post-create/post-create.component';
-import { PostListComponent } from './post-list/post-list.component';
+////import { PostCreateComponent } from './post-create/post-create.component';
+//import { PostListComponent } from './post-list/post-list.component';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -23,14 +23,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ResourceComponent } from './resource/resource.component';
 import { TrackerComponent } from './tracker/tracker.component';
-import { EntryComponent } from './entry/entry.component';
+//import { EntryComponent } from './entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QuillModule } from 'ngx-quill';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSliderModule} from '@angular/material/slider'; 
-import {MatDialogModule} from '@angular/material/dialog'; 
+import {MatSliderModule} from '@angular/material/slider';
+import {MatDialogModule} from '@angular/material/dialog';
 import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
 import { ChartsComponent } from './charts/charts.component';
@@ -40,22 +40,34 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import {LoginComponent} from "./auth/login/login.component";
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from "./auth/auth-interceptor";
+import { HeaderComponent } from './header/header.component';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { ErrorInterceptor } from './error-interceptor';
+//import { MatPaginatorModule } from "@angular/material/paginator";
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostCreateComponent,
-    PostListComponent,
     NavComponent,
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
-    EntryComponent,
     PopupComponent,
     ChartsComponent,
     HomeComponent,
     NewEditComponent,
-    PromptedEntryComponent
+    PromptedEntryComponent,
+    LoginComponent,
+    SignupComponent,
+    HeaderComponent
+    //PostCreateComponent,
+    //PostListComponent,
+      //EntryComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,13 +100,18 @@ import {MatSelectModule} from '@angular/material/select';
     EditorModule,
     MatCheckboxModule,
     MatSelectModule,
+    //MatPaginatorModule,
+    MatProgressSpinnerModule,
     QuillModule.forRoot({
       modules: {
         syntax: true,
       }
     })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

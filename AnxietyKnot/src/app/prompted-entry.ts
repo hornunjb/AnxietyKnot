@@ -15,4 +15,5 @@ export interface PromptedEntry {
   thought_patterns: Array<boolean>;
   custom_thought_patterns: string;
   thinking_differently: string;
+  creator: string;
   }

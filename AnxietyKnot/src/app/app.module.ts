@@ -40,6 +40,7 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {MatSelectModule} from '@angular/material/select';
     ChartsComponent,
     HomeComponent,
     NewEditComponent,
-    PromptedEntryComponent
+    PromptedEntryComponent,
+    DistortionDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,8 @@ import { AsyncSubject, Subject } from 'rxjs';
 import { Post } from '../post.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
+import { MatIconModule } from '@angular/material/icon'
+import { DistortionDialogComponent } from '../distortion-dialog/distortion-dialog.component';
 
 
 @Component({
@@ -46,7 +48,19 @@ export class PromptedEntryComponent {
   });
 
   openDialog(){
-    this.dialogRef.open(PopupComponent);
+    if(this.dialogRef.openDialogs.length == 0){
+      this.dialogRef.open(PopupComponent, {
+        disableClose: false
+      });
+    }
+  }
+
+  openDistortionDialog() {
+    if(this.dialogRef.openDialogs.length == 0){
+      this.dialogRef.open(DistortionDialogComponent, {
+        disableClose: false
+      });
+    }
   }
 
   handleEditorInit(e) {

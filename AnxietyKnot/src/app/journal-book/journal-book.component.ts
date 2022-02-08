@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
 
+const allowedEntryLength = 500;
 
 @Component({
   selector: 'app-journal-book',
@@ -26,6 +27,9 @@ export class JournalBookComponent {
 
   replace(content: any) {
     var parsedContent = content.replace(/<[^>]+>/g, '');
+    if (parsedContent.length > allowedEntryLength) {
+      return parsedContent.slice(0, allowedEntryLength) + "...";
+    }
     return parsedContent;
   }
 
@@ -36,4 +40,10 @@ export class JournalBookComponent {
   ngOnDestroy() {
     this.postsSub.unsubscribe();
   }
+
+  setEntryLength(entryContent) {
+      entryContent.truncate(250);
+      return entryContent;
+  }
+
 }

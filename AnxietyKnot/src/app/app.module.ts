@@ -23,14 +23,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ResourceComponent } from './resource/resource.component';
 import { TrackerComponent } from './tracker/tracker.component';
-import { EntryComponent } from './entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QuillModule } from 'ngx-quill';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSliderModule} from '@angular/material/slider'; 
-import {MatDialogModule} from '@angular/material/dialog'; 
+import {MatSliderModule} from '@angular/material/slider';
+import {MatDialogModule} from '@angular/material/dialog';
 import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
 import { ChartsComponent } from './charts/charts.component';
@@ -52,7 +51,6 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
-    EntryComponent,
     PopupComponent,
     ChartsComponent,
     HomeComponent,

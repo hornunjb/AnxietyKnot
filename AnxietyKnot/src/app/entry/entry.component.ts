@@ -9,7 +9,7 @@ import { PopupComponent } from '../popup/popup.component';
   styleUrls: ['./entry.component.css']
 })
 export class EntryComponent {
-  //var for rating bar 
+  //var for rating bar
   value = 0;
   ratingCount = 10;
   response = ["Rate your mood?",
@@ -21,7 +21,7 @@ export class EntryComponent {
   editorText = '';
 
   constructor(private dialogRef: MatDialog){}
-  
+
   openDialog(){
     this.dialogRef.open(PopupComponent);
   }

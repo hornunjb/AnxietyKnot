@@ -1,75 +1,103 @@
 import { PromptedEntry } from '../prompted-entry';
-import { PostsService } from "../posts.service";
+import { PostsService } from '../posts.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
 import { Post } from '../post.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
 import { DistortionDialogComponent } from '../distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from '../feelings-dialog/feelings-dialog.component';
-import {ViewEncapsulation} from '@angular/core';
-
-
+import { ViewEncapsulation } from '@angular/core';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import * as _moment from 'moment';
+const moment = _moment;
 
 @Component({
   selector: 'app-prompted-entry',
   templateUrl: './prompted-entry.component.html',
   styleUrls: ['./prompted-entry.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  ],
 })
 export class PromptedEntryComponent {
   value = 0;
   ratingCount = 10;
-  response = ["Rate your mood?",
-    "Really?", "Hang on", "It can be better", "I've been worse", "Not much", "Getting better", "Pretty good", "Lets go", "I feel good", "Yesir"]
-  enteredTitle = "";
-  enteredContent = "";
+  response = [
+    'Rate your mood?',
+    'Really?',
+    'Hang on',
+    'It can be better',
+    "I've been worse",
+    'Not much',
+    'Getting better',
+    'Pretty good',
+    'Lets go',
+    'I feel good',
+    'Yesir',
+  ];
+  enteredTitle = '';
+  enteredContent = '';
   private mode = 'create';
   private postId: string;
   public post: Post;
   public static text: string;
-  enteredWhat_happened= "";
-  enteredGoing_through_mind= "";
-  enteredEmotion1= "";
-  enteredIntensity1= "";
-  enteredEmotion2= "";
-  enteredIntensity2= "";
+  enteredWhat_happened = '';
+  enteredGoing_through_mind = '';
+  enteredEmotion1 = '';
+  enteredIntensity1 = '';
+  enteredEmotion2 = '';
+  enteredIntensity2 = '';
 
-  enteredThought_patterns= "";
-  enteredCustom_thought_patterns= "";
-  enteredThinking_differently= "";
+  enteredThought_patterns = '';
+  enteredCustom_thought_patterns = '';
+  enteredThinking_differently = '';
+  date = new FormControl(moment());
 
-  public intensities: Array<number>= [1,2,3,4,5,6,7,8,9,10];
-
+  public intensities: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   private editorSubject: Subject<any> = new AsyncSubject();
   public myForm = new FormGroup({
-    title: new FormControl("", Validators.required),
-    body: new FormControl("", Validators.required)
+    title: new FormControl('', Validators.required),
+    body: new FormControl('', Validators.required),
   });
 
-  openDialog(){
-    if(this.dialogRef.openDialogs.length == 0){
+  openDialog() {
+    if (this.dialogRef.openDialogs.length == 0) {
       this.dialogRef.open(PopupComponent, {
-        disableClose: false
+        disableClose: false,
       });
     }
   }
 
   openDistortionDialog() {
-    if(this.dialogRef.openDialogs.length == 0){
+    if (this.dialogRef.openDialogs.length == 0) {
       this.dialogRef.open(DistortionDialogComponent, {
-        disableClose: false
+        disableClose: false,
       });
     }
   }
 
   openFeelingsDialog() {
-    if(this.dialogRef.openDialogs.length == 0){
+    if (this.dialogRef.openDialogs.length == 0) {
       this.dialogRef.open(FeelingsDialogComponent, {
-        disableClose: false
+        disableClose: false,
       });
     }
   }
@@ -79,7 +107,11 @@ export class PromptedEntryComponent {
     this.editorSubject.complete();
   }
 
-  constructor(public postsService: PostsService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
+  constructor(
+    public postsService: PostsService,
+    public route: ActivatedRoute,
+    private dialogRef: MatDialog
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -94,7 +126,6 @@ export class PromptedEntryComponent {
     });
   }
 
-
   onSavePost(form: NgForm) {
     this.openDialog();
     if (form.invalid) {
@@ -102,9 +133,12 @@ export class PromptedEntryComponent {
     }
     if (this.mode === 'create') {
       this.postsService.addPost(form.value.title, form.value.what_happened);
-    }
-    else {
-      this.postsService.updatePost(this.postId, form.value.title, form.value.what_happend);
+    } else {
+      this.postsService.updatePost(
+        this.postId,
+        form.value.title,
+        form.value.what_happend
+      );
     }
     form.resetForm();
   }

@@ -15,7 +15,7 @@ export class PostsService {
   getPosts() {
     this.http
       .get<{ message: string; posts: any }>(
-        "http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts"
+        "http://localhost:3000/api/posts"
       )
       .pipe(map((postData) => {
         return postData.posts.map(post => {
@@ -43,7 +43,7 @@ export class PostsService {
   addPost(title: string, content: string) {
     const post: Post = { id: "", title: title, content: content };
     this.http
-      .post<{ message: string, postId: string }>("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/", post)
+      .post<{ message: string, postId: string }>("http://localhost:3000/api/posts", post)
       .subscribe(responseData => {
         const id = responseData.postId;
         post.id = id;
@@ -54,12 +54,12 @@ export class PostsService {
 
   updatePost(id: string, title: string, content: string) {
     const post: Post = { id: id, title: title, content: content};
-    this.http.put("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/" + id, post)
+    this.http.put("http://localhost:3000/api/posts" + id, post)
     .subscribe(response => console.log(response));
   }
 
   deletePost(postId: string) {
-    this.http.delete("http://anxietyknot-env-1.eba-imk9a6by.us-east-2.elasticbeanstalk.com/api/posts/" + postId)
+    this.http.delete("http://localhost:3000/api/posts" + postId)
       .subscribe(() => {
         const updatedPosts = this.posts.filter(post => post.id !== postId);
         this.posts = updatedPosts;

@@ -12,12 +12,13 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { PromptedEntry } from '../prompted-entry';
 import { PostsService } from "../posts.service";
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
 import { Post } from '../post.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
+import { timeThursdays } from "d3";
 
 
 
@@ -54,6 +55,9 @@ export class PromptedEntryComponent implements OnInit{
   enteredCustom_thought_patterns= "";
   enteredThinking_differently= "";
 
+  // adding intensity1 property??
+  intensity1= 0;
+  intensity2= 0;
 
   private mode = 'create';
   private entryId: string;
@@ -63,10 +67,32 @@ export class PromptedEntryComponent implements OnInit{
 
   public intensities: Array<number>= [1,2,3,4,5,6,7,8,9,10];
 
-  //adding editing capability
+
+  openDialog(){
+    this.dialogRef.open(PopupComponent);
+  }
 
 
-constructor(public entryService: EntryService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
+
+  // thoughts: FormGroup;
+constructor(public entryService: EntryService, public route: ActivatedRoute,
+  private dialogRef: MatDialog, fb: FormBuilder) {
+    // this.thoughts = fb.group({
+    //   C001: this.thoughtsIDs[0],
+    //   C002: this.thoughtsIDs[1],
+    //   C003: this.thoughtsIDs[2],
+    //   C004: this.thoughtsIDs[3],
+    //   C005: this.thoughtsIDs[4],
+    //   C006: this.thoughtsIDs[5],
+    //   C007: this.thoughtsIDs[6],
+    //   C008: this.thoughtsIDs[7],
+    //   C009: this.thoughtsIDs[8],
+    //   C010: this.thoughtsIDs[9],
+    //   C011: this.thoughtsIDs[10],
+    //   C012: this.thoughtsIDs[11],
+    // });
+
+  }
 
 ngOnInit() {
   this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -74,6 +100,20 @@ ngOnInit() {
       this.mode = 'edit';
       this.entryId = paramMap.get('entryId');
       this.entry = this.entryService.getEntry(this.entryId);
+
+
+      this.entry.thought_patterns.forEach(Element =>{
+          this.checkedIDs.push(Element);
+           var elem = document.getElementById(Element);
+           elem.setAttribute('checked', 'checked');
+
+    })
+      console.log(this.checkedIDs)
+
+      this.intensity1 = this.entry.intensity1;
+      this.intensity2 = this.entry.intensity2;
+      console.log(this.intensity1)
+
     } else {
       this.mode = 'create';
       this.entryId = null;
@@ -82,42 +122,52 @@ ngOnInit() {
 
 }
 
-//  public intensities: Array<number>= [1,2,3,4,5,6,7,8,9,10];
-
-
-  private editorSubject: Subject<any> = new AsyncSubject();
-  public myForm = new FormGroup({
-    title: new FormControl("", Validators.required),
-    body: new FormControl("", Validators.required)
-  });
-
-  openDialog(){
-    this.dialogRef.open(PopupComponent);
-  }
-
-
-  handleEditorInit(e) {
-    this.editorSubject.next(e.editor);
-    this.editorSubject.complete();
-  }
-
-//  constructor(public postsService: PostsService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
-
 
 // thoughtPatterner(form: NgForm){
 //   let thoughts[];
 //   forEach(MatCheckbox => in thoughts {
 
 //   });}
+
+
+// thoughtsIDs = [
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+//   false,
+// ]
+
+
+
 checkedIDs = [];
+
+
 
 changeSelection() {
   this.fetchCheckedIDs()
 }
-fetchCheckedIDs() {
+// fetchCheckedIDs() {
+//   this.checkedIDs = []
+//   for (var key in this.thoughtsIDs){
+//     if(this.thoughtsIDs[key] = true){
+//       this.checkedIDs.push(this.thoughtsIDs[key])
+//     }
+
+//   }
+
+//  }
+ fetchCheckedIDs() {
   this.checkedIDs = []
   this.checkboxDataList.forEach((value, index) => {
-    if(value.isChecked){
+    if(value.checked){
       this.checkedIDs.push(value.id);
     }
   });
@@ -128,62 +178,63 @@ fetchCheckedIDs() {
    {
      id: 'C001',
      label: 'All or nothing',
-     isChecked: false,
+     checked: true,
+
    },
    {
     id: 'C002',
     label: 'All or nothing',
-    isChecked: false,
+    checked: true,
   },
   {
     id: 'C003',
     label: 'All or nothing',
-    isChecked: false,
+    checked: false,
   },
   {
     id: 'C004',
     label: 'All or nothing',
-    isChecked: false,
+    checked: false,
   },
   {
     id: 'C005',
     label: 'All or nothing',
-    isChecked: false,
+    checked: false,
   },
   {
     id: 'C006',
     label: 'All or nothing',
-    isChecked: false,
+    checked: false,
   },
   {
     id: 'C007',
     label: 'All or nothing',
-    isChecked: false,
+    checked: false,
   },
   {
    id: 'C008',
    label: 'All or nothing',
-   isChecked: false,
+   checked: false,
  },
  {
    id: 'C009',
    label: 'All or nothing',
-   isChecked: false,
+   checked: false,
  },
  {
    id: 'C010',
    label: 'All or nothing',
-   isChecked: false,
+   checked: false,
  },
  {
    id: 'C011',
    label: 'All or nothing',
-   isChecked: false,
+   checked: false,
  },
  {
    id: 'C012',
    label: 'All or nothing',
-   isChecked: false,
+   checked: false,
  },
  ]
 
@@ -198,9 +249,9 @@ onSaveEntry(form: NgForm) {
         form.value.what_happened,
         form.value.going_through_mind,
         form.value.emotion1,
-        Number(form.value.intensity1),
+        this.intensity1,
         form.value.emotion2,
-        Number(form.value.intensity2),
+        this.intensity2,
         this.checkedIDs,
         form.value.custom_thought_patterns,
         form.value.thinking_differently,
@@ -214,9 +265,9 @@ onSaveEntry(form: NgForm) {
         form.value.what_happened,
         form.value.going_through_mind,
         form.value.emotion1,
-        form.value.intensity1,
+        this.intensity1,
         form.value.emotion2,
-        form.value.intensity2,
+        this.intensity2,
         this.checkedIDs,
         form.value.custom_thought_patterns,
         form.value.thinking_differently,
@@ -224,7 +275,7 @@ onSaveEntry(form: NgForm) {
     }
     form.resetForm();
   }
-  }
+}
 
 
 

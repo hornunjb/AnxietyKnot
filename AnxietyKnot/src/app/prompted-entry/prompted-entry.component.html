@@ -10,7 +10,7 @@
         <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
         <mat-datepicker touchUi #myDatePicker></mat-datepicker>
     </mat-form-field>
-</form>
+  </form>
   <form (submit)="onSaveEntry(postForm)" #postForm="ngForm">
 
     <label for="title">Title</label>
@@ -66,8 +66,8 @@
 
       <mat-form-field>
       <mat-label>Intensity of emotion</mat-label>
-    <mat-select >
-      <mat-option *ngFor="let intensity of intensities" [value]="intensity1"
+    <mat-select id="intensity1" name="intensity" [(value)]="intensity1">
+      <mat-option *ngFor="let intensity of intensities" [value]="intensity"
       ngDefaultControl
       name="intensity1"
       [ngModel]="entry?.intensity1"
@@ -75,6 +75,18 @@
 
         {{intensity}}
       </mat-option>
+
+      <!-- <mat-option value="1">1</mat-option>
+      <mat-option value="2">2</mat-option>
+      <mat-option value="3">3</mat-option>
+      <mat-option value="4">4</mat-option>
+      <mat-option value="5">5</mat-option>
+      <mat-option value="6">6</mat-option>
+      <mat-option value="7">7</mat-option>
+      <mat-option value="8">8</mat-option>
+      <mat-option value="9">9</mat-option>
+      <mat-option value="10">10</mat-option> -->
+
 
     </mat-select>
   </mat-form-field>
@@ -91,8 +103,8 @@
 </mat-form-field>
         <mat-form-field>
         <mat-label>Intensity of emotion</mat-label>
-        <mat-select >
-          <mat-option *ngFor="let intensity of intensities" [value]="intensity2"
+        <mat-select id="intensity2" name="intensity" [(value)]="intensity2">
+          <mat-option *ngFor="let intensity of intensities" [value]="intensity"
           ngDefaultControl
           name="intensity2"
           [ngModel]="entry?.intensity2"
@@ -103,30 +115,102 @@
         </mat-select>
 
     </mat-form-field>
-    <mat-form-field name="thoughts">
-      <input matInput [hidden]="true"
-      name="thought-patterns"
-      [ngModel]="entry?.thought_patterns"
-      #thought_patterns="ngModel"
-      >
+
+    <!-- <section class="thought-patterns" [(formGroup)]="thoughts" (change)="changeSelection()">
+      <h4>Select your thought patterns</h4>
+      <p><mat-checkbox value="C001" id="C001" formControlName="C001">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C002" id="C002" formControlName="C002">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C003" id="C003" formControlName="C003">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C004" id="C004" formControlName="C004">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C005" id="C005" formControlName="C005">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C006" id="C006" formControlName="C006">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C007" id="C007" formControlName="C007">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C008" id="C008" formControlName="C008">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C009" id="C009" formControlName="C009">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C010" id="C010" formControlName="C010">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C011" id="C011" formControlName="C011">All or Nothing</mat-checkbox></p>
+      <p><mat-checkbox value="C012" id="C012" formControlName="C012">All or Nothing</mat-checkbox></p>
+    </section>" -->
+
+        <!-- <mat-form-field name="thoughts">
+          <input matInput [hidden]="true"
+          name="thought-patterns"
+          [ngModel]="entry?.thought_patterns"
+          #thought_patterns="ngModel"
+          >
 
 
-        <ul class="checkbox-items">
-          <li *ngFor="let item of checkboxDataList">
-            <input type="checkbox" name="thought_patterns"
-            [(ngModel)]="item.isChecked" (change)="changeSelection()">
-            {{item.label}}
-          </li>
-        </ul>
+      <ul class="checkbox-items">
+              <li *ngFor="let item of checkboxDataList">
+
+                <mat-checkbox name="thought_patterns" id="{{item.id}}"
+                [(ngModel)]="item.checked" (change)="changeSelection()" >
+
+                {{item.label}}
+                </mat-checkbox>
+              </li>
+            </ul>
 
 
 
-        <div class="col-md-4">
+            <div class="col-md-4">
 
 
-      <h4>Array of IDs</h4>
-      <code>{{checkedIDs}}</code>
-    </div>
+          <h4>Array of IDs</h4>
+          <code>{{checkedIDs}}</code>
+        </div>
+    </mat-form-field>-->
+      <fieldset>
+        <legend>Identify Your Thought Patterns</legend>
+        <div>
+          <input type="checkbox" id="C001" name="thought_patterns" value="All or Nothing">
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C002" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C003" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C004" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C005" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C006" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C007" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C008" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C009" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C0010" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C0011" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+        <div>
+          <input type="checkbox" id="C0012" name="thought_patterns" value="All or Nothing" >
+          <label for="All or Nothing">All or Nothing</label>
+        </div>
+      </fieldset>
 
 
         <!-- <mat-card-content>
@@ -181,7 +265,7 @@
           </div>
         </section>
       </mat-card-content> -->
-    </mat-form-field>
+
     <label for="custom_thought_patterns">What thought patterns aren't listed?</label>
     <mat-form-field>
 

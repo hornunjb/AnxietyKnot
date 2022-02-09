@@ -18,6 +18,9 @@ export class AppComponent {
   private entriesUpdated = new Subject<PromptedEntry[]>();
   private entriesSub!: Subscription;
 
+
+
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -27,10 +30,15 @@ export class AppComponent {
     .subscribe((entries: PromptedEntry[]) => {
       this.entries = entries;
     });
+
+
   }
 
   ngOnDestroy() {
     this.entriesSub.unsubscribe();
+
+
+
   }
 
   getEntries() {
@@ -143,7 +151,7 @@ export class AppComponent {
     form.resetForm();
   }
 
-  onDelete(entryId: string) {
+  onDeleteEntry(entryId: string) {
     this.deleteEntry(entryId);
   }
 
@@ -162,6 +170,7 @@ export class AppComponent {
       this.entriesUpdated.next([...this.entries]);
     });
   }
+
 
 }
 

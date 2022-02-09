@@ -23,6 +23,7 @@ const routes: Routes = [
   //{path:'journalBook', component:JournalBookComponent},
   //{path:'journalBook', component:EntryListComponent},
   {path:'journalBook', component:JournalHistoryComponent},
+  {path:'edit-prompted/:entryId', component:PromptedEntryComponent},
 
 
   {path:'resource', component:ResourceComponent},

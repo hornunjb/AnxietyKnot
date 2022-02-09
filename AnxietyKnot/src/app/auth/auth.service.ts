@@ -66,8 +66,9 @@ export class AuthService {
             console.log(expirationDate);
             this.saveAuthData(token, expirationDate, this.userId);
             this.router.navigate(["/home"]);
+
         /// WILL DISPLAY TOKEN IN CONSOLE UPON LOGIN
-            // console.log(token);
+            console.log(token);
         }
       }, error => {
         this.authStatusListener.next(false);

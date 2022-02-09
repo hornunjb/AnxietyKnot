@@ -50,7 +50,7 @@ router.post("/login", (req, res, next) => {
     .then(result => {
       if (!result) {
         return res.status(401).json({
-          message: "Invalid Password."
+          message: "Incorrect Password."
         });
       }
       //creates new token based on object

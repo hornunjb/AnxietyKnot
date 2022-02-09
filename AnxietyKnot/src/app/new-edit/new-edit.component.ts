@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { AsyncSubject, Subject } from 'rxjs';
+import { AsyncSubject, Subject, Subscription } from 'rxjs';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
+
+import { AuthService } from "../auth/auth.service";
+
 
 
 @Component({
@@ -14,7 +17,7 @@ import { PopupComponent } from '../popup/popup.component';
   styleUrls: ['./new-edit.component.css']
 })
 
-export class NewEditComponent implements OnInit {
+export class NewEditComponent implements OnInit, OnDestroy{
 
   value = 0;
   ratingCount = 10;
@@ -25,6 +28,7 @@ export class NewEditComponent implements OnInit {
   private mode = 'create';
   private postId: string;
   public static text: string;
+  private authStatusSub: Subscription;
   private editorSubject: Subject<any> = new AsyncSubject();
   response = ["Rate your mood?","Really?", "Hang on",
   "It can be better", "I've been worse", "Not much",
@@ -49,11 +53,18 @@ export class NewEditComponent implements OnInit {
   constructor(
     public postsService: PostsService,
      public route: ActivatedRoute,
-     private dialogRef: MatDialog
+     private dialogRef: MatDialog,
+     private authService: AuthService,
+
      ) {}
 
      ngOnInit() {
-
+       // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
+      this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(authStatus => {
+        this.isLoading = false;
+      });
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
         if (paramMap.has("postId")) {
           this.mode = "edit";
@@ -80,34 +91,6 @@ export class NewEditComponent implements OnInit {
     }
 
 
-  //// THIS CODE IS INFLUENCED BY  getPost(id: string) IN POST.SERVICE.TS
-
-/*  ngOnInit() {
-
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has("postId")) {
-        this.mode = "edit";
-        this.postId = paramMap.get("postId");
-        this.isLoading = true;
-        this.postsService.getPost(this.postId).subscribe(postData => {
-          this.isLoading = false;
-          this.post = {
-            id: postData._id,
-            title: postData.title,
-            content: postData.content,
-            creator: postData.creator
-          };
-          this.myForm.setValue({
-            title: this.post.title,
-            content: this.post.content
-          });
-        });
-      } else {
-        this.mode = "create";
-        this.postId = null;
-      }
-    });
-  } */
 
     onSubmit() {
       this.openDialog();
@@ -131,5 +114,8 @@ export class NewEditComponent implements OnInit {
       }
       this.myForm.reset();
     }
-
+     // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
+    ngOnDestroy() {
+      this.authStatusSub.unsubscribe();
+    }
 }

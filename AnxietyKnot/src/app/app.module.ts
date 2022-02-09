@@ -46,6 +46,7 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
 import { HeaderComponent } from './header/header.component';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from "./error/error.component";
 //import { MatPaginatorModule } from "@angular/material/paginator";
 
 
@@ -64,7 +65,8 @@ import { ErrorInterceptor } from './error-interceptor';
     PromptedEntryComponent,
     LoginComponent,
     SignupComponent,
-    HeaderComponent
+    HeaderComponent,
+    ErrorComponent
     //PostCreateComponent,
     //PostListComponent,
       //EntryComponent,
@@ -112,6 +114,8 @@ import { ErrorInterceptor } from './error-interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }

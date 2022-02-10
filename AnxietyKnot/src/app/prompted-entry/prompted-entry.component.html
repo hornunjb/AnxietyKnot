@@ -76,16 +76,6 @@
         {{intensity}}
       </mat-option>
 
-      <!-- <mat-option value="1">1</mat-option>
-      <mat-option value="2">2</mat-option>
-      <mat-option value="3">3</mat-option>
-      <mat-option value="4">4</mat-option>
-      <mat-option value="5">5</mat-option>
-      <mat-option value="6">6</mat-option>
-      <mat-option value="7">7</mat-option>
-      <mat-option value="8">8</mat-option>
-      <mat-option value="9">9</mat-option>
-      <mat-option value="10">10</mat-option> -->
 
 
     </mat-select>
@@ -116,155 +106,60 @@
 
     </mat-form-field>
 
-    <!-- <section class="thought-patterns" [(formGroup)]="thoughts" (change)="changeSelection()">
-      <h4>Select your thought patterns</h4>
-      <p><mat-checkbox value="C001" id="C001" formControlName="C001">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C002" id="C002" formControlName="C002">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C003" id="C003" formControlName="C003">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C004" id="C004" formControlName="C004">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C005" id="C005" formControlName="C005">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C006" id="C006" formControlName="C006">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C007" id="C007" formControlName="C007">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C008" id="C008" formControlName="C008">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C009" id="C009" formControlName="C009">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C010" id="C010" formControlName="C010">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C011" id="C011" formControlName="C011">All or Nothing</mat-checkbox></p>
-      <p><mat-checkbox value="C012" id="C012" formControlName="C012">All or Nothing</mat-checkbox></p>
-    </section>" -->
 
-        <!-- <mat-form-field name="thoughts">
-          <input matInput [hidden]="true"
-          name="thought-patterns"
-          [ngModel]="entry?.thought_patterns"
-          #thought_patterns="ngModel"
-          >
-
-
-      <ul class="checkbox-items">
-              <li *ngFor="let item of checkboxDataList">
-
-                <mat-checkbox name="thought_patterns" id="{{item.id}}"
-                [(ngModel)]="item.checked" (change)="changeSelection()" >
-
-                {{item.label}}
-                </mat-checkbox>
-              </li>
-            </ul>
-
-
-
-            <div class="col-md-4">
-
-
-          <h4>Array of IDs</h4>
-          <code>{{checkedIDs}}</code>
-        </div>
-    </mat-form-field>-->
-      <fieldset>
+      <fieldset >
         <legend>Identify Your Thought Patterns</legend>
         <div>
-          <input type="checkbox" id="C001" name="thought_patterns" value="All or Nothing">
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C001" name="thought_patterns" value="all_or_nothing" (change)="changeSelection()">
+          <label for="all_or_nothing">All or Nothing</label>
         </div>
         <div>
-          <input type="checkbox" id="C002" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C002" name="thought_patterns" value="blaming_others" (change)="changeSelection()">
+          <label for="blaming_others">Blaming Others</label>
         </div>
         <div>
-          <input type="checkbox" id="C003" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C003" name="thought_patterns" value="catastrophizing" (change)="changeSelection()">
+          <label for="catastrophizing">Catastrophizing</label>
         </div>
         <div>
-          <input type="checkbox" id="C004" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C004" name="thought_patterns" value="emotional_reasoning" (change)="changeSelection()">
+          <label for="emotional_reasoning">Emotional Reasoning</label>
         </div>
         <div>
-          <input type="checkbox" id="C005" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C005" name="thought_patterns" value="fortune_telling" (change)="changeSelection()">
+          <label for="fortune_telling">Fortune Telling</label>
         </div>
         <div>
-          <input type="checkbox" id="C006" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C006" name="thought_patterns" value="labeling" (change)="changeSelection()">
+          <label for="labeling">Labeling</label>
         </div>
         <div>
-          <input type="checkbox" id="C007" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C007" name="thought_patterns" value="magnifying_the_negative" (change)="changeSelection()">
+          <label for="magnifying_the_negative">Magnifying the Negative</label>
         </div>
         <div>
-          <input type="checkbox" id="C008" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C008" name="thought_patterns" value="mind_reading" (change)="changeSelection()">
+          <label for="mind_reading">Mind Reading</label>
         </div>
         <div>
-          <input type="checkbox" id="C009" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C009" name="thought_patterns" value="minimizing_the_positive" (change)="changeSelection()">
+          <label for="minimizing_the_positive">Minimizing the Positive</label>
         </div>
         <div>
-          <input type="checkbox" id="C0010" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C0010" name="thought_patterns" value="overgeneralization" (change)="changeSelection()" >
+          <label for="overgeneralization">Overgeneralization</label>
         </div>
         <div>
-          <input type="checkbox" id="C0011" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C0011" name="thought_patterns" value="self_blaming" (change)="changeSelection()" >
+          <label for="self_blaming">Self-Blaming</label>
         </div>
         <div>
-          <input type="checkbox" id="C0012" name="thought_patterns" value="All or Nothing" >
-          <label for="All or Nothing">All or Nothing</label>
+          <input type="checkbox" id="C0012" name="thought_patterns" value="should_statements" (change)="changeSelection()" >
+          <label for="should_statements">Should Statements</label>
         </div>
       </fieldset>
 
 
-        <!-- <mat-card-content>
-          <h3>What thought patterns do you recognize?</h3>
-        <section>
-          <div class="row">
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="all_or_nothing">All or nothing</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="fortune_telling">Fortune telling</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="minimizing_the_positive">Minimizing the positive</mat-checkbox>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="blaming_others">Blaming others</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="labeling">Labeling</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="overgeneralization">Overgeneralization</mat-checkbox>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="catastrophizing">Catastrophizing</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="magnifying_the_negative">Magnifying the negative</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="self_blaming">Self-blaming</mat-checkbox>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="emotional_reasoning">Emotional reasoning</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="mind_reading">Mind reading</mat-checkbox>
-            </div>
-            <div class="col-sm-4">
-              <mat-checkbox class="thought-patterns" value="should_statements">Should statements</mat-checkbox>
-            </div>
-          </div>
-        </section>
-      </mat-card-content> -->
 
     <label for="custom_thought_patterns">What thought patterns aren't listed?</label>
     <mat-form-field>

@@ -39,7 +39,7 @@ export class AuthService {
      .subscribe(response => {
         console.log(response);
         this.router.navigate(["/home"]);
-      }, error => {
+      }, _error => {
         this.authStatusListener.next(false);
       });
   }
@@ -68,9 +68,9 @@ export class AuthService {
             this.router.navigate(["/home"]);
 
         /// WILL DISPLAY TOKEN IN CONSOLE UPON LOGIN
-            console.log(token);
+            //console.log(token);
         }
-      }, error => {
+      }, _error => {
         this.authStatusListener.next(false);
       });
   }
@@ -99,7 +99,7 @@ logout() {
   this.userId = null;
   clearTimeout(this.tokenTimer);
   this.clearAuthData(); // USER TOKEN CLEARED ON LOGOUT
-  this.router.navigate(['/']);
+  this.router.navigate(['/home']);
 }
 
 /// SET TIMEOUT FOR TOKEN

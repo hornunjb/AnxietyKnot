@@ -23,6 +23,6 @@
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-
+  <p class="info-text mat-body-1" *ngIf="!userIsAuthenticated ">Please Login or Create An Account To Begin Posting!</p>
   <p class="info-text mat-body-1" *ngIf="posts.length <= 0 ">No journal entries added yet!</p>
 </div>

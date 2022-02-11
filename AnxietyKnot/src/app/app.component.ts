@@ -7,6 +7,7 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 
+/* ALL INITIAL CODE THAT WAS IN HERE IS NOW MOVED TO POSTS.SERVICE.TS*/
 
 export class AppComponent implements OnInit{
 

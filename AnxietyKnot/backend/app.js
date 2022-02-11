@@ -14,8 +14,8 @@ const mongoose = require('mongoose');
 ///NODEMON WILL CRASH IF THESE ARE REMOVED
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
+// const entryRoutes = require("./routes/entry");
 
-// creating express app
 const app = express();
 
 // connecting our app to our mongodb database using my credentials
@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({extended: false}));
   for somewhere else - without 'next' the request will not reach any other middlewares */
 
 // since our hosts are on different ports and want to communicate we need to set headers to avoid a CORS error
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
   'Access-Control-Allow-Headers',
@@ -57,6 +57,7 @@ app.use((req, res, next) => {
 /////KEEP
 app.use("/api/user", userRoutes);
 app.use("/api/posts", postsRoutes);
+// app.use("/api/entry", entryRoutes);
 
 // export our express app along with its middlewares
 module.exports = app;

@@ -23,7 +23,7 @@ export class PostsService {
         //"http://nodejsangular-env.eba-3fswygyg.us-east-2.elasticbeanstalk.com/api/posts"
       )
       .pipe(
-        map((postData) => {
+        map(postData => {
         return{
           posts: postData.posts.map(post => {
           return {
@@ -81,6 +81,8 @@ export class PostsService {
         post.id = id;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
+
+        ///NAVIGATES USER AFTER ADD POST
         // this.router.navigate(["/"]);
       });
   }
@@ -97,6 +99,7 @@ export class PostsService {
     // OUTPUTS CONSOLE LOG OF SUCCESSFUL POST UPDATE
       .subscribe(response =>
        console.log(response)
+       // NAVIGATES USER AFTER POST UPDATE
        // this.router.navigate(["/"]);
        );
    }

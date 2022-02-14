@@ -1,24 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import * as _moment from 'moment';
+const moment = _moment;
 
 @Component({
   selector: 'app-new-edit',
   templateUrl: './new-edit.component.html',
-  styleUrls: ['./new-edit.component.css']
+  styleUrls: ['./new-edit.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  ],
 })
 export class NewEditComponent implements OnInit {
   value = 0;
   ratingCount = 10;
-  response = ["Rate your mood?",
-    "Really?", "Hang on", "It can be better", "I've been worse", "Not much", "Getting better", "Pretty good", "Lets go", "I feel good", "Yesir"]
-  enteredTitle = "";
-  enteredContent = "";
+  response = [
+    'Rate your mood?',
+    'Really?',
+    'Hang on',
+    'It can be better',
+    "I've been worse",
+    'Not much',
+    'Getting better',
+    'Pretty good',
+    'Lets go',
+    'I feel good',
+    'Yesir',
+  ];
+  enteredTitle = '';
+  enteredContent = '';
   private mode = 'create';
   private postId: string;
   public post: Post;
@@ -26,11 +56,13 @@ export class NewEditComponent implements OnInit {
 
   private editorSubject: Subject<any> = new AsyncSubject();
   public myForm = new FormGroup({
-    title: new FormControl("", Validators.required),
-    body: new FormControl("", Validators.required)
+    title: new FormControl('', Validators.required),
+    body: new FormControl('', Validators.required),
   });
 
-  openDialog(){
+  date = new FormControl(moment());
+
+  openDialog() {
     this.dialogRef.open(PopupComponent);
   }
 
@@ -39,7 +71,11 @@ export class NewEditComponent implements OnInit {
     this.editorSubject.complete();
   }
 
-  constructor(public postsService: PostsService, public route: ActivatedRoute, private dialogRef: MatDialog) {}
+  constructor(
+    public postsService: PostsService,
+    public route: ActivatedRoute,
+    private dialogRef: MatDialog
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -54,18 +90,22 @@ export class NewEditComponent implements OnInit {
     });
   }
 
-
-    onSubmit() {
-      this.openDialog();
-      if (this.myForm.invalid) {
-        return;
-      }
-      if (this.mode === 'create') {
-        this.postsService.addPost(this.myForm.value['title'], this.myForm.value['body']);
-      }
-      else {
-        this.postsService.updatePost(this.postId, this.myForm.value['title'], this.myForm.value['body']);
-      }
+  onSubmit() {
+    this.openDialog();
+    if (this.myForm.invalid) {
+      return;
     }
-
+    if (this.mode === 'create') {
+      this.postsService.addPost(
+        this.myForm.value['title'],
+        this.myForm.value['body']
+      );
+    } else {
+      this.postsService.updatePost(
+        this.postId,
+        this.myForm.value['title'],
+        this.myForm.value['body']
+      );
+    }
+  }
 }

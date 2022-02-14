@@ -1,4 +1,5 @@
 <div class="grid-container">
+
 <mat-card>
 
  <!--  <form (submit)="onSaveEntry(entryForm)" #entryForm="ngForm"> -->
@@ -62,9 +63,11 @@
         placeholder="An emotion you are feeling"
         #emotion1="ngModel"></textarea>
       <mat-error *ngIf="emotion1.invalid">Please enter an emotion.</mat-error>
-      </mat-form-field>
 
+      </mat-form-field>
+      <label for="what_happened">What Happened?</label>
       <mat-form-field>
+
       <mat-label>Intensity of emotion</mat-label>
     <mat-select id="intensity1" name="intensity" [(value)]="intensity1">
       <mat-option *ngFor="let intensity of intensities" [value]="intensity"
@@ -100,9 +103,13 @@
           [ngModel]="entry?.intensity2"
       #intensity2="ngModel">
             {{intensity}}
-          </mat-option>
 
+          </mat-option>
         </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [hidden]="true" />
+
 
     </mat-form-field>
 
@@ -191,4 +198,5 @@
       type="submit">Save Entry</button>
   </form>
 </mat-card>
+
 </div>

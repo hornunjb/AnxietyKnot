@@ -24,7 +24,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ResourceComponent } from './resource/resource.component';
 import { TrackerComponent } from './tracker/tracker.component';
-import { EntryComponent } from './entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QuillModule } from 'ngx-quill';
@@ -41,9 +40,14 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+
 import { EntryListComponent } from './entry-list/entry-list.component';
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
+import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -54,17 +58,24 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
+
     EntryComponent,
 
 
     EntryListComponent,
+
 
     PopupComponent,
     ChartsComponent,
     HomeComponent,
     NewEditComponent,
     PromptedEntryComponent,
+
     JournalHistoryComponent
+
+
+    DistortionDialogComponent,
+    FeelingsDialogComponent
 
   ],
   imports: [

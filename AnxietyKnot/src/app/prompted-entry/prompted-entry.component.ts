@@ -209,6 +209,7 @@ fetchCheckedIDs() {
 
 
 onSaveEntry(form: NgForm) {
+  this.openDialog();
   if (form.invalid) {
     return;
   }

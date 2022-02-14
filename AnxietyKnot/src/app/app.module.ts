@@ -59,7 +59,7 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
     ResourceComponent,
     TrackerComponent,
 
-    EntryComponent,
+    //EntryComponent,
 
 
     EntryListComponent,
@@ -71,11 +71,11 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
     NewEditComponent,
     PromptedEntryComponent,
 
-    JournalHistoryComponent
+    JournalHistoryComponent,
 
 
     DistortionDialogComponent,
-    FeelingsDialogComponent
+    FeelingsDialogComponent,
 
   ],
   imports: [

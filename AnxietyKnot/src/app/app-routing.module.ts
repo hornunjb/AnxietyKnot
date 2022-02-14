@@ -28,7 +28,7 @@ const routes: Routes = [
   {path:'resource', component:ResourceComponent},
   {path:'tracker', component:TrackerComponent},
 
-  {path:'entry', component:EntryComponent},
+ 
   {path: 'prompted-entry', component:PromptedEntryComponent},
 
 //  {path: 'entry-list', component:EntryListComponent},

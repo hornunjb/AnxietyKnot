@@ -58,7 +58,7 @@ const moment = _moment;
 
 export class PromptedEntryComponent implements OnInit{
 
-  enteredTitle= "";
+ 
 
 //export class PromptedEntryComponent {
   value = 0;
@@ -93,10 +93,10 @@ export class PromptedEntryComponent implements OnInit{
   ];
   enteredTitle = '';
   enteredContent = '';
-  private mode = 'create';
+  
   private postId: string;
   public post: Post;
-  public static text: string;
+ 
   enteredWhat_happened = '';
   enteredGoing_through_mind = '';
   enteredEmotion1 = '';

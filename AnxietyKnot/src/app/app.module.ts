@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { PostCreateComponent } from './post-create/post-create.component';
@@ -39,8 +40,14 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+
+import { EntryListComponent } from './entry-list/entry-list.component';
+import { JournalHistoryComponent } from './journal-history/journal-history.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -51,13 +58,25 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
+
+    EntryComponent,
+
+
+    EntryListComponent,
+
+
     PopupComponent,
     ChartsComponent,
     HomeComponent,
     NewEditComponent,
     PromptedEntryComponent,
+
+    JournalHistoryComponent
+
+
     DistortionDialogComponent,
     FeelingsDialogComponent
+
   ],
   imports: [
     BrowserModule,
@@ -66,8 +85,10 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
+    MatButtonToggleModule,
     MatButtonModule,
     MatToolbarModule,
+    MatTabsModule,
     MatExpansionModule,
     FormsModule,
     MatCommonModule,

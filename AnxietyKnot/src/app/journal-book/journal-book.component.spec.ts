@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { JournalBookComponent } from './journal-book.component';
+//import entry list component to merge lists
+import { EntryListComponent } from '../entry-list/entry-list.component';
 
 describe('JournalBookComponent', () => {
   let component: JournalBookComponent;
@@ -38,3 +40,5 @@ describe('JournalBookComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+

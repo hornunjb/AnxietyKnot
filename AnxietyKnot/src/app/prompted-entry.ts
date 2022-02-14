@@ -3,16 +3,16 @@
 
 export interface PromptedEntry {
 
-  id: number;
+  id: string;
   title: string;
   what_happened: string;
   going_through_mind: string;
   emotion1: string;
-  intensity1: Array<number>;
+  intensity1: number;
   emotion2: string;
-  intensity2: Array<number>;
+  intensity2: number;
 
-  thought_patterns: Array<boolean>;
+  thought_patterns: Array<string>;
   custom_thought_patterns: string;
   thinking_differently: string;
   }

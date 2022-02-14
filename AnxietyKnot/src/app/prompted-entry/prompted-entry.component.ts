@@ -1,12 +1,30 @@
+
+
+//import { NgForm, NgModel } from "@angular/forms";
+
+
+
+import { EntryService } from "../entry.service";
+import { MatCheckbox } from '@angular/material/checkbox';
+
+// import { format } from 'path';
+
 import { PromptedEntry } from '../prompted-entry';
 import { PostsService } from '../posts.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
 import { Post } from '../post.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
+
+import { timeThursdays } from "d3";
+
+
+
 import { MatIconModule } from '@angular/material/icon';
 import { DistortionDialogComponent } from '../distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from '../feelings-dialog/feelings-dialog.component';
@@ -23,6 +41,7 @@ import {
 import * as _moment from 'moment';
 const moment = _moment;
 
+
 @Component({
   selector: 'app-prompted-entry',
   templateUrl: './prompted-entry.component.html',
@@ -36,9 +55,29 @@ const moment = _moment;
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
 })
-export class PromptedEntryComponent {
+
+export class PromptedEntryComponent implements OnInit{
+
+  enteredTitle= "";
+
+//export class PromptedEntryComponent {
   value = 0;
   ratingCount = 10;
+
+
+  // adding intensity1 property??
+  intensity1= 0;
+  intensity2= 0;
+
+  private mode = 'create';
+  private entryId: string;
+  public entry: PromptedEntry;
+  public static text: string;
+
+
+
+
+
   response = [
     'Rate your mood?',
     'Really?',
@@ -78,6 +117,7 @@ export class PromptedEntryComponent {
     body: new FormControl('', Validators.required),
   });
 
+
   openDialog() {
     if (this.dialogRef.openDialogs.length == 0) {
       this.dialogRef.open(PopupComponent, {
@@ -102,44 +142,117 @@ export class PromptedEntryComponent {
     }
   }
 
-  handleEditorInit(e) {
-    this.editorSubject.next(e.editor);
-    this.editorSubject.complete();
+
+
+
+constructor(public entryService: EntryService, public route: ActivatedRoute,
+  private dialogRef: MatDialog, fb: FormBuilder) {
+
+
   }
 
-  constructor(
-    public postsService: PostsService,
-    public route: ActivatedRoute,
-    private dialogRef: MatDialog
-  ) {}
+ngOnInit() {
+  this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    if (paramMap.has('entryId')) {
+      this.mode = 'edit';
+      this.entryId = paramMap.get('entryId');
+      this.entry = this.entryService.getEntry(this.entryId);
 
-  ngOnInit() {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('postId')) {
-        this.mode = 'edit';
-        this.postId = paramMap.get('postId');
-        this.post = this.postsService.getPost(this.postId);
-      } else {
-        this.mode = 'create';
-        this.postId = null;
-      }
-    });
-  }
 
-  onSavePost(form: NgForm) {
-    this.openDialog();
-    if (form.invalid) {
-      return;
-    }
-    if (this.mode === 'create') {
-      this.postsService.addPost(form.value.title, form.value.what_happened);
+      this.entry.thought_patterns.forEach(Element =>{
+          this.checkedIDs.push(Element);
+           var elem = document.getElementById(Element);
+           elem.setAttribute('checked', 'checked');
+
+    })
+      console.log(this.checkedIDs)
+
+      this.intensity1 = this.entry.intensity1;
+      this.intensity2 = this.entry.intensity2;
+      console.log(this.intensity1)
+
     } else {
-      this.postsService.updatePost(
-        this.postId,
+      this.mode = 'create';
+      this.entryId = null;
+    }
+  });
+
+}
+
+
+
+
+
+
+checkedIDs = [];
+
+
+
+changeSelection() {
+  this.fetchCheckedIDs()
+}
+
+
+fetchCheckedIDs() {
+  this.checkedIDs = []
+  document.getElementsByName("thought_patterns").forEach(Element =>{
+    var elem = document.getElementById(Element.id) as HTMLInputElement;
+    if(elem.checked){
+      this.checkedIDs.push(Element.id)
+    }
+  })
+
+}
+
+
+
+
+
+onSaveEntry(form: NgForm) {
+  if (form.invalid) {
+    return;
+  }
+  else if (this.mode === 'create') {
+      this.entryService.addEntry(
         form.value.title,
-        form.value.what_happend
-      );
+        form.value.what_happened,
+        form.value.going_through_mind,
+        form.value.emotion1,
+        this.intensity1,
+        form.value.emotion2,
+        this.intensity2,
+        this.checkedIDs,
+        form.value.custom_thought_patterns,
+        form.value.thinking_differently,
+
+        );
+    }
+    else {
+      this.entryService.updateEntry(
+        this.entryId,
+        form.value.title,
+        form.value.what_happened,
+        form.value.going_through_mind,
+        form.value.emotion1,
+        this.intensity1,
+        form.value.emotion2,
+        this.intensity2,
+        this.checkedIDs,
+        form.value.custom_thought_patterns,
+        form.value.thinking_differently,
+        );
+
     }
     form.resetForm();
   }
 }
+
+
+
+
+
+
+
+
+
+

@@ -23,6 +23,17 @@
           </mat-error>
         </mat-form-field>
 
+    </form>
+  <mat-card-content>
+    <form (ngSubmit)="onSubmit()" [formGroup]="myForm">
+      <mat-form-field style="padding-bottom: 20px;" class="title">
+        <input
+          matInput
+          [formControl]="$any(myForm.controls.title)"
+          [ngModel]="post?.title"
+          placeholder="Title"
+          type="text"/>
+
         <div class="mat-form-field-wrapper">
           <editor
             apiKey="zha80xk6axec1522x463hmfjzs0iqway7q9933ypfm7qirvh"
@@ -38,12 +49,14 @@
             }"
           ></editor>
 
+
           <div class="mat-form-field-subscript-wrapper">
             <mat-error *ngIf="myForm.controls.body.hasError('maxlength')">
               Your post exceeds exceeds the character limit
               {{ myForm.controls.body.getError("maxlength").actualLength }} /
               {{ myForm.controls.body.getError("maxlength").requiredLength }}
             </mat-error>
+
 
             <mat-error
               *ngIf="

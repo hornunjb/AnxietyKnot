@@ -1,0 +1,18 @@
+<div class="grid-container">
+  <h1 style="padding-bottom: 30px;" class="mat-h1">Journal History
+    <div id="btn-group" style="float: right;">
+      <a routerLink="/newEdit"><button mat-raised-button color="accent" type="submit" >Add Journal Entry</button></a>
+      <a routerLink="/prompted-entry"><button mat-raised-button color="accent" type="submit" >Guided Journaling</button></a>
+    </div>
+  </h1>
+</div>
+<mat-button-toggle-group #group="matButtonToggleGroup">
+  <mat-button-toggle value="unprompted" (change)="showUnprompted()" >Unprompted</mat-button-toggle>
+  <mat-button-toggle value="prompted" (change)="showPrompted()">Prompted</mat-button-toggle>
+</mat-button-toggle-group>
+<div>
+  <app-journal-book *ngIf="unpromptedVisible"></app-journal-book>
+</div>
+<div>
+  <app-entry-list *ngIf="promptedVisible"></app-entry-list>
+</div>

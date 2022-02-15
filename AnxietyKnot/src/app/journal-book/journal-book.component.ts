@@ -1,7 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { Subscription } from 'rxjs';
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
+
+const allowedEntryLength = 500;
+
 
 
 @Component({
@@ -10,6 +13,9 @@ import { PostsService } from "../posts.service";
   styleUrls: ['./journal-book.component.css']
 })
 export class JournalBookComponent {
+
+
+
   posts: Post[] = [];
   public noHtmlContent: string[] = [];
   private postsSub: Subscription = new Subscription;
@@ -26,6 +32,9 @@ export class JournalBookComponent {
 
   replace(content: any) {
     var parsedContent = content.replace(/<[^>]+>/g, '');
+    if (parsedContent.length > allowedEntryLength) {
+      return parsedContent.slice(0, allowedEntryLength) + "...";
+    }
     return parsedContent;
   }
 
@@ -36,4 +45,11 @@ export class JournalBookComponent {
   ngOnDestroy() {
     this.postsSub.unsubscribe();
   }
+
+  setEntryLength(entryContent) {
+      entryContent.truncate(250);
+      return entryContent;
+  }
+
 }
+

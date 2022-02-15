@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EntryComponent } from './entry.component';
 
-describe('EntryComponent', () => {
-  let component: EntryComponent;
-  let fixture: ComponentFixture<EntryComponent>;
+import { DistortionDialogComponent } from './distortion-dialog.component';
+
+describe('DistortionDialogComponent', () => {
+  let component: DistortionDialogComponent;
+  let fixture: ComponentFixture<DistortionDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EntryComponent ]
+      declarations: [ DistortionDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EntryComponent);
+    fixture = TestBed.createComponent(DistortionDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

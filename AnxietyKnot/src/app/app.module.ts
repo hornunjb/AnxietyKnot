@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { PostCreateComponent } from './post-create/post-create.component';
@@ -23,14 +24,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ResourceComponent } from './resource/resource.component';
 import { TrackerComponent } from './tracker/tracker.component';
-import { EntryComponent } from './entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QuillModule } from 'ngx-quill';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSliderModule} from '@angular/material/slider'; 
-import {MatDialogModule} from '@angular/material/dialog'; 
+import {MatSliderModule} from '@angular/material/slider';
+import {MatDialogModule} from '@angular/material/dialog';
 import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
 import { ChartsComponent } from './charts/charts.component';
@@ -43,6 +43,14 @@ import {MatSelectModule} from '@angular/material/select';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 
+import { EntryListComponent } from './entry-list/entry-list.component';
+import { JournalHistoryComponent } from './journal-history/journal-history.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
+import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,14 +60,23 @@ import { SignupComponent } from './signup/signup.component';
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
-    EntryComponent,
+
+    //EntryComponent,
+
+
+    EntryListComponent,
+
+
     PopupComponent,
     ChartsComponent,
     HomeComponent,
     NewEditComponent,
     PromptedEntryComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    JournalHistoryComponent,
+    DistortionDialogComponent,
+    FeelingsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,8 +85,10 @@ import { SignupComponent } from './signup/signup.component';
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
+    MatButtonToggleModule,
     MatButtonModule,
     MatToolbarModule,
+    MatTabsModule,
     MatExpansionModule,
     FormsModule,
     MatCommonModule,

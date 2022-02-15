@@ -25,7 +25,7 @@ const routes: Routes = [
   {path:'signup', component: SignupComponent},
   {path: '', component:NavComponent, children:[
     {path:'home', component:HomeComponent,},
-    {path:'journalBook', component:JournalBookComponent},
+    {path:'journalBook', component:JournalHistoryComponent},
     {path:'resource', component:ResourceComponent},
     {path:'tracker', component:TrackerComponent},
     {path:'prompted-entry', component:PromptedEntryComponent},

@@ -40,6 +40,8 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 import { EntryListComponent } from './entry-list/entry-list.component';
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
@@ -70,13 +72,11 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
     HomeComponent,
     NewEditComponent,
     PromptedEntryComponent,
-
+    LoginComponent,
+    SignupComponent,
     JournalHistoryComponent,
-
-
     DistortionDialogComponent,
     FeelingsDialogComponent,
-
   ],
   imports: [
     BrowserModule,

@@ -6,25 +6,15 @@
 
 import { EntryService } from "../entry.service";
 import { MatCheckbox } from '@angular/material/checkbox';
-
-// import { format } from 'path';
-
 import { PromptedEntry } from '../prompted-entry';
 import { PostsService } from '../posts.service';
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
-
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
 import { Post } from '../post.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
-
-import { timeThursdays } from "d3";
-
-
-
 import { MatIconModule } from '@angular/material/icon';
 import { DistortionDialogComponent } from '../distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from '../feelings-dialog/feelings-dialog.component';
@@ -209,7 +199,6 @@ fetchCheckedIDs() {
 
 
 onSaveEntry(form: NgForm) {
-  this.openDialog();
   if (form.invalid) {
     return;
   }

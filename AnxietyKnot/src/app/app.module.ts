@@ -46,7 +46,10 @@ import { HeaderComponent } from './header/header.component';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from "./error/error.component";
-//import { MatPaginatorModule } from "@angular/material/paginator";
+import { JournalHistoryComponent } from './journal-history/journal-history.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+import { EntryListComponent } from './entry-list/entry-list.component';
 
 
 
@@ -65,9 +68,9 @@ import { ErrorComponent } from "./error/error.component";
     LoginComponent,
     SignupComponent,
     HeaderComponent,
-    ErrorComponent
-    //PostCreateComponent,
-    //PostListComponent,
+    ErrorComponent,
+    JournalHistoryComponent,
+    EntryListComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +105,7 @@ import { ErrorComponent } from "./error/error.component";
     MatSelectModule,
     //MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatButtonToggleModule,
     QuillModule.forRoot({
       modules: {
         syntax: true,

@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 ///NODEMON WILL CRASH IF THESE ARE REMOVED
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
-// const entryRoutes = require("./routes/entry");
+const entriesRoutes = require("./routes/entries");
 
 const app = express();
 
@@ -35,7 +35,7 @@ mongoose.connect(
 
 /// DELETING WILL DISCONNECT HTTP://LOCALHOST:3000/API
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 /* 'use' uses middleware on incoming request - takes a function that takes a request and response
   along with 'next' which allows a request to continue its journey if you are using the response
@@ -57,7 +57,7 @@ app.use((_req, res, next) => {
 /////KEEP
 app.use("/api/user", userRoutes);
 app.use("/api/posts", postsRoutes);
-// app.use("/api/entry", entryRoutes);
+app.use("/api/entries", entriesRoutes);
 
 // export our express app along with its middlewares
 module.exports = app;

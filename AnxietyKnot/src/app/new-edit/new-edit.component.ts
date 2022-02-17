@@ -2,11 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject, Subscription } from 'rxjs';
-import { Post } from '../post.model';
-import { PostsService } from '../posts.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
-
+import { Post } from '../post.model';
+import { PostsService } from '../posts.service';
 import { AuthService } from "../auth/auth.service";
 
 
@@ -34,6 +33,9 @@ export class NewEditComponent implements OnInit, OnDestroy{
   "It can be better", "I've been worse", "Not much",
   "Getting better", "Pretty good", "Lets go", "I feel good", "Yesir"]
 
+
+  /// ENSURES ALL REQUIRED FIELDS ARE FILLED BEFORE SUMIT BUTTON CAN BECOME ACTIVE
+  /// THIS ALSO MUST MATCH WITH THE SCHEMA
   public myForm = new FormGroup(
     {
     title: new FormControl("", Validators.required),
@@ -62,7 +64,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
        // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
       this.authStatusSub = this.authService
       .getAuthStatusListener()
-      .subscribe(authStatus => {
+      .subscribe(_authStatus => {
         this.isLoading = false;
       });
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -78,6 +80,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
               content: postData.content,
               creator: postData.creator
             };
+            /// THIS DOESNT SEEM TO HAVE ANY IMPACT IF REMOVED
             this.myForm.setValue({
               title: this.post.title,
               body: this.post.content
@@ -89,8 +92,6 @@ export class NewEditComponent implements OnInit, OnDestroy{
         }
       });
     }
-
-
 
     onSubmit() {
       this.openDialog();

@@ -92,6 +92,7 @@ export class AuthService {
     }
   }
 
+  /// TOKEN IS CLEARED FROM LOCAL STORAGE ON LOGOUT
 logout() {
   this.token = null;
   this.isAuthenticated = false;
@@ -102,7 +103,7 @@ logout() {
   this.router.navigate(['/home']);
 }
 
-/// SET TIMEOUT FOR TOKEN
+/// SET TIMEOUT FOR TOKEND AFTER BEING LOGGED ON FOR 1 HOUR
 private setAuthTimer(duration: number) {
   console.log("Setting timer: " + duration);
   this.tokenTimer = setTimeout(() => {
@@ -110,7 +111,7 @@ private setAuthTimer(duration: number) {
   }, duration * 1000);
 }
 
-////// SAVE TOKEN TO LOCAL STORAGE (BROWSER)
+////// SAVE TOKEN TO LOCAL STORAGE (BROWSER), KEY AND VALUES DISPLAYED BELOW
 private saveAuthData(token: string, expirationDate: Date, userId: string) {
   localStorage.setItem("token", token);
   localStorage.setItem("expiration", expirationDate.toISOString());

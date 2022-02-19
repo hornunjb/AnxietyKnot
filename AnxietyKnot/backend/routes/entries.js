@@ -2,6 +2,7 @@
 const express = require("express");
 const Entry = require("../models/entry");
 
+/// PROTECT AGAINST UNAUTHENTICATED ACCESS
 const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 

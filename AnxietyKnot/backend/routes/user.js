@@ -56,8 +56,9 @@ router.post("/login",(req, res, _next) => {
           message: "Incorrect Password."
         });
       }
-      /// TOKEN FOR USER IS CREATED HERE
-      const token = jwt.sign
+
+      /// TOKEN FOR USER IS CREATED HERE//////////////
+      const token = jwt.sign ////JWT = email and userID, .sign = server signature
       (
         { email: fetchedUser.email, userId: fetchedUser._id },
         //SERVER SIGNATURE

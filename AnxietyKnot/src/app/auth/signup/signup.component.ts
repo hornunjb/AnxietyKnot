@@ -27,6 +27,7 @@ onSignup(form: NgForm){
       return;
     }
     this.isLoading = true;
+    /// sends email and password values to server
     this.authService.createUser(form.value.email, form.value.password);
   }
 

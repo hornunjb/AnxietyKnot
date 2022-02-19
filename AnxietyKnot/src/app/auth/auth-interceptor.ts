@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
 
 /// INTERCEPT ALL OUTGOING HTTP REQUESTS
+/// MANIPULATES OUTGOING REQS TO ATTACH OUR JWT
+/// ACTS AS MIDDLEWARE FOR OUTGOING REQUESTS
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

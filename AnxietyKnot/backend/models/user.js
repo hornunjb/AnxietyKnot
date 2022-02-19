@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true }
 });
 
+/// A PLUGIN TO ADD AN EXTRA HOOK TO CHECK YOUR DATA BEFORE SAVING TO DATABASE
 userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model("User", userSchema);

@@ -3,4 +3,4 @@ export interface AuthData {
   password: string;
 }
 
-/// USED FOR SUBMITTING DATA TO THE BACKEND
+/// USED TO DEFINE HOW AUTHENTICATION DATA SHOULD LOOK LIKE

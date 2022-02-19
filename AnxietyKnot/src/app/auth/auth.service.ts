@@ -1,8 +1,12 @@
 
 import { Injectable } from "@angular/core";
+
+/// used to perform reqs and res to connect to server data
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
+
+/// USED TO DEFINE HOW AUTHENTICATION DATA SHOULD LOOK LIKE
 import { AuthData } from "./auth-data.model";
 
 
@@ -44,7 +48,7 @@ export class AuthService {
       });
   }
 
-  //Authenticate login
+  /// CHECK TO SEE IF TOKEN CONTAINS VALID CREDENTIALS FOR AUTHENTICATED LOGIN
   login(email: string, password: string) {
     const authData: AuthData = {email: email, password: password,};
     this.http
@@ -65,6 +69,7 @@ export class AuthService {
             const expirationDate = new Date (now.getTime() + expiresInDuration * 1000);
             console.log(expirationDate);
             this.saveAuthData(token, expirationDate, this.userId);
+            ///REDIRECT USER AFTER LOGIN
             this.router.navigate(["/home"]);
 
         /// WILL DISPLAY TOKEN IN CONSOLE UPON LOGIN
@@ -100,6 +105,7 @@ logout() {
   this.userId = null;
   clearTimeout(this.tokenTimer);
   this.clearAuthData(); // USER TOKEN CLEARED ON LOGOUT
+  ///REDIRECT USER AFTER LOGOUT
   this.router.navigate(['/home']);
 }
 

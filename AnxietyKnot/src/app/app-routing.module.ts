@@ -32,6 +32,7 @@ const routes: Routes = [
     {path:'list', component:PostListComponent},
     {path:'create', component:PostCreateComponent},
     {path:'edit/:postId', component:NewEditComponent},
+    {path:'edit-prompted/:entryId', component:PromptedEntryComponent},
     {path:'newEdit', component:NewEditComponent},
     {path:'edit/:postId', component:PostCreateComponent},
   ]},

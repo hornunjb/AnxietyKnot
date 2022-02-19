@@ -137,6 +137,7 @@ app.delete("/api/entries/:id", (req, res, next) => {
 app.post("/api/posts", (req, res, next) => {
   // using body parser we can access the 'body' field and create a post object that is managed by mongoose
   const post = new Post({
+    date: req.body.date,
     title: req.body.title,
     content: req.body.content
   });
@@ -155,6 +156,7 @@ app.post("/api/posts", (req, res, next) => {
 app.put("/api/posts/:id", (req, res, next) => {
   const post = new Post({
     _id: req.body.id,
+    date: req.body.date,
     title: req.body.title,
     content: req.body.content
   });

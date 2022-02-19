@@ -195,8 +195,9 @@ export class AppComponent {
     this.http.get<{message: string; posts: any}>('http://localhost:3000/api/posts/')
     // on the backend id is stored with an underscore, here we map it before we subscribe to it to change it to just id
     .pipe(map((postData) => {
-      return postData.posts.map((post: { title: any; content: any; _id: any; }) => {
+      return postData.posts.map((post: { date: any; title: any; content: any; _id: any; }) => {
         return {
+          date: post.date,
           title: post.title,
           content: post.content,
           id: post._id
@@ -216,8 +217,8 @@ export class AppComponent {
     return this.postsUpdated.asObservable();
   }
 
-  addPost(title: string, content: string) {
-    const post: Post = { id: "", title: title, content: content };
+  addPost(date: Date, title: string, content: string) {
+    const post: Post = { id: "", date: date, title: title, content: content };
     this.http
       .post<{ message: string, postId: string }>("http://localhost:3000/api/posts/", post)
       .subscribe(responseData => {
@@ -235,7 +236,7 @@ export class AppComponent {
     if (form.invalid) {
       return;
     }
-    this.addPost(form.value.title, form.value.content);
+    this.addPost(form.value.date, form.value.title, form.value.content);
     form.resetForm();
   }
 

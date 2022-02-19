@@ -50,10 +50,10 @@ export class PostCreateComponent implements OnInit{
       return;
     }
     if (this.mode === 'create') {
-      this.postsService.addPost(form.value.title, form.value.content);
+      this.postsService.addPost(form.value.date, form.value.title, form.value.content);
     }
     else {
-      this.postsService.updatePost(this.postId, form.value.title, form.value.content);
+      this.postsService.updatePost(this.postId, form.value.date, form.value.title, form.value.content);
     }
     form.resetForm();
   }

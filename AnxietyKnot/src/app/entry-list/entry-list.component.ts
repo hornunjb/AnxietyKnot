@@ -19,9 +19,18 @@ export class EntryListComponent implements OnInit, OnDestroy {
     this.entriesService.getEntries();
     this.entriesSub = this.entriesService.getEntryUpdateListener()
     .subscribe((entries: PromptedEntry[]) => {
-      this.entries = entries;
+      this.entries = entries.sort((first, second) =>
+      0 - (first.intensity1 > second.intensity1 ? -1 : 1));
     });
+
   }
+
+
+  //testing sorting by int, will change to sort by date
+  // sort_entries = this.entries.sort((first, second) =>
+  // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
+
+
 
   onDelete(entryId: string) {
     this.entriesService.deleteEntry(entryId);

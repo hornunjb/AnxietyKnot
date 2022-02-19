@@ -11,8 +11,8 @@
   <mat-button-toggle value="prompted" (change)="showPrompted()">Prompted</mat-button-toggle>
 </mat-button-toggle-group>
 <div>
-  <app-journal-book *ngIf="unpromptedVisible"></app-journal-book>
+  <app-journal-book></app-journal-book>
 </div>
 <div>
-  <app-entry-list *ngIf="promptedVisible"></app-entry-list>
+  <app-entry-list ></app-entry-list>
 </div>

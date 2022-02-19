@@ -8,7 +8,7 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { PostCreateComponent } from './post-create/post-create.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { EntryListComponent } from './entry-list/entry-list.component';
 
 //const routes: Routes = [

@@ -5,8 +5,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './journal-history.component.html',
   styleUrls: ['./journal-history.component.css']
 })
-export class JournalHistoryComponent{
+export class JournalHistoryComponent implements OnInit{
 
+
+  ngOnInit(): void {
+
+  }
 
   showUnprompted(){
     this.unpromptedVisible = true;

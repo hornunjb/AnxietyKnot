@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 //using required:true fopr everything for now, probably change later
 const entrySchema = mongoose.Schema({
   // mongoose creates an id on its own
+  date: { type: Date, required: true },
   title: { type: String, required: true},
   what_happened: { type: String, required: true},
   going_through_mind: { type: String, required: true},

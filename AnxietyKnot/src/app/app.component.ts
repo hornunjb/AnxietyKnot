@@ -65,6 +65,7 @@ export class AppComponent {
     // on the backend id is stored with an underscore, here we map it before we subscribe to it to change it to just id
     .pipe(map((entryData) => {
       return entryData.entries.map((entry: {
+        date: any;
         title: any;
     what_happened: any;
     going_through_mind: any;
@@ -78,6 +79,7 @@ export class AppComponent {
         _id: any; }) => {
         return {
           id: entry._id,
+          date: entry.date,
               title: entry.title,
               what_happened: entry.what_happened,
               going_through_mind: entry.going_through_mind,
@@ -106,6 +108,7 @@ export class AppComponent {
   }
 
   addEntry(
+    date: Date,
     title: string,
     what_happened: string,
     going_through_mind: string,
@@ -118,6 +121,7 @@ export class AppComponent {
     thinking_differently: string,) {
     const entry: PromptedEntry = {
       id: "",
+      date: date,
       title: title,
       what_happened: what_happened,
     going_through_mind: going_through_mind,
@@ -151,6 +155,7 @@ export class AppComponent {
       return;
     }
     this.addEntry(
+      form.value.date,
       form.value.title,
       form.value.what_happened,
       form.value.going_through_mind,

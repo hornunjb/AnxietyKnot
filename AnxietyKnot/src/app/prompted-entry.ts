@@ -4,6 +4,7 @@
 export interface PromptedEntry {
 
   id: string;
+  date: Date;
   title: string;
   what_happened: string;
   going_through_mind: string;

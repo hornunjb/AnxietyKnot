@@ -49,6 +49,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
+import { JournalDisplayComponent } from './journal-display/journal-display.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
     JournalHistoryComponent,
     DistortionDialogComponent,
     FeelingsDialogComponent,
+    JournalDisplayComponent,
   ],
   imports: [
     BrowserModule,

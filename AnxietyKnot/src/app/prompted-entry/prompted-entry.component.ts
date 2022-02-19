@@ -29,6 +29,8 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import * as _moment from 'moment';
+import { DatasetController } from "chart.js";
+import { MatDatepickerContent } from "@angular/material/datepicker";
 const moment = _moment;
 
 
@@ -48,7 +50,7 @@ const moment = _moment;
 
 export class PromptedEntryComponent implements OnInit{
 
- 
+
 
 //export class PromptedEntryComponent {
   value = 0;
@@ -83,10 +85,10 @@ export class PromptedEntryComponent implements OnInit{
   ];
   enteredTitle = '';
   enteredContent = '';
-  
+
   private postId: string;
   public post: Post;
- 
+
   enteredWhat_happened = '';
   enteredGoing_through_mind = '';
   enteredEmotion1 = '';
@@ -98,6 +100,10 @@ export class PromptedEntryComponent implements OnInit{
   enteredCustom_thought_patterns = '';
   enteredThinking_differently = '';
   date = new FormControl(moment());
+
+
+
+
 
   public intensities: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -199,11 +205,13 @@ fetchCheckedIDs() {
 
 
 onSaveEntry(form: NgForm) {
+  let date = this.date.value.toDate();
   if (form.invalid) {
     return;
   }
   else if (this.mode === 'create') {
       this.entryService.addEntry(
+        date,
         form.value.title,
         form.value.what_happened,
         form.value.going_through_mind,
@@ -220,6 +228,7 @@ onSaveEntry(form: NgForm) {
     else {
       this.entryService.updateEntry(
         this.entryId,
+        date,
         form.value.title,
         form.value.what_happened,
         form.value.going_through_mind,

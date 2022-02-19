@@ -22,6 +22,7 @@ export class EntryService {
           return entryData.entries.map((entry) => {
             return {
               id: entry._id,
+              date: entry.date,
               title: entry.title,
               what_happened: entry.what_happened,
               going_through_mind: entry.going_through_mind,
@@ -52,6 +53,7 @@ export class EntryService {
   }
 
   addEntry(
+    date: Date,
     title: string,
     what_happened: string,
     going_through_mind: string,
@@ -64,7 +66,9 @@ export class EntryService {
     thinking_differently: string,
     ) {
     const entry: PromptedEntry = {
+
       id: "",
+      date: date,
       title: title,
       what_happened: what_happened,
     going_through_mind: going_through_mind,
@@ -87,6 +91,7 @@ export class EntryService {
   }
 
   updateEntry(id: string,
+    date: Date,
     title: string,
     what_happened: string,
     going_through_mind: string,
@@ -99,6 +104,7 @@ export class EntryService {
     thinking_differently: string,) {
     const entry: PromptedEntry = {
       id: id,
+      date: date,
       title: title,
       what_happened: what_happened,
     going_through_mind: going_through_mind,

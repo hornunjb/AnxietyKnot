@@ -28,6 +28,7 @@ export class JournalBookComponent {
       .subscribe((posts: Post[]) => {
         this.posts = posts;
       });
+
     }
 
   replace(content: any) {

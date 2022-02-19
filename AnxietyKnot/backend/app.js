@@ -60,6 +60,7 @@ app.use((req, res, next) => {
 app.post("/api/entries", (req, res, next) => {
   // using body parser we can access the 'body' field and create a post object that is managed by mongoose
   const entry = new Entry({
+    date: req.body.date,
     title: req.body.title,
     what_happened: req.body.what_happened,
     going_through_mind: req.body.going_through_mind,
@@ -86,6 +87,7 @@ app.post("/api/entries", (req, res, next) => {
 app.put("/api/entries/:id", (req, res, next) => {
   const entry = new Entry({
     _id: req.body.id,
+    date: req.body.date,
     title: req.body.title,
     what_happened: req.body.what_happened,
     going_through_mind: req.body.going_through_mind,

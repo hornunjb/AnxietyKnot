@@ -18,6 +18,7 @@ import { NewEditComponent } from './new-edit/new-edit.component';
 import { LoginComponent } from './login/login.component';
 import { NavComponent } from './nav/nav.component';
 import { SignupComponent } from './signup/signup.component';
+import { JournalDisplayComponent } from './journal-display/journal-display.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login', pathMatch:'full'},
@@ -35,6 +36,8 @@ const routes: Routes = [
     {path:'edit-prompted/:entryId', component:PromptedEntryComponent},
     {path:'newEdit', component:NewEditComponent},
     {path:'edit/:postId', component:PostCreateComponent},
+
+    {path: 'testpath', component:JournalDisplayComponent},
   ]},
 
 ];

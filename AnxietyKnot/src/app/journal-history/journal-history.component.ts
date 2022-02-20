@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PromptedEntry } from "../prompted-entry";
+import { Post } from "../post.model";
 
 @Component({
   selector: 'app-journal-history',
@@ -11,6 +13,11 @@ export class JournalHistoryComponent implements OnInit{
   ngOnInit(): void {
 
   }
+  
+  entries_sort: PromptedEntry[] = [];
+  posts_sort: Post[] = [];
+
+
 
   showUnprompted(){
     this.unpromptedVisible = true;
@@ -26,4 +33,9 @@ export class JournalHistoryComponent implements OnInit{
   promptedVisible:boolean = false;
 
 
+}
+interface IJournals{
+    type: string;
+    title: string;
+    id: string;
 }

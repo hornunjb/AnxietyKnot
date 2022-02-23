@@ -10,6 +10,7 @@ const router = express.Router();
 /// CREATE POST
 router.post("", checkAuth, (req, res, _next) =>
 { const post = new Post({
+  date: req.body.date,
   title: req.body.title,
   content: req.body.content,
   creator: req.userData.userId
@@ -39,6 +40,7 @@ post.save().then(createdPost => {
 router.put("/:id", checkAuth, (req, res, _next) =>
 { const post = new Post({
  _id: req.body.id,
+ date: req.body.date,
  title: req.body.title,
  content: req.body.content,
  creator: req.userData.userId
@@ -50,14 +52,14 @@ router.put("/:id", checkAuth, (req, res, _next) =>
      {
       console.log(result);
     if (result.matchedCount > 0) {
-      res.status(200).json({ message: "Post Update Successful!" });
+      res.status(200).json({ message: "Journal Post Update Successful!" });
     } else {
-      res.status(401).json({ message: "You Are Not Authorized To Update This Post!" });
+      res.status(401).json({ message: "You Are Not Authorized To Update This Journal Post!" });
     }
   }) /* -----TECH ERROR PROMPT ----*/
     .catch(_error => {
     res.status(500).json({
-      message: "Technical Error: Post Update Was Not Successful!"
+      message: "Technical Error: Journal Post Update Was Not Successful!"
       });
     });
   });
@@ -76,7 +78,7 @@ router.get("", (_req, res, _next) => {
     .then(count => {
       res.status(200).json({
         //MESSAGE ONLY DISPLAYS IN http://localhost:3000/api/posts
-        message: "Posts Fetched Successfully!",
+        message: "Journal Posts Fetched Successfully!",
 
         posts: fetchedPosts,
         maxPosts: count
@@ -86,7 +88,7 @@ router.get("", (_req, res, _next) => {
       /* -----TECH ERROR PROMPT ----*/
     .catch(_error => {
       res.status(500).json({
-        message: "Technical Error: Could Not Fetch Posts!"
+        message: "Technical Error: Could Not Fetch Journal Posts!"
       });
     });
 });
@@ -99,13 +101,13 @@ router.get("/:id", (req, res, _next) => {
     if (post) {
       res.status(200).json(post);
     } else {
-      res.status(404).json({ message: "Post Not Found!" });
+      res.status(404).json({ message: "Journal Post Not Found!" });
     }
   })
     /* -----TECH ERROR PROMPT ----*/
   .catch(_error => {
     res.status(500).json({
-      message: "Technical Error: Could Not Fetch Post!"
+      message: "Technical Error: Could Not Fetch Journal Post!"
     });
   });
 });
@@ -116,14 +118,14 @@ router.delete("/:id", checkAuth, (req, res, _next) => {
   .then(result => {
        console.log(result);
     if (result.deletedCount > 0) {
-      res.status(200).json({ message: "Post Deletion Successful!" });
+      res.status(200).json({ message: "Journal Post Deletion Successful!" });
     } else {
-      res.status(401).json({ message: "You're Not Authorized To Delete This Post!" });
+      res.status(401).json({ message: "You're Not Authorized To Delete This Journal Post!" });
     }
   }) /* -----TECH ERROR PROMPT ----*/
   .catch(_error => {
     res.status(500).json({
-      message: "Technical Error: Could Not Delete Post!"
+      message: "Technical Error: Could Not Delete Journal Post!"
     });
   });
 });

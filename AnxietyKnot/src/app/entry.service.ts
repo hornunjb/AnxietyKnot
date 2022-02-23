@@ -20,6 +20,7 @@ export class EntryService {
           return entryData.entries.map(entry => {
             return {
               id: entry._id,
+              date: entry.date,
               title: entry.title,
               what_happened: entry.what_happened,
               going_through_mind: entry.going_through_mind,
@@ -49,6 +50,7 @@ export class EntryService {
   getEntry(id: string) {
     return this.http.get<{
     _id: string;
+    date: Date,
     title: string;
     what_happened: string;
     going_through_mind: string;
@@ -70,7 +72,8 @@ getEntry(id: string) {
 
 
   addEntry
-  ( title: string,
+  ( date: Date,
+    title: string,
     what_happened: string,
     going_through_mind: string,
     emotion1: string,
@@ -83,6 +86,7 @@ getEntry(id: string) {
     {
     const entry: PromptedEntry = {
       id: "",
+      date: date,
       title: title,
       what_happened: what_happened,
       going_through_mind: going_through_mind,
@@ -109,6 +113,7 @@ getEntry(id: string) {
 
   updateEntry(
     id: string,
+    date: Date,
     title: string,
     what_happened: string,
     going_through_mind: string,
@@ -118,9 +123,11 @@ getEntry(id: string) {
     intensity2: number,
     thought_patterns: Array<string>,
     custom_thought_patterns: string,
-    thinking_differently: string
-  ){const entry: PromptedEntry = {
+    thinking_differently: string,
+  ){
+    const entry: PromptedEntry = {
       id: id,
+      date: date,
       title: title,
       what_happened: what_happened,
       going_through_mind: going_through_mind,

@@ -50,6 +50,9 @@ import { JournalHistoryComponent } from './journal-history/journal-history.compo
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { EntryListComponent } from './entry-list/entry-list.component';
+import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
+import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
+
 
 
 
@@ -70,7 +73,10 @@ import { EntryListComponent } from './entry-list/entry-list.component';
     HeaderComponent,
     ErrorComponent,
     JournalHistoryComponent,
-    EntryListComponent
+    EntryListComponent,
+    FeelingsDialogComponent,
+    DistortionDialogComponent,
+
   ],
   imports: [
     BrowserModule,

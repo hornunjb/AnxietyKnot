@@ -12,6 +12,7 @@ import { AuthService } from "../auth/auth.service";
   styleUrls: ['./entry-list.component.css']
 })
 export class EntryListComponent implements OnInit, OnDestroy {
+  
   entries: PromptedEntry[] = [];
   isLoading = false;
   userId: string;

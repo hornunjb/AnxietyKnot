@@ -46,7 +46,7 @@ import { SignupComponent } from './signup/signup.component';
 import { EntryListComponent } from './entry-list/entry-list.component';
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
+import{MatStepperModule} from '@angular/material/stepper';
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
@@ -113,6 +113,7 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     EditorModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatStepperModule,
     QuillModule.forRoot({
       modules: {
         syntax: true,

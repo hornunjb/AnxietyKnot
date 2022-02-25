@@ -50,10 +50,11 @@ export class JournalBookComponent {
 
   tipMaker() {
     if (this.posts.length > 0) {
-      if (this.posts.length > 10) {
+      if (this.posts.length == 10) {
         this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
         return true;
-      } else {
+      }
+      if (this.posts.length == 5) {
         this.tip = "Nicotine and caffeine can worsen anxiety.";
         return true;
       }

@@ -9,7 +9,7 @@
             {{response[value]}}
         </section>
         <section class="button">
-            <button mat-flat-button mat-dialog-close class="okButton" routerLink="/journalBook" color="accent" type="submit" >OK</button>
+            <button mat-flat-button mat-dialog-close (click)="sendRating()" class="okButton" routerLink="/journalBook" color="accent" type="submit" >OK</button>
             <button mat-flat-button mat-dialog-close class="cancelButton" color="warn" type="submit" >Cancel</button>
         </section>
     </div>

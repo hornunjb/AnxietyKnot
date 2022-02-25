@@ -16,6 +16,7 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import * as _moment from 'moment';
+import { filter } from 'rxjs/operators';
 const moment = _moment;
 
 @Component({
@@ -32,7 +33,7 @@ const moment = _moment;
   ],
 })
 export class NewEditComponent implements OnInit {
-  value = 0;
+  value = '';
   ratingCount = 10;
   response = [
     'Rate your mood?',
@@ -63,8 +64,14 @@ export class NewEditComponent implements OnInit {
   date = new FormControl(moment());
 
   openDialog() {
-    this.dialogRef.open(PopupComponent);
+    const dialogRef = this.dialogRef.open(PopupComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.value = result;
+      console.log(this.value);
+    });
   }
+
 
   handleEditorInit(e) {
     this.editorSubject.next(e.editor);

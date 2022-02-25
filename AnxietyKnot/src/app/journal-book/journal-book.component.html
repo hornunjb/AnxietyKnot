@@ -1,7 +1,14 @@
+  <div class="tip" *ngIf="posts.length > 5">
+    <h3>Hey there! <span class="wave">👋</span></h3>
+    <p>
+      Develop a routine so that you're physically active most days of the week.
+      Exercise is a powerful stress reducer. It can improve your mood and help
+      you stay healthy. Start out slowly, and gradually increase the amount and
+      intensity of your activities.
+    </p>
+  </div>
 <div class="grid-container">
-  <h1 style="padding-bottom: 30px;" class="mat-h1">
-    Unprompted Journals
-  </h1>
+  <h1 style="padding-bottom: 30px" class="mat-h1">Unprompted Journals</h1>
   <mat-accordion multi="true" *ngIf="posts.length > 0">
     <mat-expansion-panel *ngFor="let post of posts">
       <mat-expansion-panel-header>
@@ -9,12 +16,16 @@
       </mat-expansion-panel-header>
       <p>{{ replace(post.content) }}</p>
       <mat-action-row>
-        <button mat-button color="warn" [routerLink]="['/edit', post.id]">EDIT</button>
-        <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
+        <button mat-button color="warn" [routerLink]="['/edit', post.id]">
+          EDIT
+        </button>
+        <button mat-button color="warn" (click)="onDelete(post.id)">
+          DELETE
+        </button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-  <p class="info-text mat-body-1" *ngIf="posts.length <= 0">No journal entries added yet!</p>
+  <p class="info-text mat-body-1" *ngIf="posts.length <= 0">
+    No journal entries added yet!
+  </p>
 </div>
-
-

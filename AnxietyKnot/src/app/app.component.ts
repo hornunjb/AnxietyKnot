@@ -217,8 +217,8 @@ export class AppComponent {
     return this.postsUpdated.asObservable();
   }
 
-  addPost(date: Date, title: string, content: string) {
-    const post: Post = { id: "", date: date, title: title, content: content };
+  addPost(date: Date, title: string, content: string, mood: string) {
+    const post: Post = { id: "", date: date, title: title, content: content, mood: mood };
     this.http
       .post<{ message: string, postId: string }>("http://localhost:3000/api/posts/", post)
       .subscribe(responseData => {
@@ -232,13 +232,6 @@ export class AppComponent {
       });
   }
 
-  onAddPost(form: NgForm) {
-    if (form.invalid) {
-      return;
-    }
-    this.addPost(form.value.date, form.value.title, form.value.content);
-    form.resetForm();
-  }
 
   onDelete(postId: string) {
     this.deletePost(postId);

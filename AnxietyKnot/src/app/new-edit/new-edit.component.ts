@@ -63,13 +63,34 @@ export class NewEditComponent implements OnInit {
 
   date = new FormControl(moment());
 
-  openDialog() {
+  async openDialog() {
     const dialogRef = this.dialogRef.open(PopupComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.value = result;
       console.log(this.value);
     });
+    await dialogRef.afterClosed().toPromise();
+    let date = this.date.value.toDate();
+    if (this.myForm.invalid) {
+      return;
+    }
+    if (this.mode === 'create') {
+      this.postsService.addPost(
+        date,
+        this.myForm.value['title'],
+        this.myForm.value['body'],
+        this.value
+      );
+    } else {
+      this.postsService.updatePost(
+        this.postId,
+        date,
+        this.myForm.value['title'],
+        this.myForm.value['body'],
+        this.value
+      );
+    }
   }
 
 
@@ -99,23 +120,5 @@ export class NewEditComponent implements OnInit {
 
   onSubmit() {
     this.openDialog();
-    let date = this.date.value.toDate();
-    if (this.myForm.invalid) {
-      return;
-    }
-    if (this.mode === 'create') {
-      this.postsService.addPost(
-        date,
-        this.myForm.value['title'],
-        this.myForm.value['body']
-      );
-    } else {
-      this.postsService.updatePost(
-        this.postId,
-        date,
-        this.myForm.value['title'],
-        this.myForm.value['body']
-      );
-    }
   }
 }

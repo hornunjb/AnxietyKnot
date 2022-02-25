@@ -8,7 +8,8 @@ const postSchema = mongoose.Schema({
   // mongoose creates an id on its own
   date: { type: Date, required: true },
   title: { type: String, required: true },
-  content: { type: String, required: true }
+  content: { type: String, required: true },
+  mood: {type: String, required: true}
 });
 
 /* schema is just a blueprint - in order to actually create objects from that definition

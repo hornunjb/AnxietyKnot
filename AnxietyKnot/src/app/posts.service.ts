@@ -41,8 +41,8 @@ export class PostsService {
     return {...this.posts.find(p => p.id === id)}
   }
 
-  addPost(date: Date, title: string, content: string) {
-    const post: Post = { id: "", date: date,  title: title, content: content };
+  addPost(date: Date, title: string, content: string, mood: string) {
+    const post: Post = { id: "", date: date,  title: title, content: content, mood: mood };
     this.http
       .post<{ message: string, postId: string }>("http://localhost:3000/api/posts/", post)
       .subscribe(responseData => {
@@ -53,8 +53,8 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, date: Date, title: string, content: string) {
-    const post: Post = { id: id, date: date, title: title, content: content};
+  updatePost(id: string, date: Date, title: string, content: string, mood: string) {
+    const post: Post = { id: id, date: date, title: title, content: content, mood: mood};
     this.http.put("http://localhost:3000/api/posts/" + id, post)
     .subscribe(response => console.log(response));
   }

@@ -139,7 +139,8 @@ app.post("/api/posts", (req, res, next) => {
   const post = new Post({
     date: req.body.date,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    mood: req.body.mood
   });
   // 'save' method is provided by mongoose for each model created with it
   // mongoose will create the right query and will enter our data into the database
@@ -158,7 +159,8 @@ app.put("/api/posts/:id", (req, res, next) => {
     _id: req.body.id,
     date: req.body.date,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    mood: req.body.mood
   });
   Post.updateOne({_id: req.params.id}, post).then(result => {
     console.log(result);

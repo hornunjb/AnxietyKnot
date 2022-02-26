@@ -35,9 +35,9 @@ const routes: Routes = [
     {path:'edit/:postId', component:NewEditComponent},
     {path:'edit-prompted/:entryId', component:PromptedEntryComponent},
     {path:'newEdit', component:NewEditComponent},
-    {path:'edit/:postId', component:PostCreateComponent},
+    //{path:'edit/:postId', component:PostCreateComponent},
 
-    {path: 'testpath', component:JournalDisplayComponent},
+    {path: 'journalDisplay', component:JournalDisplayComponent},
   ]},
 
 ];

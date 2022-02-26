@@ -42,7 +42,7 @@ export class AuthService {
      .post("http://localhost:3000/api/user/signup", authData)
      .subscribe(response => {
         console.log(response);
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/login"]);
       }, _error => {
         this.authStatusListener.next(false);
       });
@@ -106,7 +106,7 @@ logout() {
   clearTimeout(this.tokenTimer);
   this.clearAuthData(); // USER TOKEN CLEARED ON LOGOUT
   ///REDIRECT USER AFTER LOGOUT
-  this.router.navigate(['/home']);
+  this.router.navigate(['/login']);
 }
 
 /// SET TIMEOUT FOR TOKEND AFTER BEING LOGGED ON FOR 1 HOUR

@@ -23,7 +23,7 @@ router.post("", checkAuth, (req, res, _next) => {
     thought_patterns: req.body.thought_patterns,
     custom_thought_patterns: req.body.custom_thought_patterns,
     thinking_differently: req.body.thinking_differently,
-   creator: req.userData.userId
+    creator: req.userData.userId
   });
   entry.save().then(createdEntry => {
     res.status(201).json({

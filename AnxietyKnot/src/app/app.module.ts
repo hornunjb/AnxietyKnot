@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
+import {MatTabsModule} from '@angular/material/tabs';
 ////import { PostCreateComponent } from './post-create/post-create.component';
 //import { PostListComponent } from './post-list/post-list.component';
 import { NavComponent } from './nav/nav.component';
@@ -39,8 +40,8 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
-import {LoginComponent} from "./auth/login/login.component";
-import { SignupComponent } from './auth/signup/signup.component';
+import {LoginComponent} from "./login/login.component";
+import { SignupComponent } from './signup/signup.component';
 import { AuthInterceptor } from "./auth/auth-interceptor";
 import { HeaderComponent } from './header/header.component';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -109,6 +110,7 @@ import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog
     EditorModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatTabsModule,
     //MatPaginatorModule,
     MatProgressSpinnerModule,
     MatButtonToggleModule,

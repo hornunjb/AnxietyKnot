@@ -26,7 +26,7 @@ export class ErrorComponent {
   //   this.errorService.handleError();
   // }
 
-  // ngOnDestroy() {
-  //   this.errorSub.unsubscribe();
-  // }
+  ngOnDestroy() {
+    this.errorSub.unsubscribe();
+   }
 }

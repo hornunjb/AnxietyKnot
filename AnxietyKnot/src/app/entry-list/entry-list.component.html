@@ -1,42 +1,41 @@
+
 <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="grid-container"  multi="true" *ngIf="entries.length > 0 && !isLoading">
 
-<div class="grid-container">
-<h1 class="mat-h1">
-  Prompted Journals
+  <div *ngFor="let entry of entries" >
+    <mat-card class="journal-card" *ngIf="userIsAuthenticated && userId === entry.creator" >
+      <mat-card-subtitle >{{ entry.date }} Prompted Entry</mat-card-subtitle>
+      <mat-card-title>{{ entry.title }}</mat-card-title>
+      <mat-card-content>
+        <dl>
+          <dt>What Happened</dt>
+          <dd>{{ entry.what_happened }}</dd>
 
-</h1>
-<mat-accordion multi="true" *ngIf="entries.length > 0 && !isLoading">
-  <mat-expansion-panel *ngFor="let entry of entries">
-    <mat-expansion-panel-header *ngIf="userIsAuthenticated && userId === entry.creator" >
-      <h2>{{ entry.title }}, {{ entry.date }}</h2>
-    </mat-expansion-panel-header>
-    <dl>
-      <dt>What Happened?</dt>
-      <dd>{{ entry.what_happened }}</dd>
+          <dt>What Was Going Through My Mind</dt>
+          <dd>{{ entry.going_through_mind }}</dd>
 
-      <dt>What Was Going Through My Mind</dt>
-      <dd>{{ entry.going_through_mind }}</dd>
+          <dt>First Emotion I Was Feeling</dt>
+          <dd>{{ entry.emotion1 }}, Intensity: {{entry.intensity1}}</dd>
 
-      <dt>First Emotion I Was Feeling</dt>
-      <dd>{{ entry.emotion1 }}, Intensity: {{entry.intensity1}}</dd>
+          <dt>Second Emotion I Was Feeling</dt>
+          <dd>{{ entry.emotion2 }}, Intensity: {{entry.intensity2}}</dd>
 
-      <dt>Second Emotion I Was Feeling</dt>
-      <dd>{{ entry.emotion2 }}, Intensity: {{entry.intensity2}}</dd>
+          <dt>My Thought Patterns</dt>
+          <dd>{{ entry.thought_patterns }}</dd>
 
-      <dt>My Thought Patterns</dt>
-      <dd>{{ entry.thought_patterns }}</dd>
+          <dt>Additional Thought Patterns</dt>
+          <dd>{{ entry.custom_thought_patterns }}</dd>
 
-      <dt>Additional Thought Patterns</dt>
-      <dd>{{ entry.custom_thought_patterns }}</dd>
-
-      <dt>How I could Think Differently?</dt>
-      <dd>{{ entry.thinking_differently }}</dd>
-    </dl>
-    <mat-action-row  *ngIf="userIsAuthenticated && userId === entry.creator" >
-      <button mat-button color="warn" [routerLink]="['/edit-prompted', entry.id]">EDIT</button>
-      <button mat-button color="warn" (click)="onDelete(entry.id)">DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-<p class="info-text mat-body-1" *ngIf="entries.length <= 0">No journal entries added yet!</p>
-</div>
+          <dt>How I could Think Differently</dt>
+          <dd>{{ entry.thinking_differently }}</dd>
+        </dl>
+      </mat-card-content>
+      <mat-divider inset></mat-divider>
+      <mat-card-actions *ngIf="userIsAuthenticated && userId === entry.creator" >
+        <button mat-button color="warn" [routerLink]="['/edit-prompted', entry.id]">EDIT</button>
+        <button mat-button color="warn" (click)="onDelete(entry.id)">DELETE</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <p class="info-text mat-body-1" *ngIf="entries.length <= 0">No journal entries added yet!</p>
+  </div>

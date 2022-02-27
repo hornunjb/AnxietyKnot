@@ -5,7 +5,7 @@ import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
 import { AuthService } from "../auth/auth.service";
 
-
+const allowedEntryLength = 500;
 
 @Component({
   selector: 'app-journal-book',
@@ -14,6 +14,7 @@ import { AuthService } from "../auth/auth.service";
 })
 export class JournalBookComponent implements OnInit, OnDestroy{
 
+  tip: string = '';
   posts: Post[] = [];
   isLoading = false;
   userId: string;
@@ -50,12 +51,35 @@ export class JournalBookComponent implements OnInit, OnDestroy{
       });
     }
 
+    tipMaker() {
+      if (this.posts.length > 0) {
+        if (this.posts.length == 10) {
+          this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
+          return true;
+        }
+        if (this.posts.length == 5) {
+          this.tip = "Nicotine and caffeine can worsen anxiety.";
+          return true;
+        }
+      }
+      return false;
+    }
 
  /// THIS REMOVES HTML CODE FROM BEING DISPLAYED IN USER CREATED POSTS
   replace(content: any) {
   var parsedContent = content.replace(/<[^>]+>/g, '');
- return parsedContent;
- }
+  if (parsedContent.length > allowedEntryLength) {
+    return parsedContent.slice(0, allowedEntryLength) + '...';
+  }
+  return parsedContent;
+}
+
+/*setEntryLength(entryContent) {
+    entryContent.truncate(250);
+    return entryContent;
+  }
+*/
+
 
   onDelete(postId: string) {
     this.isLoading = true;
@@ -66,5 +90,7 @@ export class JournalBookComponent implements OnInit, OnDestroy{
     this.postsSub.unsubscribe();
     this.authStatusSub.unsubscribe();
   }
+
+
 }
 

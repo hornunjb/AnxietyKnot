@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { PromptedEntry } from "../prompted-entry";
 import { EntryService } from '../entry.service';
 import { AuthService } from "../auth/auth.service";
-
+import { utcSeconds } from 'd3';
 
 @Component({
   selector: 'app-entry-list',
@@ -12,7 +12,7 @@ import { AuthService } from "../auth/auth.service";
   styleUrls: ['./entry-list.component.css']
 })
 export class EntryListComponent implements OnInit, OnDestroy {
-  
+
   entries: PromptedEntry[] = [];
   isLoading = false;
   userId: string;
@@ -30,16 +30,24 @@ export class EntryListComponent implements OnInit, OnDestroy {
     this.userId = this.authService.getUserId();
     this.entriesSub = this.entriesService
     .getEntryUpdateListener()
-    .subscribe((entries: PromptedEntry[]) => {
-      this.isLoading = false;
-      this.entries = entries;
+    .subscribe((entries: PromptedEntry[]) =>
+    {
+      entries.forEach(Element =>
+        {
+         this.isLoading = false;
+         // this.entries = entries;
+          Element.date = new Date(Element.date)
+
+        });
+          this.entries = entries.sort((x, y) => y.date.getDate() - x.date.getDate());
     });
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService
-    .getAuthStatusListener()
-    .subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated;
-     this.userId = this.authService.getUserId();
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      this.authStatusSub = this.authService
+        .getAuthStatusListener()
+        .subscribe(isAuthenticated =>
+          {
+          this.userIsAuthenticated = isAuthenticated;
+          this.userId = this.authService.getUserId();
     });
   }
 

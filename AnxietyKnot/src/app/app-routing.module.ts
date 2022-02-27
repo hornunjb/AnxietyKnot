@@ -13,29 +13,10 @@ import { AuthGuard } from "./auth/auth.guard";
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 //import { EntryListComponent } from './entry-list/entry-list.component';
 import { NavComponent } from './nav/nav.component';
+//import { JournalDisplayComponent } from './journal-display/journal-display.component';
 
 
-/*const routes: Routes = [
-  {path: '', component:HomeComponent},
-  {path:'home', component:HomeComponent},
-
-  ///REMOVE TO SHOW PROMPTED TABES IN JOURNAL HISTORY
- // {path:'journalBook', component:JournalBookComponent},
-
- {path:'newEdit', component:NewEditComponent, canActivate: [AuthGuard]},
- {path:'edit/:postId', component:NewEditComponent,canActivate: [AuthGuard]},
-  {path: 'prompted-entry', component:PromptedEntryComponent,canActivate: [AuthGuard]},
-  {path:'edit-prompted/:entryId', component:PromptedEntryComponent, canActivate: [AuthGuard]},
-
-  {path:'login', component: LoginComponent},
-  {path:'signup', component: SignupComponent},
-
-  {path:'journalBook', component:JournalHistoryComponent},
-  {path:'resource', component:ResourceComponent},
-  {path:'tracker', component:TrackerComponent},
-  //{path: 'entry-list', component:EntryListComponent},
-
-
+/*
 
   /// HEADER NOT IN APPLICATION, WILL USE AS FUTURE USER ACCOUNT PAGE
   //{path:'header', component: HeaderComponent},
@@ -58,6 +39,7 @@ const routes: Routes = [
     {path:'edit/:postId', component:NewEditComponent},
     {path:'edit-prompted/:entryId', component:PromptedEntryComponent},
     {path:'newEdit', component:NewEditComponent},
+    //{path: 'journalDisplay', component:JournalDisplayComponent},
 
     //{path: 'testpath', component:JournalDisplayComponent},
   ]},

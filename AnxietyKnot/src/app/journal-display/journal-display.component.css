@@ -1,7 +1,20 @@
 .journal-card{
     max-width: 400px;
 }
-#flex-container{
-    display: flex;
-    flex-wrap: wrap;
+#journal-list{
+
+    max-width: 500px;
+
 }
+
+#editJournal{
+  margin-left: auto;
+  margin-right: 0;
+}
+.grid-container{
+  display: grid;
+}
+
+/* #edit{
+  display: none;
+} */

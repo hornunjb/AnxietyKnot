@@ -6,6 +6,7 @@ import { journalDisplay } from '../journalDisplay.model';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { PromptedEntry } from '../prompted-entry';
+import { NewEditComponent } from '../new-edit/new-edit.component';
 
 const allowedEntryLength = 500;
 
@@ -19,6 +20,7 @@ export class JournalDisplayComponent implements OnInit {
   posts: Post[] = [];
   entries: PromptedEntry[] = [];
 
+  editId: string;
 
   displays: journalDisplay[] = [];
   private entriesSub: Subscription = new Subscription;
@@ -27,12 +29,12 @@ export class JournalDisplayComponent implements OnInit {
   private postsSub: Subscription = new Subscription();
   tip: string = '';
 
-  constructor(public entriesService: EntryService, 
+  constructor(public entriesService: EntryService,
     public postsService: PostsService) { }
 
 
   ngOnInit() {
-    
+
     this.entriesService.getEntries();
     this.entriesSub = this.entriesService.getEntryUpdateListener()
     .subscribe((entries: PromptedEntry[]) => {
@@ -46,14 +48,11 @@ export class JournalDisplayComponent implements OnInit {
         var x = [Element.id, Element.date, Element.title, Element.what_happened];
         this.displays.push(Element);
       });
-      
-
       //this.displays.sort((x, y) => y.date.getDate() - x.date.getDate());
-      
+
       // this.display.sort((first, second) =>
       // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
       this.displays.sort((a, b) => a.title.localeCompare(b.title))
-
 
     });
 
@@ -71,20 +70,15 @@ export class JournalDisplayComponent implements OnInit {
           var x = [Element.id, Element.date, Element.title, Element.content];
           this.displays.push(Element);
         });
-        
+
         //this.displays.sort((x, y) => y.date.getDate() - x.date.getDate());
         this.displays.sort((a, b) => a.title.localeCompare(b.title))
 
       })
-    
-    
-    
+
+
+
   }
-
-  
-
-
-
   //testing sorting by int, will change to sort by date
   // sort_entries = this.entries.sort((first, second) =>
   // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
@@ -97,12 +91,16 @@ export class JournalDisplayComponent implements OnInit {
     return parsedContent;
   }
 
+  editPost(Id: string){
+    this.editId = Id;
+    // document.getElementById("edit").style.display = "block";
+  }
 
 
   onDeleteEntry(Id: string ) {
     //may need to change to be more efficient
     this.entriesService.deleteEntry(Id);
-    
+
     const removeIndex = this.displays.findIndex( item => item.id === Id );
     this.displays.splice( removeIndex, 1 );
   }
@@ -110,7 +108,7 @@ export class JournalDisplayComponent implements OnInit {
     //may need to change to be more efficient
     this.postsService.deletePost(Id);
 
-    
+
     const removeIndex = this.displays.findIndex( item => item.id === Id );
     this.displays.splice( removeIndex, 1 );
   }
@@ -128,7 +126,7 @@ export class JournalDisplayComponent implements OnInit {
 
   tipMaker() {
     if (this.displays.length > 0) {
-      if (this.displays.length == 10) {
+      if (this.displays.length > 10) {
         this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
         return true;
       }

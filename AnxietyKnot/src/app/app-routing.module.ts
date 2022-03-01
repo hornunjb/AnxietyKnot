@@ -9,7 +9,7 @@ import { NewEditComponent } from './new-edit/new-edit.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 //import { HeaderComponent } from './header/header.component';
-import { AuthGuard } from "./auth/auth.guard";
+import { AuthGuard } from "./authenticate/auth.guard";
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 //import { EntryListComponent } from './entry-list/entry-list.component';
 import { NavComponent } from './nav/nav.component';

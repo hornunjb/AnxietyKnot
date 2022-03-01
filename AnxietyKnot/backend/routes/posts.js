@@ -1,7 +1,7 @@
 const express = require("express");
 const Post = require("../models/post");
 //MIDDLEWARE TO CHECK AUTHORIZATION OF INCOMING AND OUTGOING JSONWEBTOKEN REQUESTS
-const checkAuth = require("../middleware/check-auth");
+const checkAuth = require("../middleware/check-authentication");
 const router = express.Router();
 
 
@@ -46,11 +46,10 @@ router.put("/:id", checkAuth, (req, res, _next) =>
  creator: req.userData.userId
  });
  Post.updateOne(
-   { _id: req.params.id, creator: req.userData.userId },
-   post
-   ).then(result =>
+   { _id: req.params.id, creator: req.userData.userId }, post)
+    .then(result =>
      {
-      console.log(result);
+       console.log(result);
     if (result.matchedCount > 0) {
       res.status(200).json({ message: "Journal Post Update Successful!" });
     } else {
@@ -79,7 +78,6 @@ router.get("", (_req, res, _next) => {
       res.status(200).json({
         //MESSAGE ONLY DISPLAYS IN http://localhost:3000/api/posts
         message: "Journal Posts Fetched Successfully!",
-
         posts: fetchedPosts,
         maxPosts: count
 
@@ -111,6 +109,7 @@ router.get("/:id", (req, res, _next) => {
     });
   });
 });
+
 
 router.delete("/:id", checkAuth, (req, res, _next) => {
   // mongoose's 'deleteOne' allows us to specify which entry we want to delete

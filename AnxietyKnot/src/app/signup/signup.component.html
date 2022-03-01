@@ -17,13 +17,16 @@
         <form action="">
           <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
           <input formControlName="username" type="username" name="username"  placeholder="Username">
-          <span class="text-danger" *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">*Username is required!</span>
+          <span class="text-danger" *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">
+            *Username is required!</span>
 
           <input formControlName="email" type="email" name="email"  placeholder="E-mail Address">
-           <span class="text-danger" *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email')">*Email is required!</span>
+           <span class="text-danger" *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email')">
+             *Email is required!</span>
 
            <input formControlName="password" type="password" name="password" placeholder="Password">
-          <span class="text-danger" *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required','password')">*Password is required!</span>
+          <span class="text-danger" *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required','password')">
+            *Password is required!</span>
 
           <input formControlName="repassword" type="password" name="password" placeholder="Password">
 

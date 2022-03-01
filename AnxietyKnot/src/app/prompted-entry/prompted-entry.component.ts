@@ -14,7 +14,7 @@ import { PopupComponent } from '../popup/popup.component';
 
 import { PromptedEntry } from '../prompted-entry';
 import { EntryService } from "../entry.service";
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../authenticate/auth.service";
 
 import {
   MAT_MOMENT_DATE_FORMATS,

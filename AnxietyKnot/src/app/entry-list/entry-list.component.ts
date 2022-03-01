@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { PromptedEntry } from "../prompted-entry";
 import { EntryService } from '../entry.service';
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../authenticate/auth.service";
 import { utcSeconds } from 'd3';
 
 @Component({

@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../authenticate/auth.service";
 
 const allowedEntryLength = 500;
 

@@ -42,7 +42,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {LoginComponent} from "./login/login.component";
 import { SignupComponent } from './signup/signup.component';
-import { AuthInterceptor } from "./auth/auth-interceptor";
+import { AuthInterceptor } from "./authenticate/auth-interceptor";
 import { HeaderComponent } from './header/header.component';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { ErrorInterceptor } from './error-interceptor';

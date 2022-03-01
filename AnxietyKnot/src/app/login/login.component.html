@@ -17,12 +17,16 @@
       <h1>Anxiety Knot</h1>
       <div class="login-form">
         <form action="">
-
           <form (ngSubmit)="onLogin()" [formGroup]="loginForm" >
+
             <input formControlName="email" type="email" name="email"  placeholder="E-mail Address">
-            <span class="text-danger" *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required','email')">*Email is required!</span>
+            <span class="text-danger" *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required','email')">
+              *Email is required!</span>
+
             <input formControlName="password" type="password" name="password"  placeholder="Password">
-            <span class="text-danger" *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">*Password is required!</span>
+            <span class="text-danger" *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">
+              *Password is required!</span>
+              
           <div class="remember-form">
             <input type="checkbox">
             <span>Remember me</span>

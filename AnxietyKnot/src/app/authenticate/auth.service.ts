@@ -48,14 +48,13 @@ export class AuthService {
       });
   }
 
-  /// CHECK TO SEE IF TOKEN CONTAINS VALID CREDENTIALS FOR AUTHENTICATED LOGIN
+  /// AUTHENTICATE CREDENTIALS FOR  LOGIN
   login(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password,};
+    const authData: AuthData = {email: email, password: password,}; //AUTHENTICATE EMAIL AND PASSWORD LOGIN FIELDS
     this.http
     //.post<{token: string;  expiresIn: number, userId: string }>("http://nodejsangular-env.eba-3fswygyg.us-east-2.elasticbeanstalk.com/api/user/login", authData)
     .post<{token: string,  expiresIn: number, userId: string }>(
-      "http://localhost:3000/api/user/login", authData
-      )
+      "http://localhost:3000/api/user/login", authData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;

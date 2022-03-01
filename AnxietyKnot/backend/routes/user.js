@@ -9,7 +9,7 @@ const User = require("../models/user");
 const router = express.Router();
 
 
-/// CREATE USER
+/// HANDLE INCOMING CREATE USER REQUESTS
 router.post("/signup", (req, res, _next) => {
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
@@ -27,7 +27,7 @@ router.post("/signup", (req, res, _next) => {
       .catch(_err => {
         //console.log(err);
         res.status(500).json({
-          message: "This Account Is Already In Use."
+          message: "Authentication Error: This Account Is Already In Use."
         });
       });
   });
@@ -41,7 +41,7 @@ router.post("/login",(req, res, _next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: "This Account Does Not Exist."
+          message: "Authentication Failed: This Account Does Not Exist."
         });
       }
       // user with email address found
@@ -53,14 +53,13 @@ router.post("/login",(req, res, _next) => {
     .then(result => {
       if (!result) {
         return res.status(401).json({
-          message: "Incorrect Password."
+          message: "Authentication Error: Incorrect Password."
         });
       }
 
       /// TOKEN FOR USER IS CREATED HERE//////////////
-      const token = jwt.sign ////JWT = email and userID, .sign = server signature
-      (
-        { email: fetchedUser.email, userId: fetchedUser._id },
+    const token = jwt.sign ////JWT = email and userID, .sign = server signature
+      ({ email: fetchedUser.email, userId: fetchedUser._id },
         //SERVER SIGNATURE
         "keep_this_secret",
         //USER LOGGED OUT AFTER 1 HR
@@ -76,7 +75,7 @@ router.post("/login",(req, res, _next) => {
     .catch(err => {
       console.log(err);
       return res.status(401).json({
-        message: "Invalid Authentication Credentials."
+        message: "Authentication Error: User Credentials Are Invalid."
       });
     });
 });

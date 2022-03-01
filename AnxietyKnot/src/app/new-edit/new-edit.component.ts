@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../authenticate/auth.service";
 
 
 
@@ -67,12 +67,14 @@ export class NewEditComponent implements OnInit, OnDestroy{
       .subscribe(_authStatus => {
         this.isLoading = false;
       });
-      this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      this.route.paramMap.subscribe((paramMap: ParamMap) =>
+       {
         if (paramMap.has("postId")) {
           this.mode = "edit";
           this.postId = paramMap.get("postId");
           this.isLoading = true;
-          this.postsService.getPost(this.postId).subscribe(postData => {
+          this.postsService.getPost(this.postId).subscribe(postData =>
+             {
             this.isLoading = false;
             this.post = {
               id: postData._id,
@@ -80,7 +82,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
               content: postData.content,
               creator: postData.creator
             };
-            /// THIS DOESNT SEEM TO HAVE ANY IMPACT IF REMOVED
+            /// THIS DOESNT SEEM TO HAVE ANY IMPACT IF REMOVED BUT KEEP FOR DATE
             this.myForm.setValue({
               title: this.post.title,
               body: this.post.content
@@ -115,6 +117,34 @@ export class NewEditComponent implements OnInit, OnDestroy{
       }
       this.myForm.reset();
     }
+
+    /*
+onSubmit(form :NgForm) {
+      this.openDialog();
+      let date = this.date.value.toDate();
+      if (form.invalid) {
+        return;
+      }
+      this.isLoading = true;
+      if (this.mode === 'create')
+      {
+        this.postsService.addPost(
+          date,
+          form.value.title;
+          form.value.body;
+        );
+      }
+      else {
+        this.postsService.updatePost(
+          this.postId,
+          date;
+          form.value.title;
+          form.value.body;
+          );
+      }
+      form.resetForm();
+    }
+    */
      // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
     ngOnDestroy() {
       this.authStatusSub.unsubscribe();

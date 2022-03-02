@@ -26,18 +26,21 @@ const routes: Routes = [
   {path:'signup', component: SignupComponent},
   {path: '', component:NavComponent, children:[
     {path:'home', component:HomeComponent,},
-    //{path:'journalBook', component:JournalHistoryComponent},
+
+    {path:'journalDisplay', component:JournalDisplayComponent},
+
     {path:'resource', component:ResourceComponent},
     {path:'tracker', component:TrackerComponent},
     {path:'prompted-entry', component:PromptedEntryComponent},
     {path:'list', component:PostListComponent},
     {path:'create', component:PostCreateComponent},
     {path:'edit/:postId', component:NewEditComponent},
+
     {path:'edit-prompted/:entryId', component:PromptedEntryComponent},
     {path:'newEdit', component:NewEditComponent},
     //{path:'edit/:postId', component:PostCreateComponent},
 
-    {path: 'journalDisplay', component:JournalDisplayComponent},
+
   ]},
 
 ];

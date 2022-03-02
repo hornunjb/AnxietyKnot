@@ -8,7 +8,7 @@ import { EntryService } from "../entry.service";
 import { MatCheckbox } from '@angular/material/checkbox';
 import { PromptedEntry } from '../prompted-entry';
 import { PostsService } from '../posts.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
@@ -50,7 +50,11 @@ const moment = _moment;
 
 export class PromptedEntryComponent implements OnInit{
 
-
+  //get input from parent component
+  @Input() editEntryId = ' ';
+  ngOnChanges(){
+    this.ngOnInit();
+  }
 
 //export class PromptedEntryComponent {
   value = 0;
@@ -149,9 +153,15 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
 
 ngOnInit() {
   this.route.paramMap.subscribe((paramMap: ParamMap) => {
-    if (paramMap.has('entryId')) {
+    if (paramMap.has('entryId') || (this.editEntryId != ' ')) {
       this.mode = 'edit';
-      this.entryId = paramMap.get('entryId');
+      if(this.editEntryId != ' '){
+        this.entryId = this.editEntryId;
+      } else{
+        this.entryId = paramMap.get('entryId');
+      }
+
+      
       this.entry = this.entryService.getEntry(this.entryId);
 
 
@@ -172,7 +182,6 @@ ngOnInit() {
       this.entryId = null;
     }
   });
-
 }
 
 

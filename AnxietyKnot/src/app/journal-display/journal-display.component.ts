@@ -92,16 +92,27 @@ export class JournalDisplayComponent implements OnInit {
     return parsedContent;
   }
 
-  editPost(Id: string){
-    this.editPostId = Id;
-    // document.getElementById("edit").style.display = "block";
-  }
+  // editPost(Id: string){
+  //   this.editPostId = Id;
+  //   // document.getElementById("edit").style.display = "block";
+  // }
 
-  editEntry(Id: string){
-    this.editEntryId = Id;
-    // document.getElementById("edit").style.display = "block";
-  }
+  // editEntry(Id: string){
+  //   this.editEntryId = Id;
+  //   // document.getElementById("edit").style.display = "block";
+  // }
 
+  selectCard(display: journalDisplay){
+    if(display.what_happened){
+      document.getElementById("prompted-edit").style.display = 'block';
+      document.getElementById("unprompted-edit").style.display = 'none';
+      this.editEntryId = display.id;
+    }else{
+      document.getElementById("prompted-edit").style.display = 'none';
+      document.getElementById("unprompted-edit").style.display = 'block';
+      this.editPostId = display.id;
+    }
+  }
 
   onDeleteEntry(Id: string ) {
     //may need to change to be more efficient

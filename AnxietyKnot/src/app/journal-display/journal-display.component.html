@@ -5,10 +5,13 @@
     {{ tip }}
     </p>
   </div> -->
-
-
+<div id="body" class="flex-container">
+  
+<div id="display-list" class="flex-child display">
     <div *ngFor="let display of displays">
-        <mat-card class="journal-card">
+      <button class="journal-card"  (click)="selectCard(display)">
+
+        <mat-card >
           <mat-card-subtitle>{{ display.date }} Journal Entry</mat-card-subtitle>
           <mat-card-title>{{ display.title }}</mat-card-title>
           <mat-card-content>
@@ -17,23 +20,26 @@
           </mat-card-content>
           <mat-divider inset></mat-divider>
           <mat-card-actions *ngIf="display.what_happened != null">
-            <button *ngIf="display.what_happened != null" mat-button color="primary" (click)="editEntry(display.id)" (editEntryId)="display.Id">EDIT</button>
+            <!-- <button *ngIf="display.what_happened != null" mat-button color="primary" (click)="editEntry(display.id)" (editEntryId)="display.Id">EDIT</button> -->
 
             <button mat-button color="warn" (click)="onDeleteEntry(display.id)">DELETE</button>
           </mat-card-actions>
           <mat-card-actions *ngIf="display.content != null">
-                <button  mat-button color="primary" (click)="editPost(display.id)" (editPostId)="display.Id" >EDIT</button>
+                <!-- <button  mat-button color="primary" (click)="editPost(display.id)" (editPostId)="display.Id" >EDIT</button> -->
                 <button mat-button color="warn" (click)="onDeletePost(display.id)">DELETE</button>
             </mat-card-actions>
 
         </mat-card>
+
+      </button>
   </div>
-  <div id="edit">
-    <app-prompted-entry [editEntryId]= 'editEntryId'></app-prompted-entry>
-    <app-new-edit [editPostId]= 'editPostId'></app-new-edit>
+</div>
+  <div id="edit" class="flex-child edit">
+    <app-prompted-entry id="prompted-edit" [editEntryId]= 'editEntryId'></app-prompted-entry>
+    <app-new-edit id="unprompted-edit" [editPostId]= 'editPostId'></app-new-edit>
   </div>
 
 
 
-
+</div>
 <!-- [routerLink]="['/edit', display.id]" -->

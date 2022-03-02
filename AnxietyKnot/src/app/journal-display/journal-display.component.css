@@ -1,18 +1,31 @@
 .journal-card{
-    max-width: 400px;
+    width: 100%;
+} 
+.flex-container{
+  display: flex;
+  height: (100vh - 64px);
+  width: (100vw - 200px);
 }
-#journal-list{
-
-    max-width: 500px;
-
+.flex-child.display{
+  flex: 1;
+  margin: 0 0 0 0;
+  padding: 0 0 0 10px;
+  overflow-y:auto;
+  max-height: 100vh;
 }
-
-#editJournal{
-  margin-left: auto;
-  margin-right: 0;
+.flex-child.edit{
+  flex: 2;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  overflow-y:auto;
+  max-height: 100vh;
+  width: auto;
 }
-.grid-container{
-  display: grid;
+#prompted-edit{
+  display: none;
+}
+#unprompted-edit{
+  display: none;
 }
 
 /* #edit{

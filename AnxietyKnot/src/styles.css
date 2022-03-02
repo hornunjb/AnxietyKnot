@@ -25,10 +25,10 @@ textarea {
 html, body, main { height: 100%; }
 body { margin: 0; font-family: 'lato', Roboto, "Helvetica Neue", sans-serif !important;}
 
-.grid-container {
+/* .grid-container {
   margin-right: 100px !important;
   margin-left: 100px !important;
-}
+} */
 
 .example-spacer {
   flex: 1 1 auto;

@@ -51,7 +51,7 @@ const moment = _moment;
 export class PromptedEntryComponent implements OnInit{
 
   //get input from parent component
-  @Input() editId: string;
+  @Input() editEntryId = ' ';
   ngOnChanges(){
     this.ngOnInit();
   }
@@ -153,13 +153,15 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
 
 ngOnInit() {
   this.route.paramMap.subscribe((paramMap: ParamMap) => {
-    if (paramMap.has('entryId') || this.editId.length > 1) {
+    if (paramMap.has('entryId') || (this.editEntryId != ' ')) {
       this.mode = 'edit';
-      if(this.editId.length > 1){
-        this.entryId = this.editId;
+      if(this.editEntryId != ' '){
+        this.entryId = this.editEntryId;
       } else{
         this.entryId = paramMap.get('entryId');
       }
+
+      
       this.entry = this.entryService.getEntry(this.entryId);
 
 
@@ -180,7 +182,6 @@ ngOnInit() {
       this.entryId = null;
     }
   });
-
 }
 
 

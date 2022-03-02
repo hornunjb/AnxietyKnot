@@ -20,7 +20,8 @@ export class JournalDisplayComponent implements OnInit {
   posts: Post[] = [];
   entries: PromptedEntry[] = [];
 
-  editId: string;
+  editPostId = ' ';
+  editEntryId = ' ';
 
   displays: journalDisplay[] = [];
   private entriesSub: Subscription = new Subscription;
@@ -92,7 +93,12 @@ export class JournalDisplayComponent implements OnInit {
   }
 
   editPost(Id: string){
-    this.editId = Id;
+    this.editPostId = Id;
+    // document.getElementById("edit").style.display = "block";
+  }
+
+  editEntry(Id: string){
+    this.editEntryId = Id;
     // document.getElementById("edit").style.display = "block";
   }
 

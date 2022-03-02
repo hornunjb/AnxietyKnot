@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject } from 'rxjs';
@@ -32,6 +32,13 @@ const moment = _moment;
   ],
 })
 export class NewEditComponent implements OnInit {
+
+
+  @Input() editPostId = ' ';
+  ngOnChanges(){
+    this.ngOnInit();
+  }
+
   value = 0;
   ratingCount = 10;
   response = [
@@ -79,9 +86,13 @@ export class NewEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('postId')) {
+      if (paramMap.has('postId') || (this.editPostId != ' ')) {
         this.mode = 'edit';
+        if(this.editPostId != ' '){
+          this.postId = this.editPostId;
+        }else{
         this.postId = paramMap.get('postId');
+        };
         this.post = this.postsService.getPost(this.postId);
       } else {
         this.mode = 'create';

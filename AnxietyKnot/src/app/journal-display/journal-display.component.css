@@ -6,6 +6,7 @@
   height: (100vh - 64px);
   width: (100vw - 200px);
 }
+
 .flex-child.display{
   flex: 1;
   margin: 0 0 0 0;
@@ -31,3 +32,4 @@
 /* #edit{
   display: none;
 } */
+

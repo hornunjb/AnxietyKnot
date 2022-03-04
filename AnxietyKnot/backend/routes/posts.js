@@ -22,7 +22,7 @@ post.save().then(createdPost => {
   // also sends back postId field so we can use it in our app
   res.status(201).json({
     message: "Post Added Successfully!",
-    post: {
+    postId: {
       ...createdPost,
       id: createdPost._id
     }
@@ -65,7 +65,7 @@ router.put("/:id", checkAuth, (req, res, _next) =>
 
 // KEEP MANDATORY ! GET ALL POSTS
 /// FETCHES POSTS FROM DB AND IS DISPLAYED IN http://localhost:3000/api/posts
-
+/// GET AND RETRIEVE DATA
 router.get("", (_req, res, _next) => {
   const postQuery = Post.find();
     let fetchedPosts;

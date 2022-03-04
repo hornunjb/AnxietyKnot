@@ -53,6 +53,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { EntryListComponent } from './entry-list/entry-list.component';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
+import { JournalDisplayComponent } from './journal-display/journal-display.component';
 
 
 
@@ -77,6 +78,7 @@ import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog
     EntryListComponent,
     FeelingsDialogComponent,
     DistortionDialogComponent,
+    JournalDisplayComponent,
 
   ],
   imports: [

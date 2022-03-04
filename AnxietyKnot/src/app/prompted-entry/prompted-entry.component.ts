@@ -12,7 +12,7 @@ import { FeelingsDialogComponent } from '../feelings-dialog/feelings-dialog.comp
 
 import { PopupComponent } from '../popup/popup.component';
 
-import { PromptedEntry } from '../prompted-entry';
+import { PromptedEntry } from '../prompted-entry.model';
 import { EntryService } from "../entry.service";
 import { AuthService } from "../authenticate/auth.service";
 

@@ -80,7 +80,8 @@
 
 
       <fieldset>
-        <legend>Identify Your Thought Patterns<mat-icon mat-button (click)="openDistortionDialog()">help_outline
+        <legend>Identify Your Thought Patterns
+          <mat-icon mat-button (click)="openDistortionDialog()">help_outline
           </mat-icon>
         </legend>
         <div>
@@ -151,7 +152,7 @@
           placeholder="Change your thoughts" #thinking_differently="ngModel"></textarea>
         <mat-error *ngIf="thinking_differently.invalid">Please describe how you can think differently.</mat-error>
       </mat-form-field>
-      <button mat-raised-button type="submit">Save Entry</button>
+      <button mat-raised-button type="submit" [disabled]="!postForm.valid">Save Entry</button>
     </form>
   </mat-card>
 

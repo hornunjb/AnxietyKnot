@@ -38,14 +38,22 @@ export class JournalBookComponent implements OnInit, OnDestroy{
   this.userId = this.authService.getUserId();
   this.postsSub = this.postsService
     .getPostUpdateListener()
-    .subscribe((posts: Post[]) => {
-      this.isLoading = false;
-      this.posts = posts;
-    });
+    .subscribe((posts: Post[]) =>
+    {
+      posts.forEach(Element =>
+        {
+         this.isLoading = false;
+         // this.entries = entries;
+          Element.date = new Date(Element.date)
+
+        });
+          this.posts = posts.sort((x, y) => y.date.getDate() - x.date.getDate());
+     });
       this.userIsAuthenticated = this.authService.getIsAuth();
       this.authStatusSub = this.authService
       .getAuthStatusListener()
-      .subscribe(isAuthenticated => {
+      .subscribe(isAuthenticated =>
+        {
         this.userIsAuthenticated = isAuthenticated;
        this.userId = this.authService.getUserId();
       });

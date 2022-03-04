@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { PromptedEntry } from "../prompted-entry";
+import { PromptedEntry } from "../prompted-entry.model";
 import { EntryService } from '../entry.service';
 import { AuthService } from "../authenticate/auth.service";
 import { utcSeconds } from 'd3';
@@ -21,8 +21,7 @@ export class EntryListComponent implements OnInit, OnDestroy {
  private entriesSub: Subscription;
   private authStatusSub: Subscription;
 
-  constructor(public entriesService: EntryService,
-     private authService: AuthService) { }
+  constructor(private authService: AuthService, public entriesService: EntryService) { }
 
   ngOnInit() {
     this.isLoading = true;

@@ -15,11 +15,11 @@ const entrySchema = mongoose.Schema({
   emotion1: { type: String, required: true},
   intensity1: {type: Number, required: true},
   emotion2: { type: String, required: false},
-  intensity2: {type: Number, required: true},
+  intensity2: {type: Number, required: false},
 
   thought_patterns: {type: Array, required: false},
   custom_thought_patterns: { type: String, required: false},
-  thinking_differently: { type: String, required: true},
+  thinking_differently: { type: String, required: false},
 
  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });

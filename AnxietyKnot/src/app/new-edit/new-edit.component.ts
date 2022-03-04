@@ -7,16 +7,34 @@ import { PopupComponent } from '../popup/popup.component';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { AuthService } from "../authenticate/auth.service";
-
-
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import * as _moment from 'moment';
+const moment = _moment;
 
 @Component({
   selector: 'app-new-edit',
   templateUrl: './new-edit.component.html',
-  styleUrls: ['./new-edit.component.css']
+  styleUrls: ['./new-edit.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  ],
 })
-
 export class NewEditComponent implements OnInit, OnDestroy{
+
+  date = new FormControl(moment());
 
   value = 0;
   ratingCount = 10;
@@ -42,6 +60,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
     body: new FormControl("", Validators.required)
     }
   );
+
 
   openDialog(){
     this.dialogRef.open(PopupComponent);
@@ -78,6 +97,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
             this.isLoading = false;
             this.post = {
               id: postData._id,
+              date: postData.date,
               title: postData.title,
               content: postData.content,
               creator: postData.creator
@@ -97,6 +117,8 @@ export class NewEditComponent implements OnInit, OnDestroy{
 
     onSubmit() {
       this.openDialog();
+      let date = this.date.value.toDate();
+
       if (this.myForm.invalid) {
         return;
       }
@@ -104,6 +126,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
       if (this.mode === 'create')
       {
         this.postsService.addPost(
+          date,
           this.myForm.value['title'],
           this.myForm.value['body']
           );
@@ -111,6 +134,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
       else {
         this.postsService.updatePost(
           this.postId,
+          date,
           this.myForm.value['title'],
           this.myForm.value['body']
           );
@@ -146,6 +170,7 @@ onSubmit(form :NgForm) {
     }
     */
      // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
+     
     ngOnDestroy() {
       this.authStatusSub.unsubscribe();
     }

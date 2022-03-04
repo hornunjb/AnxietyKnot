@@ -23,6 +23,7 @@ export class PostsService {
           posts: postData.posts.map(post => {
           return {
             id: post._id,
+            date: post.date,
             title: post.title,
             content: post.content,
             creator: post.creator
@@ -54,15 +55,17 @@ export class PostsService {
   getPost(id: string) {
     return this.http.get<{
       _id: string;
+      date: Date;
       title: string;
       content: string;
       creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }
 
-  addPost(title: string, content: string) {
+  addPost(date: Date, title: string, content: string) {
     const post: Post = {
       id: "",
+      date: date,
       title: title,
       content: content,
       creator: null
@@ -80,9 +83,10 @@ export class PostsService {
   }
 
   // POST UPDATE ON POST EDIT
-  updatePost(id: string, title: string, content: string) {
+  updatePost(id: string, date: Date, title: string, content: string) {
     const post: Post = {
       id: id,
+      date: date,
       title: title,
       content: content,
       creator: null
@@ -100,8 +104,7 @@ export class PostsService {
 
 
   deletePost(postId: string) {
-    return this.http
-      .delete("http://localhost:3000/api/posts/" + postId)
+     this.http.delete("http://localhost:3000/api/posts/" + postId)
       .subscribe(() => {
         const updatedPosts = this.posts.filter(post => post.id !== postId);
         this.posts = updatedPosts;

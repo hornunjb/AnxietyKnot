@@ -28,3 +28,9 @@ width: 300px;
   display: flex;
   justify-content: flex-end;
 }
+
+mat-icon {
+  padding: 5px;
+  cursor: pointer;
+}
+

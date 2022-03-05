@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { NavComponent } from './nav/nav.component';
 import { SignupComponent } from './signup/signup.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
+import { JournalOptionComponent } from './journal-option/journal-option.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login', pathMatch:'full'},
@@ -26,7 +27,7 @@ const routes: Routes = [
   {path:'signup', component: SignupComponent},
   {path: '', component:NavComponent, children:[
     {path:'home', component:HomeComponent,},
-
+    {path:'journalOption', component:JournalOptionComponent,},
     {path:'journalDisplay', component:JournalDisplayComponent},
 
     {path:'resource', component:ResourceComponent},

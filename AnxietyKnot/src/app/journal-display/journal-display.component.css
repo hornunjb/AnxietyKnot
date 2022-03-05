@@ -1,6 +1,21 @@
 .journal-card{
     width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    background-color:rgb(255, 255, 255);
+    border-radius: 12px;
+    border: hidden;
+    transition-duration: 0.4s;
 } 
+
+.journal-card:hover{
+  background-color: rgb(127, 142, 218);
+}
+
+.card-style{
+  border-radius: 12px;
+}
+
 .flex-container{
   display: flex;
   height: (100vh - 64px);
@@ -10,9 +25,12 @@
 .flex-child.display{
   flex: 1;
   margin: 0 0 0 0;
-  padding: 0 0 0 10px;
+  padding: 5px 5px 0 10px;
   overflow-y:auto;
   max-height: 100vh;
+  overflow-y: scroll;
+  scrollbar-color: rgb(224, 233, 231) white;
+  scrollbar-width: thin;
 }
 .flex-child.edit{
   flex: 2;
@@ -27,6 +45,29 @@
 }
 #unprompted-edit{
   display: none;
+}
+
+.delete-button{
+  transition: 0.5s;
+}
+
+.delete-button:after {
+  content: "🗑";
+  position: absolute;
+  opacity: 0;  
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.delete-button:hover{
+  padding-right: 24px;
+  padding-left:8px;
+}
+
+.delete-button:hover:after {
+  opacity: 1;
+  right: 10px;
 }
 
 /* #edit{

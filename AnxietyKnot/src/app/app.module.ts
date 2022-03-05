@@ -50,6 +50,7 @@ import{MatStepperModule} from '@angular/material/stepper';
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
+import { JournalOptionComponent } from './journal-option/journal-option.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     DistortionDialogComponent,
     FeelingsDialogComponent,
     JournalDisplayComponent,
+    JournalOptionComponent,
   ],
   imports: [
     BrowserModule,

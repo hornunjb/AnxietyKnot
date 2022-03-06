@@ -1,5 +1,5 @@
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,6 +14,7 @@ import { PopupComponent } from '../popup/popup.component';
 
 import { PromptedEntry } from '../prompted-entry.model';
 import { EntryService } from "../entry.service";
+
 import { AuthService } from "../authenticate/auth.service";
 
 import {
@@ -47,11 +48,17 @@ const moment = _moment;
 
 export class PromptedEntryComponent implements OnInit, OnDestroy{
 
+  //get input from parent component
+  @Input() editEntryId = ' ';
+  ngOnChanges(){
+    this.ngOnInit();
+  }
 
   date = new FormControl(moment());
   value = 0;
   ratingCount = 10;
   enteredTitle= "";
+  enteredContent = '';
   isLoading = false;
   private mode = 'create';
   private entryId: string;
@@ -60,11 +67,19 @@ export class PromptedEntryComponent implements OnInit, OnDestroy{
   private authStatusSub: Subscription;
   public intensities: Array<number>= [1,2,3,4,5,6,7,8,9,10];
 
-  response = ["Rate your mood?",
-    "Really?", "Hang on", "It can be better", "I've been worse",
-    "Not much", "Getting better", "Pretty good",
-     "Lets go", "I feel good", "Yesir"];
-
+  response = [
+    'Rate your mood?',
+    'Really?',
+    'Hang on',
+    'It can be better',
+    "I've been worse",
+    'Not much',
+    'Getting better',
+    'Pretty good',
+    'Lets go',
+    'I feel good',
+    'Yesir',
+  ];
 
   enteredWhat_happened= "";
   enteredGoing_through_mind= "";
@@ -131,12 +146,18 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
           this.intensity1 = this.entry.intensity1;
           this.intensity2 = this.entry.intensity2;
           console.log(this.intensity1)
-          });
+          })
+          if(this.editEntryId != ' '){
+        this.entryId = this.editEntryId;
+      } else{
+        this.entryId = paramMap.get('entryId');
+      };
       } else {
         this.mode = 'create';
         this.entryId = null;
       }
     })
+
   }
   openDialog() {
     if (this.dialogRef.openDialogs.length == 0) {
@@ -184,7 +205,10 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
     if (form.invalid) {
       return;
     }
-    else if (this.mode === 'create') {
+    this.isLoading = true;
+
+     if (this.mode === 'create')
+      {
         this.entryService.addEntry(
           date,
           form.value.title,
@@ -215,7 +239,6 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
           form.value.custom_thought_patterns,
           form.value.thinking_differently,
           );
-
       }
       form.resetForm();
     }

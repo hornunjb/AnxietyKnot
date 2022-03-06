@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { journalDisplay } from './journalDisplay.model';
 import { PromptedEntry } from './prompted-entry.model';
 import { Post } from "./post.model";
 
@@ -11,8 +10,7 @@ import { Post } from "./post.model";
 
 @Injectable({ providedIn: "root" })
 export class DisplayService {
-  private displays: journalDisplay[] = [];
-  private displaysUpdated = new Subject<journalDisplay[]>();
+
   private entries: PromptedEntry[] = [];
   private entriesUpdated = new Subject<PromptedEntry[]>();
   private posts: Post[] = [];

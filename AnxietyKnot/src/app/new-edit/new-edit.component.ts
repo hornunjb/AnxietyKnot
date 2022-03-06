@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject, Subscription } from 'rxjs';
@@ -34,7 +34,14 @@ const moment = _moment;
 })
 export class NewEditComponent implements OnInit, OnDestroy{
 
+
+  @Input() editPostId = ' ';
+  ngOnChanges(){
+    this.ngOnInit();
+  }
+
   date = new FormControl(moment());
+
 
   value = 0;
   ratingCount = 10;
@@ -88,7 +95,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
       });
       this.route.paramMap.subscribe((paramMap: ParamMap) =>
        {
-        if (paramMap.has("postId")) {
+        if (paramMap.has('postId') || (this.editPostId != ' ')) {
           this.mode = "edit";
           this.postId = paramMap.get("postId");
           this.isLoading = true;
@@ -107,8 +114,13 @@ export class NewEditComponent implements OnInit, OnDestroy{
               title: this.post.title,
               body: this.post.content
             });
-          });
-        } else {
+          })
+          if(this.editPostId != ' '){
+            this.postId = this.editPostId;
+          } else {
+            this.postId = paramMap.get('postId');
+          };
+          } else {
           this.mode = "create";
           this.postId = null;
         }
@@ -118,7 +130,6 @@ export class NewEditComponent implements OnInit, OnDestroy{
     onSubmit() {
       this.openDialog();
       let date = this.date.value.toDate();
-
       if (this.myForm.invalid) {
         return;
       }
@@ -142,35 +153,8 @@ export class NewEditComponent implements OnInit, OnDestroy{
       this.myForm.reset();
     }
 
-    /*
-onSubmit(form :NgForm) {
-      this.openDialog();
-      let date = this.date.value.toDate();
-      if (form.invalid) {
-        return;
-      }
-      this.isLoading = true;
-      if (this.mode === 'create')
-      {
-        this.postsService.addPost(
-          date,
-          form.value.title;
-          form.value.body;
-        );
-      }
-      else {
-        this.postsService.updatePost(
-          this.postId,
-          date;
-          form.value.title;
-          form.value.body;
-          );
-      }
-      form.resetForm();
-    }
-    */
      // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
-     
+
     ngOnDestroy() {
       this.authStatusSub.unsubscribe();
     }

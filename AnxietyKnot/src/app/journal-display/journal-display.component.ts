@@ -3,13 +3,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { EntryService } from '../entry.service';
-import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
-import { PromptedEntry } from '../prompted-entry.model';
+import { DisplayService } from '../display.service';
 
+import { Post } from '../post.model';
+import { PromptedEntry } from '../prompted-entry.model';
 import { journalDisplay } from '../journalDisplay.model';
 
 import { AuthService } from "./../authenticate/auth.service";
+import { creator } from 'd3';
 
 
 const allowedEntryLength = 500;
@@ -21,89 +23,84 @@ const allowedEntryLength = 500;
 })
 export class JournalDisplayComponent implements OnInit, OnDestroy {
 
+  editPostId = ' ';
+  editEntryId = ' ';
+
 
   tip: string = '';
-  isLoading = false;
+ // isLoading = false;
   userId: string;
   userIsAuthenticated = false;
 
-  private postsSub: Subscription;
-  private entriesSub: Subscription;
+  //private postsSub: Subscription;
+  //private entriesSub: Subscription;
   private displaysSub: Subscription;
   private authStatusSub: Subscription;
+
 
   posts: Post[] = [];
   entries: PromptedEntry[] = [];
   displays: journalDisplay[] = [];
 
 
- public noHtmlContent: string[] = [];
+ //public noHtmlContent: string[] = [];
 
-  constructor( public entriesService: EntryService,
-    public postsService: PostsService, private authService: AuthService) { }
+ replace(content: any) {
+  var parsedContent = content.replace(/<[^>]+>/g, '');
+  if (parsedContent.length > allowedEntryLength) {
+    return parsedContent.slice(0, allowedEntryLength) + '...';
+  }
+  return parsedContent;
+}
+
+  constructor(
+    public entriesService: EntryService,
+    public postsService: PostsService,
+    public displayService: DisplayService,
+    private authService: AuthService,
+    ) { }
 
 
     ngOnInit() {
-      this.isLoading = true;
+  // this.isLoading = true;
 
-      this.authStatusSub = this.authService
-      .getAuthStatusListener()
-      .subscribe(_authStatus => {
-        this.isLoading = false;
-      });
-      
-      this.entriesService.getEntries();
-      this.entriesSub = this.entriesService.getEntryUpdateListener()
+   // getEntries() located in 'entry.service.ts'
+  this.displayService.getEntries();
+      this.userId = this.authService.getUserId();
+      this.displaysSub = this.displayService
+      .getEntryUpdateListener()
       .subscribe((entries: PromptedEntry[]) =>
       {
+        this.entries = entries;
+        //this.isLoading = false;
         entries.forEach(Element =>
           {
-          this.isLoading = false;
-
           Element.date = new Date(Element.date)
-          console.log(typeof(Element.date))
-          console.log(Element.date)
-        });
-        this.entries = entries;
-        this.entries.forEach(Element =>
-          {
-          var x = [Element.id, Element.date, Element.title, Element.what_happened];
+          //console.log(typeof(Element.date))
+         // console.log(Element.date)
+         var x = [Element.id, Element.date, Element.title, Element.what_happened];
           this.displays.push(Element);
+          this.displays.sort((a, b) => a.title.localeCompare(b.title))
         });
-
-
-        //this.displays.sort((x, y) => y.date.getDate() - x.date.getDate());
-
-        // this.display.sort((first, second) =>
-        // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
-        this.displays.sort((a, b) => a.title.localeCompare(b.title))
-
-
       });
-      this.isLoading = true;
+     //this.isLoading = true;
+      // getPosts() located in 'posts.service.ts'
 
-      this.postsService.getPosts();
+      this.displayService.getPosts();
       this.userId = this.authService.getUserId();
-
-      this.postsSub = this.postsService
+      this.displaysSub = this.displayService
         .getPostUpdateListener()
         .subscribe((posts: Post[]) =>
         {
+         //  this.isLoading = false;
+         this.posts = posts;
           posts.forEach(Element =>
             {
-              this.isLoading = false;
-            Element.date = new Date(Element.date)
+              Element.date = new Date(Element.date)
+              var x = [Element.id, Element.date, Element.title, Element.content];
+              this.displays.push(Element);
+              this.displays.sort((a, b) => a.title.localeCompare(b.title))
           });
-          this.posts = posts;
-          this.posts.forEach(Element =>
-            {
-            var x = [Element.id, Element.date, Element.title, Element.content];
-            this.displays.push(Element);
-          });
-
-          //this.displays.sort((x, y) => y.date.getDate() - x.date.getDate());
-          this.displays.sort((a, b) => a.title.localeCompare(b.title))
-
         });
         this.userIsAuthenticated = this.authService.getIsAuth();
         this.authStatusSub = this.authService
@@ -113,47 +110,50 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
           this.userIsAuthenticated = isAuthenticated;
          this.userId = this.authService.getUserId();
         });
-
-    }
-
-
-
-
-
-    //testing sorting by int, will change to sort by date
-    // sort_entries = this.entries.sort((first, second) =>
-    // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
-
-    replace(content: any) {
-      var parsedContent = content.replace(/<[^>]+>/g, '');
-      if (parsedContent.length > allowedEntryLength) {
-        return parsedContent.slice(0, allowedEntryLength) + '...';
       }
-      return parsedContent;
+
+
+    selectCard(display: journalDisplay){
+      if(display.what_happened){
+        document.getElementById("prompted-edit").style.display = 'block';
+        document.getElementById("unprompted-edit").style.display = 'none';
+        this.editEntryId = display.id;
+      }else{
+        document.getElementById("prompted-edit").style.display = 'none';
+        document.getElementById("unprompted-edit").style.display = 'block';
+
+        this.editPostId = display.id;
+      }
     }
 
+   onDeleteEntry(Id: string ) {
+     // this.isLoading = true;
 
-
-    onDeleteEntry(Id: string ) {
-      //may need to change to be more efficient
+    // METHOD CALLED FROM entry.service.ts
       this.entriesService.deleteEntry(Id);
 
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );
-    }
-    onDeletePost(Id: string ) {
-      //may need to change to be more efficient
+    };
+
+    onDeletePost(Id: string) {
+     // this.isLoading = true;
+
+     //METHOD CALLED FROM posts.service.ts
       this.postsService.deletePost(Id);
 
 
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );
-    }
+
+    };
 
     ngOnDestroy() {
-      this.postsSub.unsubscribe();
-      this.entriesSub.unsubscribe();
+     // this.postsSub.unsubscribe();
+     // this.entriesSub.unsubscribe();
       this.authStatusSub.unsubscribe();
+      this.displaysSub.unsubscribe();
+
     }
 
 
@@ -162,21 +162,20 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       return entryContent;
     }
 
-    tipMaker() {
-      if (this.displays.length > 0) {
-        if (this.displays.length == 10) {
-          this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
-          return true;
-        }
-        if (this.displays.length == 5) {
-          this.tip = "Nicotine and caffeine can worsen anxiety.";
-          return true;
-        }
+     tipMaker() {
+    if (this.displays.length > 0) {
+      if (this.displays.length > 10) {
+        this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
+        return true;
       }
-      return false;
+      if (this.displays.length == 5) {
+        this.tip = "Nicotine and caffeine can worsen anxiety.";
+        return true;
+      }
     }
-
+    return false;
   }
+}
 
 
 

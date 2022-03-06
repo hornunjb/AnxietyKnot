@@ -1,8 +1,36 @@
 
-mat-spinner {
-  margin: auto;
+.journal-card{
+  width: 100%;
+}
+.flex-container{
+display: flex;
+height: (100vh - 64px);
+width: (100vw - 200px);
 }
 
-.journal-card{
-    max-width: 400px;
+.flex-child.display{
+flex: 1;
+margin: 0 0 0 0;
+padding: 0 0 0 10px;
+overflow-y:auto;
+max-height: 100vh;
 }
+.flex-child.edit{
+flex: 2;
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+overflow-y:auto;
+max-height: 100vh;
+width: auto;
+}
+#prompted-edit{
+display: none;
+}
+#unprompted-edit{
+display: none;
+}
+
+/* #edit{
+display: none;
+} */
+

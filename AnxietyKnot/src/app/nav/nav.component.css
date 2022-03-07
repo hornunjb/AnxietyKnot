@@ -34,3 +34,55 @@ button {
   margin-top: 15% !important;
   margin-left: 5% !important;
 }
+
+.new-button{
+  margin-right: 10px;
+  color: black;
+  transition: 0.5s;
+  background-color:aliceblue;
+}
+
+.new-button:after {
+  content: "➕";
+  position: absolute;
+  opacity: 0;  
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.new-button:hover{
+  padding-right: 34px;
+  padding-left:8px;
+}
+
+.new-button:hover:after {
+  opacity: 1;
+  right: 10px;
+}
+
+.logout-button{
+  margin-right: 10px;
+  color: black;
+  transition: 0.5s;
+  background-color:aliceblue
+}
+
+.logout-button:after {
+  content: "👤";
+  position: absolute;
+  opacity: 0;  
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.logout-button:hover{
+  padding-right: 34px;
+  padding-left:8px;
+}
+
+.logout-button:hover:after {
+  opacity: 1;
+  right: 10px;
+}

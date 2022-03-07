@@ -11,7 +11,7 @@
       <button class="journal-card"  (click)="selectCard(display)">
 
         <mat-card class="card-style">
-          <mat-card-subtitle>{{ display.date }} Journal Entry</mat-card-subtitle>
+          <mat-card-subtitle>{{ display.date | date:'fullDate' }}</mat-card-subtitle>
           <mat-card-title>{{ display.title }}</mat-card-title>
           <mat-card-content>
               <p *ngIf="display.what_happened != null">{{ replace(display.what_happened) }}</p>

@@ -22,7 +22,7 @@ post.save().then(createdPost => {
   // also sends back postId field so we can use it in our app
   res.status(201).json({
     message: "Post Added Successfully!",
-    postId: {
+    post: {
       ...createdPost,
       id: createdPost._id
     }
@@ -38,7 +38,8 @@ post.save().then(createdPost => {
 
 /// UPDATE POST
 router.put("/:id", checkAuth, (req, res, _next) =>
-{ const post = new Post({
+{
+  const post = new Post({
  _id: req.body.id,
  date: req.body.date,
  title: req.body.title,
@@ -49,7 +50,7 @@ router.put("/:id", checkAuth, (req, res, _next) =>
    { _id: req.params.id, creator: req.userData.userId }, post)
     .then(result =>
      {
-       console.log(result);
+      // console.log(result);
     if (result.matchedCount > 0) {
       res.status(200).json({ message: "Journal Post Update Successful!" });
     } else {
@@ -69,7 +70,8 @@ router.put("/:id", checkAuth, (req, res, _next) =>
 router.get("", (_req, res, _next) => {
   const postQuery = Post.find();
     let fetchedPosts;
-    postQuery.then(documents =>
+    postQuery
+    .then(documents =>
       {
       fetchedPosts = documents;
       return Post.count();
@@ -86,7 +88,7 @@ router.get("", (_req, res, _next) => {
       /* -----TECH ERROR PROMPT ----*/
     .catch(_error => {
       res.status(500).json({
-        message: "Technical Error: Could Not Fetch Journal Posts!"
+        message: "Technical Error: Journal Posts Failed To Fetch"
       });
     });
 });
@@ -95,7 +97,8 @@ router.get("", (_req, res, _next) => {
 
 /// GET POST ID FROM POSTS// IS THIS OPTIONAL?
 router.get("/:id", (req, res, _next) => {
-  Post.findById(req.params.id).then(post => {
+  Post.findById(req.params.id)
+  .then(post => {
     if (post) {
       res.status(200).json(post);
     } else {
@@ -105,7 +108,7 @@ router.get("/:id", (req, res, _next) => {
     /* -----TECH ERROR PROMPT ----*/
   .catch(_error => {
     res.status(500).json({
-      message: "Technical Error: Could Not Fetch Journal Post!"
+      message: "Technical Error: Could Not Fetch This Journal Post!"
     });
   });
 });
@@ -124,7 +127,7 @@ router.delete("/:id", checkAuth, (req, res, _next) => {
   }) /* -----TECH ERROR PROMPT ----*/
   .catch(_error => {
     res.status(500).json({
-      message: "Technical Error: Could Not Delete Journal Post!"
+      message: "Technical Error: Could Not Delete This Journal Post!"
     });
   });
 });

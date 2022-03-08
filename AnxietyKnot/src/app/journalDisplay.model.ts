@@ -1,5 +1,5 @@
 export interface journalDisplay {
-    id: string;
+    id?: string;
     date?: Date;
     title: string;
     what_happened?: string;

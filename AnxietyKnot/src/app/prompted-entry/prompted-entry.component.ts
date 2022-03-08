@@ -5,16 +5,12 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+
 import { DistortionDialogComponent } from '../distortion-dialog/distortion-dialog.component';
-
 import { FeelingsDialogComponent } from '../feelings-dialog/feelings-dialog.component';
-
-
 import { PopupComponent } from '../popup/popup.component';
-
 import { PromptedEntry } from '../prompted-entry.model';
 import { EntryService } from "../entry.service";
-
 import { AuthService } from "../authenticate/auth.service";
 
 import {
@@ -66,7 +62,6 @@ export class PromptedEntryComponent implements OnInit, OnDestroy{
   public static text: string;
   private authStatusSub: Subscription;
   public intensities: Array<number>= [1,2,3,4,5,6,7,8,9,10];
-
   response = [
     'Rate your mood?',
     'Really?',
@@ -87,7 +82,6 @@ export class PromptedEntryComponent implements OnInit, OnDestroy{
   enteredIntensity1= "";
   enteredEmotion2= "";
   enteredIntensity2= "";
-
   enteredThought_patterns= "";
   enteredCustom_thought_patterns= "";
   enteredThinking_differently= "";
@@ -101,11 +95,15 @@ export class PromptedEntryComponent implements OnInit, OnDestroy{
     ...BEFORE SUBMIT BUTTON BECOMES AVAILABLE but needs FormGroup
 */
 
-constructor(public entryService: EntryService, public route: ActivatedRoute,
-    private dialogRef: MatDialog, private authService: AuthService,
+constructor(
+    public entryService: EntryService,
+     public route: ActivatedRoute,
+    private dialogRef: MatDialog,
+    private authService: AuthService,
     ) {}
 
   ngOnInit() {
+   // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(_authStatus => {
@@ -113,9 +111,17 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
       });
       this.route.paramMap.subscribe((paramMap: ParamMap) =>
     {
-      if (paramMap.has('entryId')) {
+      if (paramMap.has('entryId')|| (this.editEntryId != ' '))
+       {
         this.mode = 'edit';
-        this.entryId = paramMap.get('entryId');
+       // this.entryId = paramMap.get('entryId');
+       if (this.editEntryId != ' ')
+       {
+        this.entryId = this.editEntryId;
+      }
+        else {
+          this.entryId = paramMap.get("entryId");
+        }
         this.isLoading = true;
         this.entryService.getEntry(this.entryId).subscribe(entryData =>
           {
@@ -140,25 +146,18 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
              var elem = document.getElementById(Element);
              elem.setAttribute('checked', 'checked');
           })
-
-          console.log(this.checkedIDs)
-
+        //  console.log(this.checkedIDs)
           this.intensity1 = this.entry.intensity1;
           this.intensity2 = this.entry.intensity2;
-          console.log(this.intensity1)
+      //    console.log(this.intensity1)
           })
-          if(this.editEntryId != ' '){
-        this.entryId = this.editEntryId;
-      } else{
-        this.entryId = paramMap.get('entryId');
-      };
       } else {
         this.mode = 'create';
         this.entryId = null;
       }
     })
-
   }
+
   openDialog() {
     if (this.dialogRef.openDialogs.length == 0) {
       this.dialogRef.open(PopupComponent, {
@@ -180,6 +179,7 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
         });
       }
     }
+
   checkedIDs = [];
 
   changeSelection() {
@@ -206,7 +206,6 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
       return;
     }
     this.isLoading = true;
-
      if (this.mode === 'create')
       {
         this.entryService.addEntry(
@@ -221,7 +220,6 @@ constructor(public entryService: EntryService, public route: ActivatedRoute,
           this.checkedIDs,
           form.value.custom_thought_patterns,
           form.value.thinking_differently,
-
           );
       }
       else {

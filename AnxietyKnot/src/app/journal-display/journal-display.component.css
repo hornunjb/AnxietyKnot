@@ -1,7 +1,13 @@
 
+mat-spinner {
+  margin: auto;
+}
+
 .journal-card{
   width: 100%;
 }
+
+
 .flex-container{
 display: flex;
 height: (100vh - 64px);

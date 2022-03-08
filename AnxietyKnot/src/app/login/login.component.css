@@ -1,4 +1,5 @@
 * {
+
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
@@ -13,9 +14,7 @@ body {
   font-family: Montserrat;
   overflow-x: hidden;
 }
-mat-spinner {
-  margin: auto;
-  }
+
 article,
 aside,
 details,

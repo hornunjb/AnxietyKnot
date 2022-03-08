@@ -54,9 +54,19 @@ export class NewEditComponent implements OnInit, OnDestroy{
   public static text: string;
   private authStatusSub: Subscription;
   private editorSubject: Subject<any> = new AsyncSubject();
-  response = ["Rate your mood?","Really?", "Hang on",
-  "It can be better", "I've been worse", "Not much",
-  "Getting better", "Pretty good", "Lets go", "I feel good", "Yesir"]
+  response = [
+    "Rate your mood?",
+    "Really?",
+    "Hang on",
+    "It can be better",
+    "I've been worse",
+    "Not much",
+    "Getting better",
+    "Pretty good",
+    "Lets go",
+    "I feel good",
+    "Yesir"
+];
 
 
   /// ENSURES ALL REQUIRED FIELDS ARE FILLED BEFORE SUMIT BUTTON CAN BECOME ACTIVE
@@ -95,13 +105,22 @@ export class NewEditComponent implements OnInit, OnDestroy{
       });
       this.route.paramMap.subscribe((paramMap: ParamMap) =>
        {
-        if (paramMap.has('postId') || (this.editPostId != ' ')) {
+        if (paramMap.has('postId') || (this.editPostId != ' '))
+        {
           this.mode = "edit";
-          this.postId = paramMap.get("postId");
+         // this.postId = paramMap.get("postId");
+         if (this.editPostId != ' ')
+         {
+          this.postId = this.editPostId;
+        }
+          else {
+            this.postId = paramMap.get("postId");
+          }
           this.isLoading = true;
           this.postsService.getPost(this.postId).subscribe(postData =>
              {
             this.isLoading = false;
+            /// POSTDATA PASSES THROUGH POST.SERVICE AND DISPLAY.SERVICE
             this.post = {
               id: postData._id,
               date: postData.date,
@@ -115,11 +134,6 @@ export class NewEditComponent implements OnInit, OnDestroy{
               body: this.post.content
             });
           })
-          if(this.editPostId != ' '){
-            this.postId = this.editPostId;
-          } else {
-            this.postId = paramMap.get('postId');
-          };
           } else {
           this.mode = "create";
           this.postId = null;

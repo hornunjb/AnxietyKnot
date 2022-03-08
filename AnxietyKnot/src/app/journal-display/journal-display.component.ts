@@ -28,12 +28,12 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
 
 
   tip: string = '';
- // isLoading = false;
+  isLoading = false;
   userId: string;
   userIsAuthenticated = false;
 
-  //private postsSub: Subscription;
-  //private entriesSub: Subscription;
+  private postsSub: Subscription;
+  private entriesSub: Subscription;
   private displaysSub: Subscription;
   private authStatusSub: Subscription;
 
@@ -43,15 +43,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
   displays: journalDisplay[] = [];
 
 
- //public noHtmlContent: string[] = [];
+ public noHtmlContent: string[] = [];
 
- replace(content: any) {
-  var parsedContent = content.replace(/<[^>]+>/g, '');
-  if (parsedContent.length > allowedEntryLength) {
-    return parsedContent.slice(0, allowedEntryLength) + '...';
-  }
-  return parsedContent;
-}
 
   constructor(
     public entriesService: EntryService,
@@ -62,7 +55,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-  // this.isLoading = true;
+  this.isLoading = true;
 
    // getEntries() located in 'entry.service.ts'
   this.displayService.getEntries();
@@ -72,7 +65,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       .subscribe((entries: PromptedEntry[]) =>
       {
         this.entries = entries;
-        //this.isLoading = false;
+        this.isLoading = false;
         entries.forEach(Element =>
           {
           Element.date = new Date(Element.date)
@@ -83,7 +76,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
           this.displays.sort((a, b) => a.title.localeCompare(b.title))
         });
       });
-     //this.isLoading = true;
+     this.isLoading = true;
       // getPosts() located in 'posts.service.ts'
 
       this.displayService.getPosts();
@@ -92,7 +85,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         .getPostUpdateListener()
         .subscribe((posts: Post[]) =>
         {
-         //  this.isLoading = false;
+         this.isLoading = false;
          this.posts = posts;
           posts.forEach(Element =>
             {
@@ -126,10 +119,41 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       }
     }
 
+    replace(content: any) {
+      var parsedContent = content.replace(/<[^>]+>/g, '');
+      if (parsedContent.length > allowedEntryLength) {
+        return parsedContent.slice(0, allowedEntryLength) + '...';
+      }
+      return parsedContent;
+    }
+
+
+/* onUpdateEntry
+
+
+
+
+*/
+
+
+/* onUpdatePost(Id: string){
+
+      this.postsService.updatePost(Id);
+      const updateIndex = this.displays.findIndex( item => item.id === Id );
+      this.displays.splice( updateIndex, 1 );
+
+    };
+
+
+
+
+
+*/
+
    onDeleteEntry(Id: string ) {
-     // this.isLoading = true;
 
     // METHOD CALLED FROM entry.service.ts
+         // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE ENTRIES
       this.entriesService.deleteEntry(Id);
 
       const removeIndex = this.displays.findIndex( item => item.id === Id );
@@ -137,12 +161,9 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     };
 
     onDeletePost(Id: string) {
-     // this.isLoading = true;
-
      //METHOD CALLED FROM posts.service.ts
+     // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE POSTS
       this.postsService.deletePost(Id);
-
-
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );
 

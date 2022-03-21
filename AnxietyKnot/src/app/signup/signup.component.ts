@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit} from "@angular/core";
 import { Subscription } from "rxjs";
 import { AuthService } from "../authenticate/auth.service";
-import { FormGroup, Validators, FormControl} from "@angular/forms"
+import { FormGroup, Validators, FormBuilder, FormControl} from "@angular/forms"
 
 
 ///AUTH CREATE REDIRECTS TO 'auth.service.ts' WHICH CONTAINS HTTPCLIENT
+import { HttpClient } from '@angular/common/http';
+
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',

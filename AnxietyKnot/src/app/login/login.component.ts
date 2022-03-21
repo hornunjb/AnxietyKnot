@@ -5,6 +5,10 @@ import { FormGroup, Validators, FormControl} from "@angular/forms"
 
 ///AUTH LOGIN REDIRECTS TO 'auth.service.ts' WHICH CONTAINS HTTPCLIENT
 
+
+import { Router } from '@angular/router';
+
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

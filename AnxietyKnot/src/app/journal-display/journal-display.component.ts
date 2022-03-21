@@ -14,6 +14,9 @@ import { AuthService } from "./../authenticate/auth.service";
 import { creator } from 'd3';
 
 
+
+import { NewEditComponent } from '../new-edit/new-edit.component';
+
 const allowedEntryLength = 500;
 
 @Component({
@@ -22,6 +25,8 @@ const allowedEntryLength = 500;
   styleUrls: ['./journal-display.component.css']
 })
 export class JournalDisplayComponent implements OnInit, OnDestroy {
+
+
 
   editPostId = ' ';
   editEntryId = ' ';

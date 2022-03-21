@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+
+
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AsyncSubject, Subject, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -79,7 +81,9 @@ export class NewEditComponent implements OnInit, OnDestroy{
   );
 
 
-  openDialog(){
+
+
+  openDialog() {
     this.dialogRef.open(PopupComponent);
   }
 

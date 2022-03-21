@@ -9,9 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
-import {MatTabsModule} from '@angular/material/tabs';
+
 ////import { PostCreateComponent } from './post-create/post-create.component';
 //import { PostListComponent } from './post-list/post-list.component';
 import { NavComponent } from './nav/nav.component';
@@ -88,8 +89,10 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
+    MatButtonToggleModule,
     MatButtonModule,
     MatToolbarModule,
+    MatTabsModule,
     MatExpansionModule,
     FormsModule,
     MatCommonModule,

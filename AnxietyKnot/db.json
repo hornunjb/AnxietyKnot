@@ -1,0 +1,68 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "signupUsers": [
+    {
+      "username": "",
+      "email": "",
+      "password": "",
+      "id": 1
+    },
+    {
+      "username": "",
+      "email": "",
+      "password": "",
+      "id": 2
+    },
+    {
+      "username": "",
+      "email": "",
+      "password": "",
+      "id": 3
+    },
+    {
+      "username": "122",
+      "email": "admin",
+      "password": "1234",
+      "id": 4
+    },
+    {
+      "username": "oliver",
+      "email": "lujq@mail.uc.edu",
+      "password": "1234",
+      "id": 5
+    },
+    {
+      "username": "",
+      "email": "admin",
+      "password": "1234",
+      "id": 6
+    },
+    {
+      "username": "",
+      "email": "admin",
+      "password": "1234",
+      "id": 7
+    },
+    {
+      "username": "1223",
+      "email": "1233",
+      "password": "122",
+      "id": 8
+    },
+    {
+      "username": "oliver",
+      "email": "4611@qq.com",
+      "password": "666",
+      "id": 9
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

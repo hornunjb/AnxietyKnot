@@ -7,14 +7,15 @@
   </div> -->
   <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-  <div id="body" class="flex-container" multi="true" *ngIf="posts.length > 0 && !isLoading" >
+
+  <div id="body" class="flex-container" multi="true" >
 
     <div id="display-list" class="flex-child display"  >
         <div *ngFor="let display of displays">
           <button class="journal-card"  (click)="selectCard(display)" *ngIf="userIsAuthenticated && userId === display.creator">
 
-            <mat-card *ngIf="posts.length > 0 ">
-              <mat-card-subtitle>{{ display.date }} Journal Entry</mat-card-subtitle>
+            <mat-card class="card-style">
+              <mat-card-subtitle>{{ display.date  | date:'fullDate' }} </mat-card-subtitle>
               <mat-card-title>{{ display.title }}</mat-card-title>
               <mat-card-content >
                   <p *ngIf="display.what_happened != null">{{ replace(display.what_happened) }}</p>
@@ -26,17 +27,17 @@
               <mat-card-actions *ngIf="display.what_happened != null">
                 <!-- <button *ngIf="display.what_happened != null" mat-button color="primary" (click)="editEntry(display.id)" (editEntryId)="display.Id">EDIT</button> -->
 
-                <button mat-button color="warn" (click)="onDeleteEntry(display.id)">DELETE</button>
+                <button class="delete-button" mat-button color="warn" (click)="onDeleteEntry(display.id)">DELETE</button>
               </mat-card-actions>
               <mat-card-actions *ngIf="display.content != null ">
                 <!--    <button  mat-button color="primary" [routerLink]="['/edit',display.id]" >EDIT</button> -->
-                    <button mat-button color="warn" (click)="onDeletePost(display.id)">DELETE</button>
+                    <button class="delete-button" mat-button color="warn" (click)="onDeletePost(display.id)">DELETE</button>
                 </mat-card-actions>
             </mat-card>
           </button>
       </div>
-    </div>
-      <div id="edit" class="flex-child edit" >
+     </div>
+      <div id="edit" class="flex-child edit"  >
         <app-prompted-entry  id="prompted-edit" [editEntryId]= 'editEntryId'></app-prompted-entry>
         <app-new-edit id="unprompted-edit" [editPostId]= 'editPostId'></app-new-edit>
       </div>

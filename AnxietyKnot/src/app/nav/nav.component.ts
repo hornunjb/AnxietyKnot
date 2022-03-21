@@ -27,6 +27,8 @@ export class NavComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
   }
+
+  ///Calls Upon 'logout()' function from auth.service.ts to remove toker and userdata and redirect them to /login
   onLogout() {
     this.authService.logout();
   }

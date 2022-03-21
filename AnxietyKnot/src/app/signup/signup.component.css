@@ -11,9 +11,7 @@
 width: auto;
   height: auto;
 }
-mat-spinner {
-margin: auto;
-}
+
 .mat-error {
 color: #b73a3a;
 
@@ -24,7 +22,9 @@ body {
   font-family: Montserrat;
   overflow-x: hidden;
 }
-
+mat-spinner {
+  margin: auto;
+}
 article,
 aside,
 details,

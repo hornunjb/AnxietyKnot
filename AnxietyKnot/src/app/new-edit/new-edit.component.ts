@@ -83,6 +83,42 @@ export class NewEditComponent implements OnInit, OnDestroy{
     this.dialogRef.open(PopupComponent);
   }
 
+
+  ///NEW CODING FROM BRANCH NOT YET IMPLEMENTED
+  /*
+
+  ///Requires removal of onSubmit() coding and in html
+ openDialog() {
+  async openDialog() {
+    const dialogRef = this.dialogRef.open(PopupComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.value = result;
+      console.log(this.value);
+    });
+    await dialogRef.afterClosed().toPromise();
+    let date = this.date.value.toDate();
+    if (this.myForm.invalid) {
+      return;
+    }
+    if (this.mode === 'create') {
+      this.postsService.addPost(
+        date,
+        this.myForm.value['title'],
+        this.myForm.value['body'],
+        this.value
+      );
+    } else {
+      this.postsService.updatePost(
+        this.postId,
+        date,
+        this.myForm.value['title'],
+        this.myForm.value['body'],
+        this.value
+      );
+    }
+  }
+  */
   handleEditorInit(e) {
     this.editorSubject.next(e.editor);
     this.editorSubject.complete();
@@ -142,6 +178,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
     }
 
     onSubmit() {
+      
       this.openDialog();
       let date = this.date.value.toDate();
       if (this.myForm.invalid) {

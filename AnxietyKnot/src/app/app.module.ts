@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -30,6 +30,7 @@ import { QuillModule } from 'ngx-quill';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSliderModule} from '@angular/material/slider';
+//import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgRatingBarModule } from 'ng-rating-bar';
 import { PopupComponent } from './popup/popup.component';
@@ -50,10 +51,13 @@ import { ErrorComponent } from "./error/error.component";
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
+import{MatStepperModule} from '@angular/material/stepper';
+
 import { EntryListComponent } from './entry-list/entry-list.component';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
+import { JournalOptionComponent } from './journal-option/journal-option.component';
 
 
 
@@ -79,6 +83,7 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     FeelingsDialogComponent,
     DistortionDialogComponent,
     JournalDisplayComponent,
+    JournalOptionComponent
 
   ],
   imports: [
@@ -116,12 +121,17 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     //MatPaginatorModule,
     MatProgressSpinnerModule,
     MatButtonToggleModule,
+    MatSelectModule,
+    MatStepperModule,
     QuillModule.forRoot({
       modules: {
         syntax: true,
       }
     })
   ],
+
+  /// Muli allows us to use more than one HTTP interceptors
+  /// enable TRUE in HTMLS to use BOTH AUTHINTERCEPTOR AND ERRORINTERCEPTOR
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

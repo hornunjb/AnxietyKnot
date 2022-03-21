@@ -1,0 +1,68 @@
+
+body,html{
+    height: 100%;
+    }
+
+body {
+    font-family: "Lato", sans-serif;
+    color: #111;
+    display: flex;
+    width: auto;
+    height: 92.75%;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    background-image: url("../../assets/images/bg6.jpg");
+    background-size: cover;
+    opacity: 0.75;
+    }
+
+
+.btn{
+    margin: 10% auto;
+    border: none;
+    padding: 10px 44px;
+    font-size: 36px;
+    position: relative;
+    }
+
+.btn::before{
+    transition: all 0.85s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    content: '';
+    width: 50%;
+    height: 100%;
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
+
+.btn-text{
+    color: white;
+    mix-blend-mode: difference;
+    }
+
+.btn:hover:before{
+    background: black;
+    width: 100%;
+    }
+
+.rounded{
+    border-radius:50px;
+}
+
+.text-green{
+    color:white;
+    mix-blend-mode: difference;
+    }
+
+.rounded::before{
+    border-radius: 50px;
+    width: 25%;
+    background: black;
+    }
+
+.rounded:hover:before{
+    background: black;
+    width: 100%;
+    }

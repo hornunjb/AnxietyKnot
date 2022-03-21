@@ -18,10 +18,11 @@ router.post("/signup", (req, res, _next) => {
       password: hash
     });
     user.save()
-      .then(result => {
+      .then(_result => {
         res.status(201).json({
           message: "User Account Created.",
-          result: result
+          // comment out to prevent signup info appearing in browser console
+          //result: result
         });
       })
       .catch(_err => {

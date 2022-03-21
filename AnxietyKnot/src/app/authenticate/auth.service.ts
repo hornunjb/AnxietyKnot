@@ -79,7 +79,8 @@ export class AuthService {
       });
   }
 
-  /// AUTO AUTHENTICATE THE USER VIA LOCAL STORAGE TOKEN to keep USER TOKEN IN USE DURING RELOAD
+  /// AUTO AUTHENTICATE THE USER VIA LOCAL STORAGE TOKEN...
+  //...to keep USER TOKEN IN USE DURING RELOAD (NOT RECOMMENDED TO USE)
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
@@ -107,6 +108,7 @@ logout() {
   ///REDIRECT USER AFTER LOGOUT
   this.router.navigate(['/login']);
 }
+
 
 /// SET TIMEOUT FOR TOKEND AFTER BEING LOGGED ON FOR 1 HOUR
 private setAuthTimer(duration: number) {

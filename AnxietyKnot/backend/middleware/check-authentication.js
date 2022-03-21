@@ -16,6 +16,9 @@ module.exports = (req, res, next) => {
     // accepts token from header of request
     /// ("") is bearer word
     const token = req.headers.authorization.split(" ")[1];
+
+    //---process.env.JWT_KEY located within nodemon.json---///
+    //--DO NOT INSERT AN process.env.JWT_KEY --//
     const decodedToken = jwt.verify(token, "keep_this_secret");
 
     /// REQUESTED USERDATA WILL HAVE THEIR EMAIL AND USERID DECODED VIA JWT

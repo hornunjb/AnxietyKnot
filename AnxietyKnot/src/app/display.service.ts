@@ -71,12 +71,6 @@ export class DisplayService {
     creator: string;
     }>("http://localhost:3000/api/entries/" + id);
   }
-  /*
-getEntry(id: string) {
-    return {...this.entries.find(p => p.id === id)}
-  }
-  */
-
 
   addEntry
   ( date: Date,
@@ -149,7 +143,7 @@ getEntry(id: string) {
     };
     this.http.put("http://localhost:3000/api/entries/" + id, entry)
     .subscribe(response => console.log(response)
-    // NAVIGATES USER AFTER POST UPDATE
+    // DO NOT USE THIS ROUTER NAVIGATE, USE POPUP HTML AND COMP.TS INSTEAD
        // this.router.navigate(["/"]);
     );
   }
@@ -200,10 +194,6 @@ getEntry(id: string) {
   }
 
 
- // getPost(id: string) {
-  //  return {...this.posts.find(p => p.id === id)}
- // }
-
 //// THIS CODE AFFECTS 'GET POST' IN NEW-EDIT.COMPONENT.TS
 
   getPost(id: string) {
@@ -229,6 +219,7 @@ getEntry(id: string) {
         "http://localhost:3000/api/posts/", post
         )
       .subscribe(responseData => {
+        //console.log(responseData)
         const id = responseData.postId;
         post.id = id;
         this.posts.push(post);
@@ -249,7 +240,9 @@ getEntry(id: string) {
     // OUTPUTS CONSOLE LOG OF SUCCESSFUL POST UPDATE
       .subscribe(response =>
        console.log(response)
-       // NAVIGATES USER AFTER POST UPDATE
+       //        this.router.navigate(['/journalDisplay'])
+
+      // DO NOT USE THIS ROUTER NAVIGATE, USE POPUP HTML AND COMP.TS INSTEAD
        // .subscribe(response => {
      // this.router.navigate(["/"]);
    //});

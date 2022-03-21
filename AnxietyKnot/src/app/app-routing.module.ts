@@ -12,8 +12,10 @@ import { AuthGuard } from "./authenticate/auth.guard";
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 import { NavComponent } from './nav/nav.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
+import { JournalOptionComponent } from './journal-option/journal-option.component';
 
-///canActivate: [AuthGuard] ENSURES UNAUTHORIZED USERS CANNOT MANUALLY ENTER ACCESS POINT IN URL UNLESS LOGGED IN
+//-canActivate: [AuthGuard] ENSURES UNAUTHORIZED USERS CANNOT MANUALLY ENTER ACCESS POINT IN URL UNLESS LOGGED IN-//
+
 const routes: Routes = [
   {path:'', redirectTo:'login', pathMatch:'full'},
   {path:'login', component: LoginComponent},
@@ -21,7 +23,10 @@ const routes: Routes = [
   {path: '', component:NavComponent, children:[
 
     {path:'home', component:HomeComponent,canActivate: [AuthGuard]},
-   {path:'journalBook', component:JournalHistoryComponent, canActivate: [AuthGuard]},
+   {path:'journalOption', component:JournalOptionComponent, canActivate: [AuthGuard]},
+    {path: 'journalDisplay', component:JournalDisplayComponent, canActivate: [AuthGuard]},
+    
+  // {path:'journalBook', component:JournalHistoryComponent, canActivate: [AuthGuard]},
     {path:'resource', component:ResourceComponent, canActivate: [AuthGuard]},
     {path:'tracker', component:TrackerComponent, canActivate: [AuthGuard]},
     {path:'prompted-entry', component:PromptedEntryComponent, canActivate: [AuthGuard]},
@@ -29,7 +34,7 @@ const routes: Routes = [
     {path:'edit-prompted/:entryId', component:PromptedEntryComponent, canActivate: [AuthGuard]},
     {path:'newEdit', component:NewEditComponent, canActivate: [AuthGuard]},
 
-    {path: 'journalDisplay', component:JournalDisplayComponent, canActivate: [AuthGuard]},
+
 
     //{path: 'testpath', component:JournalDisplayComponent},
   ]},

@@ -11,6 +11,8 @@ import { PromptedEntry } from '../prompted-entry.model';
 import { journalDisplay } from '../journalDisplay.model';
 
 import { AuthService } from "./../authenticate/auth.service";
+import { Router } from "@angular/router";
+
 import { creator } from 'd3';
 
 
@@ -32,8 +34,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
   userId: string;
   userIsAuthenticated = false;
 
-  private postsSub: Subscription;
-  private entriesSub: Subscription;
+ // private postsSub: Subscription;
+  //private entriesSub: Subscription;
   private displaysSub: Subscription;
   private authStatusSub: Subscription;
 
@@ -50,6 +52,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     public entriesService: EntryService,
     public postsService: PostsService,
     public displayService: DisplayService,
+    private router: Router,
     private authService: AuthService,
     ) { }
 
@@ -85,7 +88,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         .getPostUpdateListener()
         .subscribe((posts: Post[]) =>
         {
-         this.isLoading = false;
+          this.isLoading = false;
+
          this.posts = posts;
           posts.forEach(Element =>
             {
@@ -128,29 +132,10 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     }
 
 
-/* onUpdateEntry
-
-
-
-
-*/
-
-
-/* onUpdatePost(Id: string){
-
-      this.postsService.updatePost(Id);
-      const updateIndex = this.displays.findIndex( item => item.id === Id );
-      this.displays.splice( updateIndex, 1 );
-
-    };
-
-
-
-
-
-*/
-
    onDeleteEntry(Id: string ) {
+    this.isLoading = true;
+    //---CAUSES ERROR IN FIREFOX--//
+   // window.location.reload();
 
     // METHOD CALLED FROM entry.service.ts
          // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE ENTRIES
@@ -158,22 +143,36 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
 
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );
+
+      let currentUrl = this.router.url;
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+     this.router.onSameUrlNavigation = 'reload';
+     this.router.navigate([currentUrl]);
     };
 
     onDeletePost(Id: string) {
+      this.isLoading = true;
+      //---CAUSES ERROR IN FIREFOX--//
+     // window.location.reload();
+
      //METHOD CALLED FROM posts.service.ts
      // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE POSTS
-      this.postsService.deletePost(Id);
+      this.postsService.deletePost(Id)
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );
 
+     let currentUrl = this.router.url;
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+     this.router.onSameUrlNavigation = 'reload';
+     this.router.navigate([currentUrl]);
     };
 
     ngOnDestroy() {
      // this.postsSub.unsubscribe();
      // this.entriesSub.unsubscribe();
+     this.displaysSub.unsubscribe();
       this.authStatusSub.unsubscribe();
-      this.displaysSub.unsubscribe();
+
 
     }
 

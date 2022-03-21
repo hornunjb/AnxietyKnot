@@ -1,0 +1,8 @@
+<body>
+<button *ngIf="userIsAuthenticated" class="btn" routerLink="/newEdit">
+    <span class="btn-text">Normal Journal</span>
+</button>
+<button *ngIf="userIsAuthenticated" class="btn rounded" routerLink="/prompted-entry">
+    <span class="text-green">Guided Journal</span>
+</button>
+</body>

@@ -112,7 +112,12 @@ getEntry(id: string) {
         this.entriesUpdated.next([...this.entries]);
       });
   }
-
+/*
+.subscribe(_responseData => {
+          this.router.navigate(["/journalDisplay"]);
+        });
+    }
+*/
   updateEntry(
     id: string,
     date: Date,

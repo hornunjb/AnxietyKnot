@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, OnInit, OnDestroy } from "@angular/core";
 
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
  import { Subscription } from "rxjs";
@@ -10,11 +10,15 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
   selector: "app-error",
   // styleUrls: ["./error.component.css"]
 })
-export class ErrorComponent {
+
+
+export class ErrorComponent implements OnInit, OnDestroy {
   //data: { message: string };
- private errorSub: Subscription;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string }, private errorService: ErrorService) {}
-  // constructor(private errorService: ErrorService) {}
+  private errorSub: Subscription;
+
+  constructor
+    (@Inject(MAT_DIALOG_DATA) public data: { message: string },
+      private errorService: ErrorService) {}
 
   ngOnInit() {
     this.errorSub = this.errorService.getErrorListener().subscribe(message => {

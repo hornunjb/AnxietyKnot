@@ -1,11 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+
+
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { AsyncSubject, Subject } from 'rxjs';
-import { Post } from '../post.model';
-import { PostsService } from '../posts.service';
+import { AsyncSubject, Subject, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
+import { Post } from '../post.model';
+import { PostsService } from '../posts.service';
+import { AuthService } from "../authenticate/auth.service";
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
@@ -31,7 +34,7 @@ const moment = _moment;
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
 })
-export class NewEditComponent implements OnInit {
+export class NewEditComponent implements OnInit, OnDestroy{
 
 
   @Input() editPostId = ' ';
@@ -39,35 +42,46 @@ export class NewEditComponent implements OnInit {
     this.ngOnInit();
   }
 
+  date = new FormControl(moment());
+
+
   value = 0;
   ratingCount = 10;
-  response = [
-    'Rate your mood?',
-    'Really?',
-    'Hang on',
-    'It can be better',
-    "I've been worse",
-    'Not much',
-    'Getting better',
-    'Pretty good',
-    'Lets go',
-    'I feel good',
-    'Yesir',
-  ];
-  enteredTitle = '';
-  enteredContent = '';
+  enteredTitle = "";
+  enteredContent = "";
+  isLoading = false;
+  public post: Post;
   private mode = 'create';
   private postId: string;
-  public post: Post;
   public static text: string;
-
+  private authStatusSub: Subscription;
   private editorSubject: Subject<any> = new AsyncSubject();
-  public myForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    body: new FormControl('', Validators.required),
-  });
+  response = [
+    "Rate your mood?",
+    "Really?",
+    "Hang on",
+    "It can be better",
+    "I've been worse",
+    "Not much",
+    "Getting better",
+    "Pretty good",
+    "Lets go",
+    "I feel good",
+    "Yesir"
+];
 
-  date = new FormControl(moment());
+
+  /// ENSURES ALL REQUIRED FIELDS ARE FILLED BEFORE SUMIT BUTTON CAN BECOME ACTIVE
+  /// THIS ALSO MUST MATCH WITH THE SCHEMA
+  public myForm = new FormGroup(
+    {
+    title: new FormControl("", Validators.required),
+    body: new FormControl("", Validators.required)
+    }
+  );
+
+
+
 
   openDialog() {
     this.dialogRef.open(PopupComponent);
@@ -80,46 +94,86 @@ export class NewEditComponent implements OnInit {
 
   constructor(
     public postsService: PostsService,
-    public route: ActivatedRoute,
-    private dialogRef: MatDialog
-  ) {}
+     public route: ActivatedRoute,
+     private dialogRef: MatDialog,
+     private authService: AuthService,
 
-  ngOnInit() {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('postId') || (this.editPostId != ' ')) {
-        this.mode = 'edit';
-        if(this.editPostId != ' '){
+     ) {}
+
+     ngOnInit() {
+       // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
+      this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(_authStatus => {
+        this.isLoading = false;
+      });
+      this.route.paramMap.subscribe((paramMap: ParamMap) =>
+       {
+        if (paramMap.has('postId') || (this.editPostId != ' '))
+        {
+          this.mode = "edit";
+         // this.postId = paramMap.get("postId");
+         if (this.editPostId != ' ')
+         {
           this.postId = this.editPostId;
-        }else{
-        this.postId = paramMap.get('postId');
-        };
-        this.post = this.postsService.getPost(this.postId);
-      } else {
-        this.mode = 'create';
-        this.postId = null;
-      }
-    });
-  }
+        }
+          else {
+            this.postId = paramMap.get("postId");
+          }
+          this.isLoading = true;
+          this.postsService.getPost(this.postId).subscribe(postData =>
+             {
+            this.isLoading = false;
+            /// POSTDATA PASSES THROUGH POST.SERVICE AND DISPLAY.SERVICE
+            this.post = {
+              id: postData._id,
+              date: postData.date,
+              title: postData.title,
+              content: postData.content,
+              creator: postData.creator
+            };
+            /// THIS DOESNT SEEM TO HAVE ANY IMPACT IF REMOVED BUT KEEP FOR DATE
+            this.myForm.setValue({
+              title: this.post.title,
+              body: this.post.content
+            });
+          })
+          } else {
+          this.mode = "create";
+          this.postId = null;
+        }
+      });
+    }
 
-  onSubmit() {
-    this.openDialog();
-    let date = this.date.value.toDate();
-    if (this.myForm.invalid) {
-      return;
+    onSubmit() {
+      this.openDialog();
+      let date = this.date.value.toDate();
+      if (this.myForm.invalid) {
+        return;
+      }
+      this.isLoading = true;
+      if (this.mode === 'create')
+      {
+        this.postsService.addPost(
+          date,
+          this.myForm.value['title'],
+          this.myForm.value['body']
+          );
+      }
+      else {
+        this.postsService.updatePost(
+          this.postId,
+          date,
+          this.myForm.value['title'],
+          this.myForm.value['body']
+          );
+      }
+      this.myForm.reset();
     }
-    if (this.mode === 'create') {
-      this.postsService.addPost(
-        date,
-        this.myForm.value['title'],
-        this.myForm.value['body']
-      );
-    } else {
-      this.postsService.updatePost(
-        this.postId,
-        date,
-        this.myForm.value['title'],
-        this.myForm.value['body']
-      );
+
+     // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
+
+    ngOnDestroy() {
+      this.authStatusSub.unsubscribe();
     }
-  }
 }

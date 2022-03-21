@@ -1,3 +1,5 @@
+<body>
+
 <div class="grid-container">
   <h1 style="padding-bottom: 30px;" class="mat-h1">Journal History
     <div id="btn-group" style="float: right;">
@@ -11,6 +13,12 @@
   <mat-button-toggle value="prompted" (change)="showPrompted()">Prompted</mat-button-toggle>
 </mat-button-toggle-group>
 <div>
-  <app-journal-book></app-journal-book>
-  <app-entry-list ></app-entry-list>
+
+  <!--  DISPLAYS JOURNAL BOOK AKA UNPROMPTED -->
+  <app-journal-book *ngIf="unpromptedVisible"></app-journal-book>
 </div>
+<div>
+  <!--  DISPLAYS PROMPTED -->
+  <app-entry-list *ngIf="promptedVisible"></app-entry-list>
+</div>
+</body>

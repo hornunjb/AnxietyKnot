@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PromptedEntry } from "../prompted-entry";
-import { EntryService } from '../entry.service';
-import { utcSeconds } from 'd3';
 
+import { PromptedEntry } from "../prompted-entry.model";
+import { EntryService } from '../entry.service';
+import { AuthService } from "../authenticate/auth.service";
+import { utcSeconds } from 'd3';
 
 @Component({
   selector: 'app-entry-list',
@@ -13,50 +14,50 @@ import { utcSeconds } from 'd3';
 export class EntryListComponent implements OnInit, OnDestroy {
 
   entries: PromptedEntry[] = [];
+  isLoading = false;
+  userId: string;
+  userIsAuthenticated = false;
+ // public noHtmlContent: string[] = [];
+ private entriesSub: Subscription;
+  private authStatusSub: Subscription;
 
-  private entriesSub: Subscription = new Subscription;
-
-  constructor(public entriesService: EntryService) { }
+  constructor(private authService: AuthService, public entriesService: EntryService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.entriesService.getEntries();
-    this.entriesSub = this.entriesService.getEntryUpdateListener()
-    .subscribe((entries: PromptedEntry[]) => {
-      entries.forEach(Element =>{
-        Element.date = new Date(Element.date)
-        console.log(typeof(Element.date))
-        console.log(Element.date)
-      });
+    this.userId = this.authService.getUserId();
+    this.entriesSub = this.entriesService
+    .getEntryUpdateListener()
+    .subscribe((entries: PromptedEntry[]) =>
+    {
+      entries.forEach(Element =>
+        {
+         this.isLoading = false;
+         // this.entries = entries;
+          Element.date = new Date(Element.date)
 
-      this.entries = entries.sort((x, y) => y.date.getDate() - x.date.getDate());
-      // this.entries = entries.sort((first, second) =>
-      // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
-
-
-
+        });
+          this.entries = entries.sort((x, y) => y.date.getDate() - x.date.getDate());
+    });
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      this.authStatusSub = this.authService
+        .getAuthStatusListener()
+        .subscribe(isAuthenticated =>
+          {
+          this.userIsAuthenticated = isAuthenticated;
+          this.userId = this.authService.getUserId();
     });
   }
-  logger() {
-    this.entries.forEach(Element =>{
-      Element.date = new Date(Element.date)
-      console.log(typeof(Element.date))
-    })
-  }
-
-
-
-  //testing sorting by int, will change to sort by date
-  // sort_entries = this.entries.sort((first, second) =>
-  // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
-
-
 
   onDelete(entryId: string) {
+    this.isLoading = true;
     this.entriesService.deleteEntry(entryId);
   }
 
   ngOnDestroy() {
     this.entriesSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 
 }

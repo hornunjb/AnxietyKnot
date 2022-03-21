@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PromptedEntry } from "../prompted-entry";
+//import { PromptedEntry } from "../prompted-entry";
 import { Post } from "../post.model";
 
 @Component({
@@ -7,17 +7,10 @@ import { Post } from "../post.model";
   templateUrl: './journal-history.component.html',
   styleUrls: ['./journal-history.component.css']
 })
-export class JournalHistoryComponent implements OnInit{
+export class JournalHistoryComponent{
 
-
-  ngOnInit(): void {
-
-  }
-  
-  entries_sort: PromptedEntry[] = [];
-  posts_sort: Post[] = [];
-
-
+/* JOURNAL BOOK AND PROMPTED PAGE POSTS ARE ALWAYS SHOWING BUT THESE FUNCTION AS A VALUE TO TEMPORARILY HIDE OR SHOW WHEN CLICKED
+THEESE INFORMATION FOR THE UNPROMPTED AND PROMPTED PAGES ALWAYS SHOW, BUT THESE FUNCTIONS ENSURE THE PROMPTS/UNPROMPT WILL SHOW OR NOT */
 
   showUnprompted(){
     this.unpromptedVisible = true;

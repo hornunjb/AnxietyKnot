@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -12,8 +12,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
-import { PostCreateComponent } from './post-create/post-create.component';
-import { PostListComponent } from './post-list/post-list.component';
+
+////import { PostCreateComponent } from './post-create/post-create.component';
+//import { PostListComponent } from './post-list/post-list.component';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,34 +41,31 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { PromptedEntryComponent } from './prompted-entry/prompted-entry.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
-import { LoginComponent } from './login/login.component';
+import {LoginComponent} from "./login/login.component";
 import { SignupComponent } from './signup/signup.component';
-
-import { EntryListComponent } from './entry-list/entry-list.component';
+import { AuthInterceptor } from "./authenticate/auth-interceptor";
+import { HeaderComponent } from './header/header.component';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from "./error/error.component";
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
-import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
+import { EntryListComponent } from './entry-list/entry-list.component';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
+import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostCreateComponent,
-    PostListComponent,
     NavComponent,
     JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
-
-    //EntryComponent,
-
-
-    EntryListComponent,
-
-
     PopupComponent,
     ChartsComponent,
     HomeComponent,
@@ -75,10 +73,14 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     PromptedEntryComponent,
     LoginComponent,
     SignupComponent,
+    HeaderComponent,
+    ErrorComponent,
     JournalHistoryComponent,
-    DistortionDialogComponent,
+    EntryListComponent,
     FeelingsDialogComponent,
+    DistortionDialogComponent,
     JournalDisplayComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -113,13 +115,22 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     EditorModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatTabsModule,
+    //MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatButtonToggleModule,
     QuillModule.forRoot({
       modules: {
         syntax: true,
       }
     })
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
+
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }

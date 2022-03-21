@@ -1,37 +1,44 @@
 <div class="parent clearfix">
-    <div class="bg-illustration">
-      <img src="assets/images/Logo.svg" alt="logo">
-  
-      <div class="burger-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-  
+  <div class="bg-illustration">
+    <img src="assets/images/Logo.svg" alt="logo">
+
+    <div class="burger-btn">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-  
-    <div class="login">
-      <div class="container">
-        <h1>Anxiety Knot</h1>
-        <div class="login-form">
-          <form action="">
-            <form [formGroup]="signupForm" (ngSubmit)="signUp()">
-            <input formControlName="username" type="username" name="username"  placeholder="Username">
-            <span class="text-danger" *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">*Username is required!</span>
-            <input formControlName="email" type="email" name="email"  placeholder="E-mail Address">
-            <span class="text-danger" *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email')">*Email is required!</span>
-            <input formControlName="password" type="password" name="password" placeholder="Password">
-            <span class="text-danger" *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required','password')">*Password is required!</span>
-            <input formControlName="repassword" type="password" name="password" placeholder="Password">
-            <div>
-              <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
-            </div>
-          </form>
-            <a routerLink="/login">Already have an account? Click to Login!</a>
-          </form>
-  
-        </div>
-  
+
+  </div>
+
+  <div class="login">
+    <div class="container">
+      <h1>Anxiety Knot</h1>
+      <div class="login-form">
+        <form action="">
+          <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+          <input formControlName="username" type="username" name="username"  placeholder="Username">
+          <span class="text-danger" *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">
+            *Username is required!</span>
+
+          <input formControlName="email" type="email" name="email"  placeholder="E-mail Address">
+           <span class="text-danger" *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email')">
+             *Email is required!</span>
+
+           <input formControlName="password" type="password" name="password" placeholder="Password">
+          <span class="text-danger" *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required','password')">
+            *Password is required!</span>
+
+          <input formControlName="repassword" type="password" name="password" placeholder="Password">
+
+          <div>
+            <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+          </div>
+        </form>
+          <a routerLink="/login">Already have an account? Click to Login!</a>
+        </form>
+
       </div>
+
     </div>
   </div>
+</div>

@@ -1,6 +1,13 @@
+import { Component, OnDestroy, OnInit} from "@angular/core";
+import { Subscription } from "rxjs";
+import { AuthService } from "../authenticate/auth.service";
+import { FormGroup, Validators, FormBuilder, FormControl} from "@angular/forms"
+
+
+///AUTH CREATE REDIRECTS TO 'auth.service.ts' WHICH CONTAINS HTTPCLIENT
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,28 +15,40 @@ import { Router } from '@angular/router';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
 
-  public signupForm !: FormGroup;
+  isLoading = false;
+  private authStatusSub: Subscription;
 
-  constructor(private formBuilder : FormBuilder, private http: HttpClient, private router:Router) { }
+public signupForm = new FormGroup (
+  {
+  username: new FormControl ("", Validators.required),
+  email: new FormControl ("", Validators.required),
+  password: new FormControl ("", Validators.required),
+  repassword: new FormControl ("", Validators.required),
+});
 
-  ngOnInit(): void {
-    this.signupForm = this.formBuilder.group({
-      username:['',Validators.required],
-      email:['',Validators.required],
-      password:['',Validators.required]
-    })
+constructor(public authService: AuthService){}
+
+  ngOnInit() {
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
+      _authStatus => {
+        this.isLoading = false;
+      }
+    );
   }
-  signUp(){
-    this.http.post<any>("http://localhost:3000/signupUsers", this.signupForm.value)
-    .subscribe(res=>{
-      alert("Signup Successfull");
-      this.signupForm.reset();
-      this.router.navigate(['login']);
-    },err=>{
-      alert("Something went wrong")
-    })
+
+  onSignup(){
+    if (this.signupForm.invalid) {
+      return;
+    }
+    this.isLoading = true;
+    this.authService.createUser(this.signupForm.value.email, this.signupForm.value.password);
   }
 
+
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
+  }
 }

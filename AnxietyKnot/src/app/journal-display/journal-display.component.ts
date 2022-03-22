@@ -14,9 +14,6 @@ import { AuthService } from "./../authenticate/auth.service";
 import { Router } from "@angular/router";
 
 import { creator } from 'd3';
-
-
-
 import { NewEditComponent } from '../new-edit/new-edit.component';
 
 const allowedEntryLength = 500;

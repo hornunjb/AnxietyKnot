@@ -1,6 +1,16 @@
 
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+
+//import { NgForm, NgModel } from "@angular/forms";
+
+
+
+import { MatCheckbox } from '@angular/material/checkbox';
+
+import { PostsService } from '../posts.service';
+
+
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -247,3 +257,13 @@ constructor(
     this.authStatusSub.unsubscribe();
   }
 }
+
+
+
+
+
+
+
+
+
+

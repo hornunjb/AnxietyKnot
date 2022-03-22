@@ -25,7 +25,7 @@ const routes: Routes = [
     {path:'home', component:HomeComponent,canActivate: [AuthGuard]},
    {path:'journalOption', component:JournalOptionComponent, canActivate: [AuthGuard]},
     {path: 'journalDisplay', component:JournalDisplayComponent, canActivate: [AuthGuard]},
-    
+
   // {path:'journalBook', component:JournalHistoryComponent, canActivate: [AuthGuard]},
     {path:'resource', component:ResourceComponent, canActivate: [AuthGuard]},
     {path:'tracker', component:TrackerComponent, canActivate: [AuthGuard]},

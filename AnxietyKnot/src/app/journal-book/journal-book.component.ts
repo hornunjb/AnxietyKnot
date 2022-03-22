@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Post } from "../post.model";
@@ -10,7 +10,7 @@ const allowedEntryLength = 500;
 @Component({
   selector: 'app-journal-book',
   templateUrl: './journal-book.component.html',
-  styleUrls: ['./journal-book.component.css']
+  styleUrls: ['./journal-book.component.css'],
 })
 export class JournalBookComponent implements OnInit, OnDestroy{
 
@@ -20,8 +20,9 @@ export class JournalBookComponent implements OnInit, OnDestroy{
   userId: string;
   userIsAuthenticated = false;
  // public noHtmlContent: string[] = [];
-  private postsSub: Subscription;
+  private postsSub: Subscription = new Subscription();
   private authStatusSub: Subscription;
+
 
   ///OLD CODE
   //private postsSub: Subscription = new Subscription;
@@ -57,7 +58,7 @@ export class JournalBookComponent implements OnInit, OnDestroy{
         this.userIsAuthenticated = isAuthenticated;
        this.userId = this.authService.getUserId();
       });
-    }
+  }
 
     tipMaker() {
       if (this.posts.length > 0) {
@@ -99,6 +100,11 @@ export class JournalBookComponent implements OnInit, OnDestroy{
     this.authStatusSub.unsubscribe();
   }
 
+  setEntryLength(entryContent) {
+    entryContent.truncate(250);
+    return entryContent;
+  }
 
+ 
 }
 

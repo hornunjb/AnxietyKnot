@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+//import { PromptedEntry } from "../prompted-entry";
+import { Post } from "../post.model";
 
 @Component({
   selector: 'app-journal-history',
@@ -24,4 +26,9 @@ THEESE INFORMATION FOR THE UNPROMPTED AND PROMPTED PAGES ALWAYS SHOW, BUT THESE 
   promptedVisible:boolean = false;
 
 
+}
+interface IJournals{
+    type: string;
+    title: string;
+    id: string;
 }

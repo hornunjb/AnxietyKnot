@@ -40,3 +40,5 @@ describe('JournalBookComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+

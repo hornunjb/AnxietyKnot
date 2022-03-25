@@ -25,9 +25,9 @@ export class CustomValidators {
   /// CONTROL-NAME AND MATCHING-CONTROL-NAME ARE DEFINED IN SIGNUP.COMPONENT.TS
 
   static mustMatch(controlName: string, matchingControlName: string) {
-    return (signupForm: FormGroup) => {
-      const control = signupForm.controls[controlName];
-      const matchingControl = signupForm.controls[matchingControlName];
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
 
       if (matchingControl.errors && !matchingControl.errors.mustMatch) {
         return;

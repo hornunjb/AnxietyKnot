@@ -7,12 +7,14 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { NewEditComponent } from './new-edit/new-edit.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-//import { HeaderComponent } from './header/header.component';
 import { AuthGuard } from "./authenticate/auth.guard";
 import { JournalHistoryComponent } from './journal-history/journal-history.component';
 import { NavComponent } from './nav/nav.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
 import { JournalOptionComponent } from './journal-option/journal-option.component';
+
+//import { HeaderComponent } from './header/header.component';
+
 
 //-canActivate: [AuthGuard] ENSURES UNAUTHORIZED USERS CANNOT MANUALLY ENTER ACCESS POINT IN URL UNLESS LOGGED IN-//
 
@@ -34,6 +36,7 @@ const routes: Routes = [
     {path:'edit-prompted/:entryId', component:PromptedEntryComponent, canActivate: [AuthGuard]},
     {path:'newEdit', component:NewEditComponent, canActivate: [AuthGuard]},
 
+    {path:'header', component:JournalHistoryComponent, canActivate: [AuthGuard]},
 
 
     //{path: 'testpath', component:JournalDisplayComponent},

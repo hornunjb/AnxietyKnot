@@ -1,8 +1,10 @@
 .save-button {
   margin-top: 3em;
   margin-right: 8px;
+  float: right;
   color: rgb(241, 245, 245);
 }
+
 
 .datepicker{
 margin-left: 8px;
@@ -44,3 +46,6 @@ mat-icon {
   margin-right: 2%;
 }
 
+.grid-container {
+  margin: 20px;
+}

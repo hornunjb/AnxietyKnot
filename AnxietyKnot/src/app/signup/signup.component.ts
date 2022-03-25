@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit} from "@angular/core";
 import { Subscription } from "rxjs";
 import { AuthService } from "../authenticate/auth.service";
-import { FormGroup, Validators, FormControl} from "@angular/forms"
+import { FormGroup, Validators, FormControl, NgForm} from "@angular/forms"
+//--FORM CONTROL AND FORM GROUP CANNOT BE USED WITH NGFORM--//
+
 import { CustomValidators } from '../providers/CustomValidators';
 ///AUTH CREATE REDIRECTS TO 'auth.service.ts' WHICH CONTAINS HTTPCLIENT
 
@@ -18,7 +20,7 @@ import { CustomValidators } from '../providers/CustomValidators';
 export class SignupComponent implements OnInit, OnDestroy {
 
 
-  success = '';
+ // success = '';
   submitted = false;
   isLoading = false;
   private authStatusSub: Subscription;
@@ -47,9 +49,10 @@ constructor(public authService: AuthService){}
       });
     }
 
-  get f() {
-    return this.signupForm.controls;
-  }
+    // convenience getter for easy access to form fields
+  //get f() {
+ //   return this.signupForm.controls;
+ // }
 
   onSignup(){
     this.submitted = true;
@@ -57,12 +60,14 @@ constructor(public authService: AuthService){}
       return;
     }
     this.isLoading = true;
+   // this.success = JSON.stringify(this.signupForm.value);
+
     this.authService
       .createUser(
         this.signupForm.value.email, this.signupForm.value.password
-    );
-    this.success = JSON.stringify(this.signupForm.value);
-  }
+    )
+      }
+
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

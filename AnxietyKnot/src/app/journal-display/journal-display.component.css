@@ -1,7 +1,7 @@
 
 mat-spinner {
   margin: auto;
-} 
+}
 
 .journal-card{
   width: 100%;
@@ -11,6 +11,7 @@ mat-spinner {
   border-radius: 12px;
   border: hidden;
   transition-duration: 0.4s;
+  position: inherit;
 }
 
 .journal-card:hover{
@@ -19,12 +20,14 @@ background-color: rgb(127, 142, 218);
 
 .card-style{
 border-radius: 12px;
+text-align-last: calc();
+
 }
 
 .flex-container{
 display: flex;
-height: (100vh - 64px);
-width: (100vw - 200px);
+height: 100%;
+width: 100%;
 }
 
 .flex-child.display{
@@ -36,6 +39,7 @@ max-height: 100vh;
 overflow-y: scroll;
 scrollbar-color: rgb(224, 233, 231) white;
 scrollbar-width: thin;
+
 }
 .flex-child.edit{
 flex: 2;
@@ -47,7 +51,6 @@ width: auto;
 align-items: center;
 align-content: center;
 justify-content: center;
-
 background-size: cover;
 background-image: url("../../assets/images/bg2.jpg");
 opacity: 0.75;

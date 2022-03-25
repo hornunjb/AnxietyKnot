@@ -45,7 +45,6 @@ import {MatSelectModule} from '@angular/material/select';
 import {LoginComponent} from "./login/login.component";
 import { SignupComponent } from './signup/signup.component';
 import { AuthInterceptor } from "./authenticate/auth-interceptor";
-import { HeaderComponent } from './header/header.component';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from "./error/error.component";
@@ -59,6 +58,7 @@ import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.compo
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
 import { JournalOptionComponent } from './journal-option/journal-option.component';
+//import { HeaderComponent } from './header/header.component';
 
 
 
@@ -77,14 +77,15 @@ import { JournalOptionComponent } from './journal-option/journal-option.componen
     PromptedEntryComponent,
     LoginComponent,
     SignupComponent,
-    HeaderComponent,
     ErrorComponent,
     JournalHistoryComponent,
     EntryListComponent,
     FeelingsDialogComponent,
     DistortionDialogComponent,
     JournalDisplayComponent,
-    JournalOptionComponent
+    JournalOptionComponent,
+   // HeaderComponent,
+
 
   ],
   imports: [

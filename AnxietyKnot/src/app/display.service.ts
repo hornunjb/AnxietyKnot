@@ -212,16 +212,18 @@ getEntry(id: string) {
       date: Date;
       title: string;
       content: string;
+      mood: string;
       creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }
 
-  addPost(date: Date, title: string, content: string) {
+  addPost(date: Date, title: string, content: string, mood: string) {
     const post: Post = {
       id: "",
       date: date,
       title: title,
       content: content,
+      mood: mood,
       creator: null
     };
     this.http
@@ -237,12 +239,13 @@ getEntry(id: string) {
   }
 
   // POST UPDATE ON POST EDIT
-  updatePost(id: string, date: Date, title: string, content: string) {
+  updatePost(id: string, date: Date, title: string, content: string, mood: string) {
     const post: Post = {
       id: id,
       date: date,
       title: title,
       content: content,
+      mood: mood,
       creator: null
      };
     this.http.put("http://localhost:3000/api/posts/" + id, post)

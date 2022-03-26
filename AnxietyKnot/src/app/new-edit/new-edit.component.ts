@@ -166,6 +166,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
               date: postData.date,
               title: postData.title,
               content: postData.content,
+              mood: this.value,
               creator: postData.creator
             };
             /// THIS DOESNT SEEM TO HAVE ANY IMPACT IF REMOVED BUT KEEP FOR DATE
@@ -193,7 +194,8 @@ export class NewEditComponent implements OnInit, OnDestroy{
         this.postsService.addPost(
           date,
           this.myForm.value['title'],
-          this.myForm.value['body']
+          this.myForm.value['body'],
+          this.value
           );
       }
       else {
@@ -201,7 +203,8 @@ export class NewEditComponent implements OnInit, OnDestroy{
           this.postId,
           date,
           this.myForm.value['title'],
-          this.myForm.value['body']
+          this.myForm.value['body'],
+          this.value
           );
       }
       this.myForm.reset();

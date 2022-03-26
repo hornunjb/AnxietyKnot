@@ -33,3 +33,13 @@ body { margin: 0; font-family: 'lato', Roboto, "Helvetica Neue", sans-serif !imp
 .example-spacer {
   flex: 1 1 auto;
 }
+
+
+.blue-snackbar {
+  background: #5bc0de;
+  color: black;
+}
+
+.blue-snackbar button {
+  color: black;
+}

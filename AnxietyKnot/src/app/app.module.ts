@@ -108,6 +108,7 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     MatCheckboxModule,
     MatSelectModule,
     MatTabsModule,
+    MatSnackBarModule,
     //MatPaginatorModule,
     MatProgressSpinnerModule,
     MatButtonToggleModule,

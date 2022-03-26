@@ -15,6 +15,11 @@ import { creator } from 'd3';
 
 import { NewEditComponent } from '../new-edit/new-edit.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 const allowedEntryLength = 500;
 
@@ -53,7 +58,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {  }
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -108,6 +114,14 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       });
   }
 
+  openSnackBar(tip, action) {
+    this._snackBar.open(tip, action, {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['blue-snackbar'],
+    });
+  }
+
   selectCard(display: journalDisplay) {
     if (display.what_happened) {
       document.getElementById('prompted-edit').style.display = 'block';
@@ -129,7 +143,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     return parsedContent;
   }
 
-  refreshPage(postId){
+  refreshPage() {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
@@ -175,7 +189,6 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
     this.authStatusSub.unsubscribe();
     this.displaysSub.unsubscribe();
   }

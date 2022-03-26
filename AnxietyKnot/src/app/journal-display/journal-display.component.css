@@ -1,55 +1,53 @@
-
 mat-spinner {
   margin: auto;
 }
 
-.journal-card{
+.journal-card {
   width: 100%;
 }
 
-
-.flex-container{
-display: flex;
-height: (100vh - 64px);
-width: (100vw - 200px);
+.flex-container {
+  display: flex;
+  height: (100vh - 64px);
+  width: (100vw - 200px);
 }
 
-.flex-child.display{
-flex: 1;
-margin: 0 0 0 0;
-padding: 0 0 0 10px;
-overflow-y:auto;
-max-height: 100vh;
+.flex-child.display {
+  flex: 1;
+  margin: 0 0 0 0;
+  padding: 0 0 0 10px;
+  overflow-y: auto;
+  max-height: 100vh;
 }
-.flex-child.edit{
-flex: 2;
-margin: 0 0 0 0;
-padding: 0 0 0 0;
-overflow-y:auto;
-max-height: 100vh;
-width: auto;
+.flex-child.edit {
+  flex: 2;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  overflow-y: auto;
+  max-height: 100vh;
+  width: auto;
 }
-#prompted-edit{
-display: none;
+#prompted-edit {
+  display: none;
 }
-#unprompted-edit{
-display: none;
+#unprompted-edit {
+  display: none;
 }
 
 .tip {
-  border-style: dotted;
-  border-radius: 5px;
-  border-width: 2px;
-  margin: 20px;
-  padding: 10px;
-  border-color: dimgray;
+  background-color: rgba(138, 200, 50);
+  z-index: 1;
+  right: 0;
+  margin-right: 5%;
+  margin-top: 2%;
+  position: absolute;
 }
 
 .wave {
-  animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
-  animation-duration: 2.5s;        /* Change to speed up or slow down */
-  animation-iteration-count: infinite;  /* Never stop waving :) */
-  transform-origin: 70% 70%;       /* Pivot around the bottom-left palm */
+  animation-name: wave-animation; /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.5s; /* Change to speed up or slow down */
+  animation-iteration-count: infinite; /* Never stop waving :) */
+  transform-origin: 70% 70%; /* Pivot around the bottom-left palm */
   display: inline-block;
   font-size: 20px;
 }
@@ -75,13 +73,28 @@ display: none;
 }
 
 @keyframes wave-animation {
-    0% { transform: rotate( 0.0deg) }
-   10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
-   20% { transform: rotate(-8.0deg) }
-   30% { transform: rotate(14.0deg) }
-   40% { transform: rotate(-4.0deg) }
-   50% { transform: rotate(10.0deg) }
-   60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
-  100% { transform: rotate( 0.0deg) }
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  } /* The following five values can be played with to make the waving more or less extreme */
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  } /* Reset for the last half to pause */
+  100% {
+    transform: rotate(0deg);
+  }
 }
-

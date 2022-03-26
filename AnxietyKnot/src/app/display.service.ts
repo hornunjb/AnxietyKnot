@@ -177,7 +177,7 @@ getEntry(id: string) {
           return {
             id: post._id,
             date: post.date,
-
+            mood: post.mood,
             title: post.title,
             content: post.content,
             creator: post.creator

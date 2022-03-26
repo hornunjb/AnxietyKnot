@@ -26,6 +26,7 @@ export class PostsService {
             date: post.date,
             title: post.title,
             content: post.content,
+            mood: post.mood,
             creator: post.creator
           };
         }),
@@ -58,6 +59,7 @@ export class PostsService {
       date: Date;
       title: string;
       content: string;
+      mood: string;
       creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }

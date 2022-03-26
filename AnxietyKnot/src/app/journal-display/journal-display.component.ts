@@ -1,25 +1,14 @@
-import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-
 import { EntryService } from '../entry.service';
 import { PostsService } from '../posts.service';
 import { DisplayService } from '../display.service';
-
 import { Post } from '../post.model';
 import { PromptedEntry } from '../prompted-entry.model';
 import { journalDisplay } from '../journalDisplay.model';
-
 import { AuthService } from './../authenticate/auth.service';
-import { creator } from 'd3';
-
-import { NewEditComponent } from '../new-edit/new-edit.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const allowedEntryLength = 500;
 
@@ -31,23 +20,17 @@ const allowedEntryLength = 500;
 export class JournalDisplayComponent implements OnInit, OnDestroy {
   editPostId = ' ';
   editEntryId = ' ';
-
   tip: string = '';
   isLoading = false;
   userId: string;
   userIsAuthenticated = false;
-
-  private postsSub: Subscription;
-  private entriesSub: Subscription;
   private displaysSub: Subscription;
   private authStatusSub: Subscription;
-
   posts: Post[] = [];
   entries: PromptedEntry[] = [];
   displays: journalDisplay[] = [];
   tipTracking: any = [];
   thisUsersEntries: any = [];
-
   public noHtmlContent: string[] = [];
   counter: number = 0;
 
@@ -63,8 +46,6 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-
-    // getEntries() located in 'entry.service.ts'
     this.displayService.getEntries();
     this.userId = this.authService.getUserId();
     this.displaysSub = this.displayService
@@ -74,8 +55,6 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         entries.forEach((Element) => {
           Element.date = new Date(Element.date);
-          //console.log(typeof(Element.date))
-          // console.log(Element.date)
           var x = [
             Element.id,
             Element.date,
@@ -86,10 +65,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
           this.displays.sort((a, b) => a.title.localeCompare(b.title));
         });
       });
-
     this.isLoading = true;
-    // getPosts() located in 'posts.service.ts'
-
     this.displayService.getPosts();
     this.userId = this.authService.getUserId();
     this.displaysSub = this.displayService
@@ -104,7 +80,6 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
           this.displays.sort((a, b) => a.title.localeCompare(b.title));
         });
       });
-
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListener()
@@ -150,39 +125,13 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     this.router.navigate([currentUrl]);
   }
 
-  /* onUpdateEntry
-
-
-
-
-*/
-
-  /* onUpdatePost(Id: string){
-
-      this.postsService.updatePost(Id);
-      const updateIndex = this.displays.findIndex( item => item.id === Id );
-      this.displays.splice( updateIndex, 1 );
-
-    };
-
-
-
-
-
-*/
-
   onDeleteEntry(Id: string) {
-    // METHOD CALLED FROM entry.service.ts
-    // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE ENTRIES
     this.entriesService.deleteEntry(Id);
-
     const removeIndex = this.displays.findIndex((item) => item.id === Id);
     this.displays.splice(removeIndex, 1);
   }
 
   onDeletePost(Id: string) {
-    //METHOD CALLED FROM posts.service.ts
-    // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE POSTS
     this.postsService.deletePost(Id);
     const removeIndex = this.displays.findIndex((item) => item.id === Id);
     this.displays.splice(removeIndex, 1);

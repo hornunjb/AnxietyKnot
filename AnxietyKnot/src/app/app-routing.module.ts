@@ -9,7 +9,6 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 //import { HeaderComponent } from './header/header.component';
 import { AuthGuard } from "./authenticate/auth.guard";
-import { JournalHistoryComponent } from './journal-history/journal-history.component';
 import { NavComponent } from './nav/nav.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
 
@@ -21,7 +20,6 @@ const routes: Routes = [
   {path: '', component:NavComponent, children:[
 
     {path:'home', component:HomeComponent,canActivate: [AuthGuard]},
-   {path:'journalBook', component:JournalDisplayComponent, canActivate: [AuthGuard]},
     {path:'resource', component:ResourceComponent, canActivate: [AuthGuard]},
     {path:'tracker', component:TrackerComponent, canActivate: [AuthGuard]},
     {path:'prompted-entry', component:PromptedEntryComponent, canActivate: [AuthGuard]},

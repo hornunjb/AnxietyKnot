@@ -1,5 +1,6 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
+
 <div>
   {{ displayCounter(displays) }}
 </div>
@@ -60,6 +61,6 @@
       id="prompted-edit"
       [editEntryId]="editEntryId"
     ></app-prompted-entry>
-    <app-new-edit id="unprompted-edit" [editPostId]="editPostId"></app-new-edit>
+    <app-new-edit (newData)="refreshPage()" id="unprompted-edit"  [editPostId]="editPostId" ></app-new-edit>
   </div>
 </div>

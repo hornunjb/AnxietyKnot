@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 
 
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AsyncSubject, Subject, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
@@ -19,6 +19,8 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import * as _moment from 'moment';
+import { DisplayService } from '../display.service';
+import { EventEmitter } from '@angular/core';
 const moment = _moment;
 
 @Component({
@@ -36,11 +38,14 @@ const moment = _moment;
 })
 export class NewEditComponent implements OnInit, OnDestroy{
 
+  @Output() newData: EventEmitter<any> = new EventEmitter();
 
   @Input() editPostId = ' ';
   ngOnChanges(){
     this.ngOnInit();
   }
+
+
 
   date = new FormControl(moment());
 
@@ -97,6 +102,9 @@ export class NewEditComponent implements OnInit, OnDestroy{
      public route: ActivatedRoute,
      private dialogRef: MatDialog,
      private authService: AuthService,
+     public displayService: DisplayService,
+     private router: Router,
+     private activatedRoute: ActivatedRoute,
 
      ) {}
 
@@ -169,6 +177,11 @@ export class NewEditComponent implements OnInit, OnDestroy{
           );
       }
       this.myForm.reset();
+      let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
+      this.newData.emit();
     }
 
      // USED TO PREVENT LOADING ISSUES DUE TO FAILURE

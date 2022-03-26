@@ -14,6 +14,7 @@ import { AuthService } from './../authenticate/auth.service';
 import { creator } from 'd3';
 
 import { NewEditComponent } from '../new-edit/new-edit.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const allowedEntryLength = 500;
 
@@ -49,8 +50,10 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     public entriesService: EntryService,
     public postsService: PostsService,
     public displayService: DisplayService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {  }
 
   ngOnInit() {
     this.isLoading = true;
@@ -103,7 +106,6 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
-
   }
 
   selectCard(display: journalDisplay) {
@@ -125,6 +127,13 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       return parsedContent.slice(0, allowedEntryLength) + '...';
     }
     return parsedContent;
+  }
+
+  refreshPage(postId){
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
   /* onUpdateEntry
@@ -166,8 +175,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.postsSub.unsubscribe();
-    // this.entriesSub.unsubscribe();
+
     this.authStatusSub.unsubscribe();
     this.displaysSub.unsubscribe();
   }

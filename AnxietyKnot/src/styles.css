@@ -43,7 +43,3 @@ body { margin: 0; font-family: 'lato', Roboto, "Helvetica Neue", sans-serif !imp
 .blue-snackbar button {
   color: black;
 }
-
-.mat-snack-bar-container {
-  opacity: 0.9 !important;
-}

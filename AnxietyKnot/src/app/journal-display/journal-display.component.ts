@@ -114,8 +114,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       });
   }
 
-  openSnackBar() {
-    this._snackBar.open('Lorem ipsum and lorem ipsum', 'X', {
+  openSnackBar(tip, action) {
+    this._snackBar.open(tip, action, {
       horizontalPosition: 'center',
       verticalPosition: 'top',
       panelClass: ['blue-snackbar'],
@@ -143,7 +143,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     return parsedContent;
   }
 
-  refreshPage(postId) {
+  refreshPage() {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';

@@ -4,8 +4,12 @@
   {{ displayCounter(displays) }}
 </div>
 
-<div *ngIf="counter == 2;">
-  <button class="tip" mat-mini-fab (click)="openSnackBar();"><span class="wave">👋</span></button>
+<div *ngIf="counter > 2 && counter < 4;">
+  <button class="tip" mat-mini-fab (click)="openSnackBar('Visualization techniques, meditation and yoga are examples of relaxation techniques that can ease anxiety.', 'X');"><span class="wave">👋</span></button>
+</div>
+
+<div *ngIf="counter > 4 && counter < 6;">
+  <button class="tip" mat-mini-fab (click)="openSnackBar('Do what you can to make sure you are getting enough sleep to feel rested.', 'X');"><span class="wave">👋</span></button>
 </div>
 
 <div

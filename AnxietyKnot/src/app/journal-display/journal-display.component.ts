@@ -40,6 +40,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
   entries: PromptedEntry[] = [];
   displays: journalDisplay[] = [];
   tipTracking: any = [];
+  thisUsersEntries: any = [];
 
   public noHtmlContent: string[] = [];
   counter: number = 0;
@@ -102,6 +103,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+
   }
 
   selectCard(display: journalDisplay) {
@@ -177,9 +179,11 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
 
   displayCounter(displays) {
     this.counter = 0;
+    this.thisUsersEntries = [];
     for (var i = 0; i < displays.length; i++) {
       if (this.userIsAuthenticated && this.userId == displays[i].creator) {
         this.counter++;
+        this.thisUsersEntries.push(displays[i]);
       }
     }
   }

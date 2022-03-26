@@ -21,6 +21,7 @@ import {
 import * as _moment from 'moment';
 import { DisplayService } from '../display.service';
 import { EventEmitter } from '@angular/core';
+import { filter } from 'rxjs/operators';
 const moment = _moment;
 
 @Component({
@@ -50,7 +51,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
   date = new FormControl(moment());
 
 
-  value = 0;
+  value = '';
   ratingCount = 10;
   enteredTitle = "";
   enteredContent = "";
@@ -88,9 +89,36 @@ export class NewEditComponent implements OnInit, OnDestroy{
 
 
 
-  openDialog() {
-    this.dialogRef.open(PopupComponent);
+  async openDialog() {
+    const dialogRef = this.dialogRef.open(PopupComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.value = result;
+      console.log(this.value);
+    });
+    await dialogRef.afterClosed().toPromise();
+    let date = this.date.value.toDate();
+    if (this.myForm.invalid) {
+      return;
+    }
+    if (this.mode === 'create') {
+      this.postsService.addPost(
+        date,
+        this.myForm.value['title'],
+        this.myForm.value['body'],
+        this.value
+      );
+    } else {
+      this.postsService.updatePost(
+        this.postId,
+        date,
+        this.myForm.value['title'],
+        this.myForm.value['body'],
+        this.value
+      );
+    }
   }
+
 
   handleEditorInit(e) {
     this.editorSubject.next(e.editor);

@@ -1,6 +1,5 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-
 <div>
   {{ displayCounter(displays) }}
 </div>
@@ -61,6 +60,13 @@
       id="prompted-edit"
       [editEntryId]="editEntryId"
     ></app-prompted-entry>
-    <app-new-edit (newData)="refreshPage()" id="unprompted-edit"  [editPostId]="editPostId" ></app-new-edit>
+    <app-new-edit
+      (newData)="refreshPage()"
+      id="unprompted-edit"
+      [editPostId]="editPostId"
+    ></app-new-edit>
+    <div class="nothingSelected" *ngIf="!(editPostId.length > 5 || editEntryId.length > 5)">
+      <div class="nothingSelectedChild">Select an entry to get started!</div>
+    </div>
   </div>
 </div>

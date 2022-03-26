@@ -54,6 +54,26 @@ display: none;
   font-size: 20px;
 }
 
+.nothingSelected {
+  font-family: arial;
+  font-size: 24px;
+  margin: 20%;
+  height: 200px;
+  /* Setup */
+  position: relative;
+}
+
+.nothingSelectedChild {
+  height: 50px;
+  width: 100%;
+  /* Center vertically and horizontally */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
 @keyframes wave-animation {
     0% { transform: rotate( 0.0deg) }
    10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */

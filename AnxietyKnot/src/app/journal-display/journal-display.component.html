@@ -27,7 +27,7 @@
       >
         <mat-card *ngIf="posts.length > 0">
           <mat-card-subtitle
-            >{{ display.date }} Journal Entry</mat-card-subtitle
+            >{{ display.date | date:'fullDate' }}</mat-card-subtitle
           >
           <mat-card-title>{{ display.title }}</mat-card-title>
           <mat-card-content>

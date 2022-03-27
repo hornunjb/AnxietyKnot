@@ -210,7 +210,7 @@ constructor(
   onSaveEntry(form: NgForm) {
 
     // openDialog redirects user back to entry-list page after entry create, edit or delete
-    this.openDialog();
+    
     let date = this.date.value.toDate();
     if (form.invalid) {
       return;

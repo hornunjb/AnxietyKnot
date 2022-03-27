@@ -54,21 +54,22 @@
       <span>Anxiety Knot</span>
       <span class="example-spacer"></span>
       <button class="new-button" mat-button color="warn" routerLink="/journalOption">New Journal</button>
-      <button class="logout-button" mat-button color="warn" routerLink="/login">Log out</button>
+      
       <!-- <button mat-icon-button> <svg style="padding-right: 0.5rem; padding-bottom: 0.1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
       </svg>
       <a routerLink="/login">Log out</a></button> -->
 
-      <button *ngIf="userIsAuthenticated" mat-icon-button > <svg style="padding-right: 0.5rem; padding-bottom: 0.1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+      <!-- <button *ngIf="userIsAuthenticated" mat-icon-button > <svg style="padding-right: 0.5rem; padding-bottom: 0.1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
       </svg>
-      Account</button>
+      Account</button> -->
 
-      <button *ngIf="userIsAuthenticated" mat-button (click)="onLogout()">
-        <svg style="padding-right: 0.5rem; padding-bottom: 0.1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+      <button class="logout-button" *ngIf="userIsAuthenticated" mat-button (click)="onLogout()">
+        <!-- <svg style="padding-right: 0.5rem; padding-bottom: 0.1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
           <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-      </svg>Logout</button>
+      </svg> -->
+      Logout</button>
 
     </mat-toolbar>
 

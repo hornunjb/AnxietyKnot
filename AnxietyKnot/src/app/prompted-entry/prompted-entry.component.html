@@ -168,7 +168,7 @@
                 placeholder="Change your thoughts" #thinking_differently="ngModel"></textarea>
               <mat-error *ngIf="thinking_differently.invalid">Please describe how you can think differently.</mat-error>
             </mat-form-field>
-            <button class="savebutton"mat-raised-button  type="submit" [disabled]="!postForm.valid">Save Entry</button>
+            <button class="savebutton"mat-raised-button  (click)="openDialog()" type="submit" [disabled]="!postForm.valid">Save Entry</button>
             <button class="stepbutton" mat-button matStepperPrevious>Back</button>
           </div>
         </mat-step>

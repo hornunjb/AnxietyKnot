@@ -1,88 +1,117 @@
-import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EntryService } from '../entry.service';
-import { journalDisplay } from '../journalDisplay.model';
-import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
-import { PromptedEntry } from '../prompted-entry';
-import { NewEditComponent } from '../new-edit/new-edit.component';
+import { DisplayService } from '../display.service';
+import { Post } from '../post.model';
+import { PromptedEntry } from '../prompted-entry.model';
+import { journalDisplay } from '../journalDisplay.model';
+import { AuthService } from './../authenticate/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TrackerService } from '../tracker.service';
 
 const allowedEntryLength = 500;
 
 @Component({
   selector: 'app-journal-display',
   templateUrl: './journal-display.component.html',
-  styleUrls: ['./journal-display.component.css']
+  styleUrls: ['./journal-display.component.css'],
 })
-export class JournalDisplayComponent implements OnInit {
-
-  posts: Post[] = [];
-  entries: PromptedEntry[] = [];
-
+export class JournalDisplayComponent implements OnInit, OnDestroy {
   editPostId = ' ';
   editEntryId = ' ';
-
-  displays: journalDisplay[] = [];
-  private entriesSub: Subscription = new Subscription;
-
-  public noHtmlContent: string[] = [];
-  private postsSub: Subscription = new Subscription();
   tip: string = '';
+  isLoading = false;
+  userId: string;
+  userIsAuthenticated = false;
+  private displaysSub: Subscription;
+  private authStatusSub: Subscription;
+  posts: Post[] = [];
+  entries: PromptedEntry[] = [];
+  displays: journalDisplay[] = [];
+  tipTracking: any = [];
+  thisUsersEntries: any = [];
+  thisUserDates: any = [];
+  public noHtmlContent: string[] = [];
+  counter: number = 0;
 
-  constructor(public entriesService: EntryService,
-    public postsService: PostsService) { }
-
+  constructor(
+    public entriesService: EntryService,
+    public postsService: PostsService,
+    public displayService: DisplayService,
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private _snackBar: MatSnackBar,
+    private trackerService: TrackerService
+  ) {}
 
   ngOnInit() {
-
-    this.entriesService.getEntries();
-    this.entriesSub = this.entriesService.getEntryUpdateListener()
-    .subscribe((entries: PromptedEntry[]) => {
-      entries.forEach(Element =>{
-        Element.date = new Date(Element.date)
-        console.log(typeof(Element.date))
-        console.log(Element.date)
+    this.isLoading = true;
+    this.displayService.getEntries();
+    this.userId = this.authService.getUserId();
+    this.displaysSub = this.displayService
+      .getEntryUpdateListener()
+      .subscribe((entries: PromptedEntry[]) => {
+        this.entries = entries;
+        this.isLoading = false;
+        entries.forEach((Element) => {
+          Element.date = new Date(Element.date);
+          var x = [
+            Element.id,
+            Element.date,
+            Element.title,
+            Element.what_happened,
+          ];
+          this.displays.push(Element);
+          this.displays.sort((a, b) => a.title.localeCompare(b.title));
+        });
       });
-      this.entries = entries;
-      this.entries.forEach(Element =>{
-        var x = [Element.id, Element.date, Element.title, Element.what_happened];
-        this.displays.push(Element);
-      });
-      //this.displays.sort((x, y) => y.date.getDate() - x.date.getDate());
-
-      // this.display.sort((first, second) =>
-      // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
-      this.displays.sort((a, b) => a.title.localeCompare(b.title))
-
-    });
-
-    this.postsService.getPosts();
-    this.postsSub = this.postsService
+    this.isLoading = true;
+    this.displayService.getPosts();
+    this.userId = this.authService.getUserId();
+    this.displaysSub = this.displayService
       .getPostUpdateListener()
       .subscribe((posts: Post[]) => {
-        posts.forEach(Element =>{
-          Element.date = new Date(Element.date)
-
-        });
+        this.isLoading = false;
         this.posts = posts;
-
-        this.posts.forEach(Element =>{
+        posts.forEach((Element) => {
+          Element.date = new Date(Element.date);
           var x = [Element.id, Element.date, Element.title, Element.content];
           this.displays.push(Element);
+          this.displays.sort((a, b) => a.title.localeCompare(b.title));
         });
-
-        //this.displays.sort((x, y) => y.date.getDate() - x.date.getDate());
-        this.displays.sort((a, b) => a.title.localeCompare(b.title))
-
-      })
-
-
-
+      });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+      });
   }
-  //testing sorting by int, will change to sort by date
-  // sort_entries = this.entries.sort((first, second) =>
-  // 0 - (first.intensity1 > second.intensity1 ? -1 : 1));
+
+  openSnackBar(tip, action) {
+    this._snackBar.open(tip, action, {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['blue-snackbar'],
+    });
+  }
+
+  selectCard(display: journalDisplay) {
+    if (display.what_happened) {
+      document.getElementById('prompted-edit').style.display = 'block';
+      document.getElementById('unprompted-edit').style.display = 'none';
+      this.editEntryId = display.id;
+    } else {
+      document.getElementById('prompted-edit').style.display = 'none';
+      document.getElementById('unprompted-edit').style.display = 'block';
+
+      this.editPostId = display.id;
+    }
+  }
 
   replace(content: any) {
     var parsedContent = content.replace(/<[^>]+>/g, '');
@@ -92,48 +121,28 @@ export class JournalDisplayComponent implements OnInit {
     return parsedContent;
   }
 
-  // editPost(Id: string){
-  //   this.editPostId = Id;
-  //   // document.getElementById("edit").style.display = "block";
-  // }
-
-  // editEntry(Id: string){
-  //   this.editEntryId = Id;
-  //   // document.getElementById("edit").style.display = "block";
-  // }
-
-  selectCard(display: journalDisplay){
-    if(display.what_happened){
-      document.getElementById("prompted-edit").style.display = 'block';
-      document.getElementById("unprompted-edit").style.display = 'none';
-      this.editEntryId = display.id;
-    }else{
-      document.getElementById("prompted-edit").style.display = 'none';
-      document.getElementById("unprompted-edit").style.display = 'block';
-      this.editPostId = display.id;
-    }
+  refreshPage() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
-  onDeleteEntry(Id: string ) {
-    //may need to change to be more efficient
+  onDeleteEntry(Id: string) {
     this.entriesService.deleteEntry(Id);
-
-    const removeIndex = this.displays.findIndex( item => item.id === Id );
-    this.displays.splice( removeIndex, 1 );
+    const removeIndex = this.displays.findIndex((item) => item.id === Id);
+    this.displays.splice(removeIndex, 1);
   }
-  onDeletePost(Id: string ) {
-    //may need to change to be more efficient
+
+  onDeletePost(Id: string) {
     this.postsService.deletePost(Id);
-
-
-    const removeIndex = this.displays.findIndex( item => item.id === Id );
-    this.displays.splice( removeIndex, 1 );
+    const removeIndex = this.displays.findIndex((item) => item.id === Id);
+    this.displays.splice(removeIndex, 1);
   }
-
 
   ngOnDestroy() {
-    this.entriesSub.unsubscribe();
-    this.postsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
+    this.displaysSub.unsubscribe();
   }
 
   setEntryLength(entryContent) {
@@ -141,25 +150,16 @@ export class JournalDisplayComponent implements OnInit {
     return entryContent;
   }
 
-  tipMaker() {
-    if (this.displays.length > 0) {
-      if (this.displays.length > 10) {
-        this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
-        return true;
-      }
-      if (this.displays.length == 5) {
-        this.tip = "Nicotine and caffeine can worsen anxiety.";
-        return true;
+  displayCounter(displays) {
+    this.counter = 0;
+    this.thisUsersEntries = [];
+    for (var i = 0; i < displays.length; i++) {
+      if (this.userIsAuthenticated && this.userId == displays[i].creator) {
+        this.counter++;
+        this.thisUsersEntries.push(parseInt((displays[i].mood)));
+        this.trackerService.addMoods(this.thisUsersEntries);
+        console.log(this.thisUsersEntries);
       }
     }
-    return false;
   }
 }
-
-
-
-
-
-
-
-

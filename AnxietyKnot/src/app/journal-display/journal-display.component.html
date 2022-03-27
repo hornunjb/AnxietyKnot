@@ -1,42 +1,78 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
 
-  <!-- <div class="tip" *ngIf="tipMaker()">
-    <h3>Hey there! <span class="wave">👋</span></h3>
-    <p>
-    {{ tip }}
-    </p>
-  </div> -->
-<div id="body" class="flex-container">
-<div id="display-list" class="flex-child display">
+<div>
+  {{ displayCounter(displays) }}
+</div>
+
+<div *ngIf="counter > 2 && counter < 4;">
+  <button class="tip" mat-mini-fab (click)="openSnackBar('Visualization techniques, meditation and yoga are examples of relaxation techniques that can ease anxiety.', 'X');"><span class="wave">👋</span></button>
+</div>
+
+<div *ngIf="counter > 4 && counter < 6;">
+  <button class="tip" mat-mini-fab (click)="openSnackBar('Do what you can to make sure you are getting enough sleep to feel rested.', 'X');"><span class="wave">👋</span></button>
+</div>
+
+<div
+  id="body"
+  class="flex-container"
+  multi="true"
+  *ngIf="posts.length > 0 && !isLoading"
+>
+  <div id="display-list" class="flex-child display">
     <div *ngFor="let display of displays">
-      <button class="journal-card"  (click)="selectCard(display)">
-
-        <mat-card class="card-style">
-          <mat-card-subtitle>{{ display.date | date:'fullDate' }}</mat-card-subtitle>
+      <button
+        class="journal-card"
+        (click)="selectCard(display)"
+        *ngIf="userIsAuthenticated && userId === display.creator"
+      >
+        <mat-card *ngIf="posts.length > 0">
+          <mat-card-subtitle
+            >{{ display.date }} Journal Entry</mat-card-subtitle
+          >
           <mat-card-title>{{ display.title }}</mat-card-title>
           <mat-card-content>
-              <p *ngIf="display.what_happened != null">{{ replace(display.what_happened) }}</p>
-              <p *ngIf="display.content != null">{{ replace(display.content) }}</p>
+            <p *ngIf="display.what_happened != null">
+              {{ replace(display.what_happened) }}
+            </p>
+            <p *ngIf="display.content != null">
+              {{ replace(display.content) }}
+            </p>
           </mat-card-content>
+
           <mat-divider inset></mat-divider>
+
           <mat-card-actions *ngIf="display.what_happened != null">
             <!-- <button *ngIf="display.what_happened != null" mat-button color="primary" (click)="editEntry(display.id)" (editEntryId)="display.Id">EDIT</button> -->
 
-            <button class="delete-button" mat-button color="warn" (click)="onDeleteEntry(display.id)">DELETE</button>
+            <button class="delete-button" mat-button color="warn" (click)="onDeleteEntry(display.id)">
+              DELETE
+            </button>
           </mat-card-actions>
           <mat-card-actions *ngIf="display.content != null">
-                <!-- <button  mat-button color="primary" (click)="editPost(display.id)" (editPostId)="display.Id" >EDIT</button> -->
-                <button class="delete-button" mat-button color="warn" (click)="onDeletePost(display.id)">DELETE</button>
-            </mat-card-actions>
-
+            <!--    <button  mat-button color="primary" [routerLink]="['/edit',display.id]" >EDIT</button> -->
+            <button class="delete-button" mat-button color="warn" (click)="onDeletePost(display.id)">
+              DELETE
+            </button>
+          </mat-card-actions>
         </mat-card>
-
       </button>
+    </div>
   </div>
-</div>
   <div id="edit" class="flex-child edit">
-    <app-prompted-entry id="prompted-edit" [editEntryId]= 'editEntryId'></app-prompted-entry>
-    <app-new-edit id="unprompted-edit" [editPostId]= 'editPostId'></app-new-edit>
+    <app-prompted-entry
+      id="prompted-edit"
+      [editEntryId]="editEntryId"
+    ></app-prompted-entry>
+    <app-new-edit
+      (newData)="refreshPage()"
+      id="unprompted-edit"
+      [editPostId]="editPostId"
+    ></app-new-edit>
+    <div
+      class="nothingSelected"
+      *ngIf="!(editPostId.length > 5 || editEntryId.length > 5)"
+    >
+      <div class="nothingSelectedChild">Select an entry to get started!</div>
+    </div>
   </div>
-
 </div>
-<!-- [routerLink]="['/edit', display.id]" -->

@@ -1,10 +1,11 @@
 // express app (node.js app taking advtange of express framework)
 // tool we want to use for creating routes
-
-// imports
 const express = require('express');
+
+
 // parses incoming request bodies and extracts the stream of data
 const bodyParser = require('body-parser');
+
 
 // imports our Post model from our mongoose blueprint
 ////////////// const Post = require('./models/post')
@@ -16,15 +17,26 @@ const Post = require('./models/post')
 
 
 
+
 // we are using mongoose instead of mongodb's drivers to connect and interact with our database
 // mongoose also uses schemas, that will allow us to store structured data and fetch it easily
 const mongoose = require('mongoose');
 
-// creating express app
+
+///NODEMON WILL CRASH IF THESE ARE REMOVED
+const postsRoutes = require("./routes/posts");
+const userRoutes = require("./routes/user");
+const entriesRoutes = require("./routes/entries");
+
 const app = express();
 
 // connecting our app to our mongodb database using my credentials
-mongoose.connect("mongodb+srv://hornunjb:UnOQUPwiXXaCz90a@cluster0.ltjdk.mongodb.net/AnxietyKnot?retryWrites=true&w=majority")
+// Connecting Local DB: have Mongo atlas password in Nodemon.json file or manually enter in 'mongoose.connect' below
+mongoose.connect(
+  "mongodb+srv://hornunjb:" +
+    process.env.MONGO_ATLAS_PW +
+    "@cluster0.ltjdk.mongodb.net/AnxietyKnot"
+  )
 .then(() => {
   console.log("Connected to database!");
 })
@@ -32,23 +44,21 @@ mongoose.connect("mongodb+srv://hornunjb:UnOQUPwiXXaCz90a@cluster0.ltjdk.mongodb
   console.log("Connection failed!");
 });
 
-// bodyParser is deprecated, might want to find another solution down the road (still works)
-// parses our request body data
+
+/// DELETING WILL DISCONNECT HTTP://LOCALHOST:3000/API
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 /* 'use' uses middleware on incoming request - takes a function that takes a request and response
   along with 'next' which allows a request to continue its journey if you are using the response
   for somewhere else - without 'next' the request will not reach any other middlewares */
 
 // since our hosts are on different ports and want to communicate we need to set headers to avoid a CORS error
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
   'Access-Control-Allow-Headers',
-  'Origin, X-Requested-With, Content-Type, Accept'
+  'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
   res.setHeader('Access-Control-Allow-Methods',
   'GET, POST, PATCH, PUT, DELETE, OPTIONS'
@@ -56,6 +66,10 @@ app.use((req, res, next) => {
   next();
 });
 
+/////KEEP
+app.use("/api/user", userRoutes);
+app.use("/api/posts", postsRoutes);
+app.use("/api/entries", entriesRoutes);
 // handle incoming post requests, passing a path argument all requests that target localhost:3000/api/posts will reach this middleware
 app.post("/api/entries", (req, res, next) => {
   // using body parser we can access the 'body' field and create a post object that is managed by mongoose
@@ -139,7 +153,8 @@ app.post("/api/posts", (req, res, next) => {
   const post = new Post({
     date: req.body.date,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    mood: req.body.mood
   });
   // 'save' method is provided by mongoose for each model created with it
   // mongoose will create the right query and will enter our data into the database
@@ -158,7 +173,8 @@ app.put("/api/posts/:id", (req, res, next) => {
     _id: req.body.id,
     date: req.body.date,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    mood: req.body.mood
   });
   Post.updateOne({_id: req.params.id}, post).then(result => {
     console.log(result);

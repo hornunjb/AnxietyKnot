@@ -1,40 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit} from "@angular/core";
+import { Subscription } from "rxjs";
+import { AuthService } from "../authenticate/auth.service";
+import { FormGroup, Validators, FormControl} from "@angular/forms"
+
+///AUTH LOGIN REDIRECTS TO 'auth.service.ts' WHICH CONTAINS HTTPCLIENT
+
+
 import { Router } from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms"
+
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  
-  public loginForm!: FormGroup
-  constructor(private formBuilder : FormBuilder, private http: HttpClient, private router: Router){
+export class LoginComponent implements OnInit, OnDestroy {
 
-  }
- 
-  ngOnInit(): void {
-    this.loginForm = this.formBuilder.group({
-      email:['',Validators.required],
-      password:['',Validators.required],
-    })
-  }
-  login(){
-    this.http.get<any>("http://localhost:3000/signupUsers")
-    .subscribe(res=>{
-      const user = res.find((a:any)=>{
-        return a.email === this.loginForm.value.email && a.password === this.loginForm.value.password
-      });
-      if(user){
-        this.loginForm.reset();
-        this.router.navigate(['home'])
-      }else{
-        alert("Wrong Credential");
+  isLoading = false;
+  private authStatusSub: Subscription;
+
+
+  public loginForm = new FormGroup(
+    {
+      email: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required)
+    }
+  );
+
+  constructor(public authService: AuthService){}
+
+  ngOnInit() {
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
+      _authStatus => {
+        this.isLoading = false;
       }
-    },err=>{
-      alert("Something went wrong!!")
-    })
+    );
   }
-  
+
+  onLogin(){
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.isLoading = true;
+    this.authService.login(this.loginForm.value.email, this.loginForm.value.password);
+  }
+
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
+  }
+
 }
+
+

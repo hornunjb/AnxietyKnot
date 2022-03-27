@@ -27,6 +27,11 @@ export class TrackerService {
   }
 
   getMoodsTallied() {
+    this.sad = 0;
+    this.somewhatSad = 0;
+    this.okay = 0;
+    this.somewhatGood = 0;
+    this.good = 0;
     for(var i = 0; i < this.moods.length; i++) {
       switch(this.moods[i]) {
         case 1: {

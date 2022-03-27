@@ -27,7 +27,7 @@
       >
         <mat-card *ngIf="posts.length > 0">
           <mat-card-subtitle
-            >{{ display.date }} Journal Entry</mat-card-subtitle
+            >{{ display.date | date:'fullDate' }}</mat-card-subtitle
           >
           <mat-card-title>{{ display.title }}</mat-card-title>
           <mat-card-content>
@@ -44,13 +44,13 @@
           <mat-card-actions *ngIf="display.what_happened != null">
             <!-- <button *ngIf="display.what_happened != null" mat-button color="primary" (click)="editEntry(display.id)" (editEntryId)="display.Id">EDIT</button> -->
 
-            <button mat-button color="warn" (click)="onDeleteEntry(display.id)">
+            <button class="delete-button" mat-button color="warn" (click)="onDeleteEntry(display.id)">
               DELETE
             </button>
           </mat-card-actions>
           <mat-card-actions *ngIf="display.content != null">
             <!--    <button  mat-button color="primary" [routerLink]="['/edit',display.id]" >EDIT</button> -->
-            <button mat-button color="warn" (click)="onDeletePost(display.id)">
+            <button class="delete-button" mat-button color="warn" (click)="onDeletePost(display.id)">
               DELETE
             </button>
           </mat-card-actions>

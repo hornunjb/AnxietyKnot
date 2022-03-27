@@ -34,3 +34,17 @@ mat-icon {
   cursor: pointer;
 }
 
+.stepbutton{
+  float: right;
+  margin-top: 5%;
+  margin-right: 2%;
+  color: #48A9A6;
+  background-color: aliceblue;
+}
+
+.savebutton{
+  float: right;
+  margin-top: 5%;
+  margin-right: 2%;
+}
+

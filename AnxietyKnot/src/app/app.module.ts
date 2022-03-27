@@ -48,11 +48,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
 import { EntryListComponent } from './entry-list/entry-list.component';
+import{MatStepperModule} from '@angular/material/stepper';
 import { FeelingsDialogComponent } from './feelings-dialog/feelings-dialog.component';
 import { DistortionDialogComponent } from './distortion-dialog/distortion-dialog.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
+import { JournalOptionComponent } from './journal-option/journal-option.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     FeelingsDialogComponent,
     DistortionDialogComponent,
     JournalDisplayComponent,
+    JournalOptionComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,6 +109,7 @@ import { JournalDisplayComponent } from './journal-display/journal-display.compo
     EditorModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatStepperModule,
     MatTabsModule,
     MatSnackBarModule,
     //MatPaginatorModule,

@@ -11,6 +11,7 @@ import { SignupComponent } from './signup/signup.component';
 import { AuthGuard } from "./authenticate/auth.guard";
 import { NavComponent } from './nav/nav.component';
 import { JournalDisplayComponent } from './journal-display/journal-display.component';
+import { JournalOptionComponent } from './journal-option/journal-option.component';
 
 ///canActivate: [AuthGuard] ENSURES UNAUTHORIZED USERS CANNOT MANUALLY ENTER ACCESS POINT IN URL UNLESS LOGGED IN
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'signup', component: SignupComponent},
   {path: '', component:NavComponent, children:[
-
+   
+    {path:'journalOption', component:JournalOptionComponent, canActivate: [AuthGuard]},
     {path:'home', component:HomeComponent,canActivate: [AuthGuard]},
     {path:'resource', component:ResourceComponent, canActivate: [AuthGuard]},
     {path:'tracker', component:TrackerComponent, canActivate: [AuthGuard]},

@@ -210,12 +210,11 @@ constructor(
   onSaveEntry(form: NgForm) {
 
     // openDialog redirects user back to entry-list page after entry create, edit or delete
-    this.openDialog();
     let date = this.date.value.toDate();
     if (form.invalid) {
       return;
     }
-    this.isLoading = true;
+     this.isLoading = true;
      if (this.mode === 'create')
       {
         this.entryService.addEntry(
@@ -248,7 +247,7 @@ constructor(
           form.value.thinking_differently,
           );
       }
-      form.resetForm();
+      // form.resetForm();
     }
 
 

@@ -214,8 +214,8 @@ constructor(
     if (form.invalid) {
       return;
     }
-    // this.isLoading = true;
-     else if (this.mode === 'create')
+     this.isLoading = true;
+     if (this.mode === 'create')
       {
         this.entryService.addEntry(
           date,

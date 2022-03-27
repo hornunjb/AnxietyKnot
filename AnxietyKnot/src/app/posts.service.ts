@@ -26,6 +26,7 @@ export class PostsService {
             date: post.date,
             title: post.title,
             content: post.content,
+            mood: post.mood,
             creator: post.creator
           };
         }),
@@ -58,18 +59,13 @@ export class PostsService {
       date: Date;
       title: string;
       content: string;
+      mood: string;
       creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }
 
-  addPost(date: Date, title: string, content: string) {
-    const post: Post = {
-      id: "",
-      date: date,
-      title: title,
-      content: content,
-      creator: null
-    };
+  addPost(date: Date, title: string, content: string, mood: string) {
+    const post: Post = { id: "", date: date,  title: title, content: content, creator: null, mood: mood };
     this.http
       .post<{ message: string, postId: string }>(
         "http://localhost:3000/api/posts/", post
@@ -82,15 +78,8 @@ export class PostsService {
       });
   }
 
-  // POST UPDATE ON POST EDIT
-  updatePost(id: string, date: Date, title: string, content: string) {
-    const post: Post = {
-      id: id,
-      date: date,
-      title: title,
-      content: content,
-      creator: null
-     };
+  updatePost(id: string, date: Date, title: string, content: string, mood: string) {
+    const post: Post = { id: id, date: date, title: title, content: content, creator: null, mood: mood};
     this.http.put("http://localhost:3000/api/posts/" + id, post)
     // OUTPUTS CONSOLE LOG OF SUCCESSFUL POST UPDATE
       .subscribe(response =>

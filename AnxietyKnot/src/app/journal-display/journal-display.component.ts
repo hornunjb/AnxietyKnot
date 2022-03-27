@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EntryService } from '../entry.service';
 import { PostsService } from '../posts.service';
@@ -9,6 +9,7 @@ import { journalDisplay } from '../journalDisplay.model';
 import { AuthService } from './../authenticate/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TrackerService } from '../tracker.service';
 
 const allowedEntryLength = 500;
 
@@ -31,6 +32,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
   displays: journalDisplay[] = [];
   tipTracking: any = [];
   thisUsersEntries: any = [];
+  thisUserDates: any = [];
   public noHtmlContent: string[] = [];
   counter: number = 0;
 
@@ -41,7 +43,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private trackerService: TrackerService
   ) {}
 
   ngOnInit() {
@@ -153,7 +156,9 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     for (var i = 0; i < displays.length; i++) {
       if (this.userIsAuthenticated && this.userId == displays[i].creator) {
         this.counter++;
-        this.thisUsersEntries.push(displays[i]);
+        this.thisUsersEntries.push(parseInt((displays[i].mood)));
+        this.trackerService.addMoods(this.thisUsersEntries);
+        console.log(this.thisUsersEntries);
       }
     }
   }

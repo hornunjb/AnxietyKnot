@@ -1,77 +1,81 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { Post } from '../post.model';
+import { TrackerService } from '../tracker.service';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.css']
+  styleUrls: ['./charts.component.css'],
 })
 export class ChartsComponent implements OnInit {
-  chart:any;
+  chart: any;
 
-  constructor() { }
+  constructor(private trackerService: TrackerService) {}
 
   ngOnInit(): void {
-    this.chart = document.getElementById('my_chart')
+    this.chart = document.getElementById('my_chart');
     Chart.register(...registerables);
-    this.loadChart();
-  }
-
-  loadChart(): void{
+    console.log(this.trackerService.getMoods());
     new Chart(this.chart, {
-      type: 'line',
-      data:{
-        datasets:[{
-          data:[2,3,3,4,2,3,4,4,2,3,4,5],
-          label:'Mood',
-          backgroundColor: '#007bff',
-          tension:0.2,
-          borderColor: '#007bff',
-        },
-      ],
-      labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-
-      },
-      options:{
-        responsive:true,
-        maintainAspectRatio:false,
-        scales:{
-          y:{
-            grid:{
-              borderDash:[1,2],
-              drawBorder:false,
-            },
-            beginAtZero:true,
-            title: {
-              display: true,
-              text: 'Happiness',
-              color: 'black',
-              font: {
-                family: 'lato',
-                size: 20,
-                weight: 'bold',
-                lineHeight: 1.2,
-              }
-            }
+      type: 'bar',
+      data: {
+        datasets: [
+          {
+            data: this.trackerService.getMoodsTallied(),
+            label: 'Mood Tally',
+            backgroundColor: '#007bff',
+            borderColor: '#007bff',
           },
-          x:{
-            grid:{
-              drawBorder:false,
+        ],
+        labels: [
+          'Very Sad',
+          'Somewhat Sad',
+          'Nuetral',
+          'Somewhat Happy',
+          'Very Happy',
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            grid: {
+              borderDash: [1, 2],
+              drawBorder: false,
             },
+            beginAtZero: true,
             title: {
               display: true,
-              text: 'Month',
+              text: 'Tally',
               color: 'black',
               font: {
                 family: 'lato',
                 size: 20,
                 weight: 'bold',
                 lineHeight: 1.2,
-              }
-            }
-          }
+              },
+            },
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+            },
+            title: {
+              display: true,
+              text: 'Mood',
+              color: 'black',
+              font: {
+                family: 'lato',
+                size: 20,
+                weight: 'bold',
+                lineHeight: 1.2,
+              },
+            },
+          },
         },
       },
-    })
+    });
   }
 }

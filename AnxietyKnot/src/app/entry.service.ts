@@ -102,8 +102,9 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
-      creator: null,
       mood: mood,
+      creator: null,
+      
     };
     this.http
       .post<{ message: string, entryId: string }>(

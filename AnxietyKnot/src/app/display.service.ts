@@ -40,8 +40,9 @@ export class DisplayService {
               thought_patterns: entry.thought_patterns,
               custom_thought_patterns: entry.custom_thought_patterns,
               thinking_differently: entry.thinking_differently,
-              creator: entry.creator,
               mood: entry.mood,
+              creator: entry.creator,
+              
             };
           });
         })
@@ -70,8 +71,9 @@ export class DisplayService {
     thought_patterns: Array<string>;
     custom_thought_patterns: string;
     thinking_differently: string;
-    creator: string;
     mood: string;
+    creator: string;
+    
     }>("http://localhost:3000/api/entries/" + id);
   }
   /*
@@ -108,8 +110,9 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
-      creator: null,
       mood: mood,
+      creator: null,
+      
     };
     this.http
       .post<{ message: string, entryId: string }>(
@@ -151,8 +154,9 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
-      creator: null,
       mood: mood,
+      creator: null,
+      
     };
     this.http.put("http://localhost:3000/api/entries/" + id, entry)
     .subscribe(response => console.log(response)

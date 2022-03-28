@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
 
 //import { NgForm, NgModel } from "@angular/forms";
@@ -22,6 +22,7 @@ import { PopupComponent } from '../popup/popup.component';
 import { PromptedEntry } from '../prompted-entry.model';
 import { EntryService } from "../entry.service";
 import { AuthService } from "../authenticate/auth.service";
+import { filter } from 'rxjs/operators';
 
 import {
   MAT_MOMENT_DATE_FORMATS,
@@ -54,6 +55,7 @@ const moment = _moment;
 
 export class PromptedEntryComponent implements OnInit, OnDestroy{
 
+  @Output() newData: EventEmitter<any> = new EventEmitter();
   //get input from parent component
   @Input() editEntryId = ' ';
   ngOnChanges(){
@@ -61,7 +63,7 @@ export class PromptedEntryComponent implements OnInit, OnDestroy{
   }
 
   date = new FormControl(moment());
-  value = 0;
+  value = '';
   ratingCount = 10;
   enteredTitle= "";
   enteredContent = '';
@@ -149,7 +151,8 @@ constructor(
             thought_patterns: entryData.thought_patterns,
             custom_thought_patterns: entryData.custom_thought_patterns,
             thinking_differently: entryData.thinking_differently,
-            creator: entryData.creator
+            creator: entryData.creator,
+            mood: entryData.mood,
           };
           this.entry.thought_patterns.forEach(Element =>{
             this.checkedIDs.push(Element);
@@ -168,12 +171,54 @@ constructor(
     })
   }
 
-  openDialog() {
-    if (this.dialogRef.openDialogs.length == 0) {
-      this.dialogRef.open(PopupComponent, {
-        disableClose: false,
-      });
+  async openDialog(form: NgForm) {
+    const dialogRef = this.dialogRef.open(PopupComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.value = result;
+      console.log(this.value);
+    });
+    await dialogRef.afterClosed().toPromise();
+    let date = this.date.value.toDate();
+    if (form.invalid) {
+      return;
     }
+     this.isLoading = true;
+     if (this.mode === 'create')
+      {
+        this.entryService.addEntry(
+          date,
+          form.value.title,
+          form.value.what_happened,
+          form.value.going_through_mind,
+          form.value.emotion1,
+          this.intensity1,
+          form.value.emotion2,
+          this.intensity2,
+          this.checkedIDs,
+          form.value.custom_thought_patterns,
+          form.value.thinking_differently,
+          this.value,
+          );
+      }
+      else {
+        this.entryService.updateEntry(
+          this.entryId,
+          date,
+          form.value.title,
+          form.value.what_happened,
+          form.value.going_through_mind,
+          form.value.emotion1,
+          this.intensity1,
+          form.value.emotion2,
+          this.intensity2,
+          this.checkedIDs,
+          form.value.custom_thought_patterns,
+          form.value.thinking_differently,
+          this.value,
+          );
+      }
   }
   openDistortionDialog() {
     if (this.dialogRef.openDialogs.length == 0) {
@@ -210,43 +255,7 @@ constructor(
   onSaveEntry(form: NgForm) {
 
     // openDialog redirects user back to entry-list page after entry create, edit or delete
-    let date = this.date.value.toDate();
-    if (form.invalid) {
-      return;
-    }
-     this.isLoading = true;
-     if (this.mode === 'create')
-      {
-        this.entryService.addEntry(
-          date,
-          form.value.title,
-          form.value.what_happened,
-          form.value.going_through_mind,
-          form.value.emotion1,
-          this.intensity1,
-          form.value.emotion2,
-          this.intensity2,
-          this.checkedIDs,
-          form.value.custom_thought_patterns,
-          form.value.thinking_differently,
-          );
-      }
-      else {
-        this.entryService.updateEntry(
-          this.entryId,
-          date,
-          form.value.title,
-          form.value.what_happened,
-          form.value.going_through_mind,
-          form.value.emotion1,
-          this.intensity1,
-          form.value.emotion2,
-          this.intensity2,
-          this.checkedIDs,
-          form.value.custom_thought_patterns,
-          form.value.thinking_differently,
-          );
-      }
+
       // form.resetForm();
     }
 

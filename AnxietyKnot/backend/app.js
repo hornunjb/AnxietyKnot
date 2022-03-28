@@ -85,6 +85,7 @@ app.post("/api/entries", (req, res, next) => {
     thought_patterns: req.body.thought_patterns,
     custom_thought_patterns: req.body.custom_thought_patterns,
     thinking_differently: req.body.thinking_differently,
+    mood: req.body.mood,
   });
   // 'save' method is provided by mongoose for each model created with it
   // mongoose will create the right query and will enter our data into the database
@@ -112,6 +113,7 @@ app.put("/api/entries/:id", (req, res, next) => {
     thought_patterns: req.body.thought_patterns,
     custom_thought_patterns: req.body.custom_thought_patterns,
     thinking_differently: req.body.thinking_differently,
+    mood: req.body.mood,
   });
   Entry.updateOne({_id: req.params.id}, entry).then(result => {
     console.log(result);

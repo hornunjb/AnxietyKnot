@@ -153,6 +153,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
 
     // METHOD CALLED FROM entry.service.ts
          // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE ENTRIES
+         //---      this.entriesService.deletePost(Id) causes duplicate posts
       this.entriesService.deleteEntry(Id);
 
       const removeIndex = this.displays.findIndex( item => item.id === Id );
@@ -171,6 +172,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
 
      //METHOD CALLED FROM posts.service.ts
      // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE POSTS
+     //---      this.displayService.deletePost(Id) causes duplicate posts
+
       this.postsService.deletePost(Id)
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );

@@ -143,11 +143,13 @@ Tracker Mood inputs fail to load In Tracker IF Refreshing the Tracker page
 
 */
 
-  /*let currentUrl = this.router.url;
+ /* let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
-*/
+    this.router.navigate([currentUrl]); */
+    window.location.reload();
+
+
     this.newData.emit();
   }
 

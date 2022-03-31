@@ -13,6 +13,8 @@ router.post("", checkAuth, (req, res, _next) =>
   date: req.body.date,
   title: req.body.title,
   content: req.body.content,
+  mood: req.body.mood,
+
   creator: req.userData.userId
 });
 /// UNCOMMENT CONSOLE.LOG TO GET EMAIL AND USERID FROM SERVER
@@ -44,6 +46,8 @@ router.put("/:id", checkAuth, (req, res, _next) =>
  date: req.body.date,
  title: req.body.title,
  content: req.body.content,
+ mood: req.body.mood,
+
  creator: req.userData.userId
  });
  Post.updateOne(
@@ -95,7 +99,7 @@ router.get("", (_req, res, _next) => {
 
 
 
-/// GET POST ID FROM POSTS// IS THIS OPTIONAL?
+/// GET POSTs for Journal Display
 router.get("/:id", (req, res, _next) => {
   Post.findById(req.params.id)
   .then(post => {

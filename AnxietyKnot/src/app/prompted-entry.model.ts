@@ -16,6 +16,8 @@ export interface PromptedEntry {
   thought_patterns: Array<string>;
   custom_thought_patterns: string;
   thinking_differently: string;
+  //  mood: string;
+
   creator: string;
 
   }

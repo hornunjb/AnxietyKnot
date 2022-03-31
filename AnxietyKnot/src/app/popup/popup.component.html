@@ -8,9 +8,11 @@
       <section class="text">
           {{response[value]}}
       </section>
-      <section class="button" >
-          <button mat-flat-button mat-dialog-close class="okButton" (click)="reloadComponent()"color="accent" type="submit" >OK</button>
-          <button mat-flat-button mat-dialog-close class="cancelButton" color="warn" type="cancel" >Cancel</button>
+      <section class="button">
+          <button mat-flat-button mat-dialog-close (click)="sendRating()" class="okButton" routerLink="/journalDisplay" color="accent" type="submit" >OK</button>
+          <!--<button mat-flat-button mat-dialog-close class="okButton" (click)="reloadComponent()"color="accent" type="submit" >OK</button>
+ -->
+          <button mat-flat-button mat-dialog-close class="cancelButton" color="warn" type="submit" >Cancel</button>
       </section>
   </div>
 </div>

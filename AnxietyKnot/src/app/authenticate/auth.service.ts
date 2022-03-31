@@ -43,7 +43,8 @@ export class AuthService {
      .subscribe(response => {
         console.log(response);
         this.router.navigate(["/login"]);
-      }, _error => {
+      }, ///Error Handler
+      _error => {
         this.authStatusListener.next(false);
       });
   }
@@ -54,7 +55,8 @@ export class AuthService {
     this.http
     //.post<{token: string;  expiresIn: number, userId: string }>("http://nodejsangular-env.eba-3fswygyg.us-east-2.elasticbeanstalk.com/api/user/login", authData)
     .post<{token: string,  expiresIn: number, userId: string }>(
-      "http://localhost:3000/api/user/login", authData)
+      "http://localhost:3000/api/user/login", authData
+      )
       .subscribe(response => {
         const token = response.token;
         this.token = token;
@@ -65,7 +67,9 @@ export class AuthService {
             this.userId = response.userId;
             this.authStatusListener.next(true);
             const now = new Date();
-            const expirationDate = new Date (now.getTime() + expiresInDuration * 1000);
+            const expirationDate = new Date (
+              now.getTime() + expiresInDuration * 1000
+              );
             console.log(expirationDate);
             this.saveAuthData(token, expirationDate, this.userId);
             ///REDIRECT USER AFTER LOGIN

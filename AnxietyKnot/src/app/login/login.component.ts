@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit} from "@angular/core";
+import { FormGroup, Validators, FormControl} from "@angular/forms"
 import { Subscription } from "rxjs";
 import { AuthService } from "../authenticate/auth.service";
-import { FormGroup, Validators, FormControl} from "@angular/forms"
 
 ///AUTH LOGIN REDIRECTS TO 'auth.service.ts' WHICH CONTAINS HTTPCLIENT
 

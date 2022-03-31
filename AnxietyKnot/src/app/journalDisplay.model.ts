@@ -4,6 +4,7 @@ export interface journalDisplay {
     title: string;
     what_happened?: string;
     content?: string;
+    mood?: string;
     creator?: string;
 
   }

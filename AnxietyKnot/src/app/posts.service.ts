@@ -3,13 +3,15 @@ import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
 import { map } from 'rxjs/operators';
 import { Post } from "./post.model";
+import { Router } from "@angular/router";
+
 
 @Injectable({ providedIn: "root" })
 export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-  constructor(private http: HttpClient ) {}
+  constructor(private http: HttpClient, private router: Router ) {}
 
   getPosts() {
     this.http
@@ -26,6 +28,7 @@ export class PostsService {
             date: post.date,
             title: post.title,
             content: post.content,
+            mood: post.mood,
             creator: post.creator
           };
         }),
@@ -46,10 +49,6 @@ export class PostsService {
   }
 
 
- // getPost(id: string) {
-  //  return {...this.posts.find(p => p.id === id)}
- // }
-
 //// THIS CODE AFFECTS 'GET POST' IN NEW-EDIT.COMPONENT.TS
 
   getPost(id: string) {
@@ -58,37 +57,36 @@ export class PostsService {
       date: Date;
       title: string;
       content: string;
+      mood: string;
       creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }
 
-  addPost(date: Date, title: string, content: string) {
+  addPost(date: Date, title: string, content: string, mood: string) {
     const post: Post = {
       id: "",
       date: date,
       title: title,
       content: content,
+      mood: mood,
       creator: null
     };
     this.http
       .post<{ message: string, postId: string }>(
         "http://localhost:3000/api/posts/", post
         )
-      .subscribe(responseData => {
-        const id = responseData.postId;
-        post.id = id;
-        this.posts.push(post);
-        this.postsUpdated.next([...this.posts]);
+        .subscribe(_responseData => {
+          this.router.navigate(["journalDisplay"]);
       });
   }
 
-  // POST UPDATE ON POST EDIT
-  updatePost(id: string, date: Date, title: string, content: string) {
+  updatePost(id: string, date: Date, title: string, content: string, mood: string) {
     const post: Post = {
       id: id,
       date: date,
       title: title,
       content: content,
+      mood: mood,
       creator: null
      };
     this.http.put("http://localhost:3000/api/posts/" + id, post)

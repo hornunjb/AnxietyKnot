@@ -85,8 +85,6 @@ import { JournalOptionComponent } from './journal-option/journal-option.componen
     JournalDisplayComponent,
     JournalOptionComponent,
    // HeaderComponent,
-
-
   ],
   imports: [
     BrowserModule,

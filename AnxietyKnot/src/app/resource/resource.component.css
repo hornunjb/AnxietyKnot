@@ -49,7 +49,7 @@ mat-card-header {
   margin-right: auto;
   -webkit-animation: spin 50s linear infinite;
   -moz-animation: spin 50s linear infinite;
-  animation: spin 50s linear infinite;
+  animation: spin 80s linear infinite;
 }
 
 @-webkit-keyframes spin{

@@ -11,10 +11,10 @@ import { PromptedEntry } from '../prompted-entry.model';
 import { journalDisplay } from '../journalDisplay.model';
 
 import { AuthService } from "./../authenticate/auth.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TrackerService } from '../tracker.service';
 
-import { creator } from 'd3';
-import { NewEditComponent } from '../new-edit/new-edit.component';
 
 const allowedEntryLength = 500;
 
@@ -25,30 +25,23 @@ const allowedEntryLength = 500;
 })
 export class JournalDisplayComponent implements OnInit, OnDestroy {
 
-
-
   editPostId = ' ';
   editEntryId = ' ';
-
-
   tip: string = '';
   isLoading = false;
   userId: string;
   userIsAuthenticated = false;
-
- // private postsSub: Subscription;
-  //private entriesSub: Subscription;
   private displaysSub: Subscription;
   private authStatusSub: Subscription;
-
-
   posts: Post[] = [];
   entries: PromptedEntry[] = [];
   displays: journalDisplay[] = [];
-
+  tipTracking: any = [];
+  thisUsersEntries: any = [];
+  thisUserDates: any = [];
 
  public noHtmlContent: string[] = [];
-
+ counter: number = 0;
 
   constructor(
     public entriesService: EntryService,
@@ -56,12 +49,14 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     public displayService: DisplayService,
     private router: Router,
     private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private _snackBar: MatSnackBar,
+    private trackerService: TrackerService
     ) { }
 
 
     ngOnInit() {
   this.isLoading = true;
-
    // getEntries() located in 'entry.service.ts'
   this.displayService.getEntries();
       this.userId = this.authService.getUserId();
@@ -73,33 +68,36 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         entries.forEach(Element =>
           {
-          Element.date = new Date(Element.date)
-          //console.log(typeof(Element.date))
-         // console.log(Element.date)
-         var x = [Element.id, Element.date, Element.title, Element.what_happened];
+            Element.date = new Date(Element.date);
+          var x = [
+            Element.id,
+            Element.date,
+            Element.title,
+            Element.what_happened,
+          ];
           this.displays.push(Element);
-          this.displays.sort((a, b) => a.title.localeCompare(b.title))
+          this.displays.sort((a, b) => a.title.localeCompare(b.title));
         });
       });
      this.isLoading = true;
       // getPosts() located in 'posts.service.ts'
-
       this.displayService.getPosts();
       this.userId = this.authService.getUserId();
-      this.displaysSub = this.displayService
-        .getPostUpdateListener()
-        .subscribe((posts: Post[]) =>
+      this.displaysSub = this.displayService.getPostUpdateListener().subscribe((posts: Post[]) =>
         {
           this.isLoading = false;
-
          this.posts = posts;
           posts.forEach(Element =>
             {
-              Element.date = new Date(Element.date)
-              var x = [Element.id, Element.date, Element.title, Element.content];
+              Element.date = new Date(Element.date);
+              var x = [
+                Element.id,
+                Element.date,
+                Element.title,
+              ];
               this.displays.push(Element);
-              this.displays.sort((a, b) => a.title.localeCompare(b.title))
-          });
+              this.displays.sort((a, b) => a.title.localeCompare(b.title));
+            });
         });
         this.userIsAuthenticated = this.authService.getIsAuth();
         this.authStatusSub = this.authService
@@ -111,6 +109,13 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         });
       }
 
+      openSnackBar(tip, action) {
+        this._snackBar.open(tip, action, {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['blue-snackbar'],
+        });
+      }
 
     selectCard(display: journalDisplay){
       if(display.what_happened){
@@ -133,6 +138,13 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       return parsedContent;
     }
 
+
+  refreshPage(){
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
 
    onDeleteEntry(Id: string ) {
     this.isLoading = true;
@@ -170,12 +182,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     };
 
     ngOnDestroy() {
-     // this.postsSub.unsubscribe();
-     // this.entriesSub.unsubscribe();
      this.displaysSub.unsubscribe();
       this.authStatusSub.unsubscribe();
-
-
     }
 
 
@@ -184,19 +192,31 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       return entryContent;
     }
 
-     tipMaker() {
-    if (this.displays.length > 0) {
-      if (this.displays.length > 10) {
+    displayCounter(displays) {
+      this.counter = 0;
+    this.thisUsersEntries = [];
+    for (var i = 0; i < displays.length; i++) {
+      if (this.userIsAuthenticated && this.userId == displays[i].creator) {
+        this.counter++;
+        this.thisUsersEntries.push(parseInt((displays[i].mood)));
+        this.trackerService.addMoods(this.thisUsersEntries);
+        }
+      }
+    }
+
+    /*openSnackBar() {
+    if (this.counter > 2 && this.counter < 4) {
+      if (this.counter > 10) {
         this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
         return true;
       }
-      if (this.displays.length == 5) {
+      if (this.counter == 5) {
         this.tip = "Nicotine and caffeine can worsen anxiety.";
         return true;
       }
     }
     return false;
-  }
+  }*/
 }
 
 

@@ -31,6 +31,7 @@ export class EntryService {
               thought_patterns: entry.thought_patterns,
               custom_thought_patterns: entry.custom_thought_patterns,
               thinking_differently: entry.thinking_differently,
+              //mood: entry.mood,
               creator: entry.creator
             };
           });
@@ -62,6 +63,7 @@ export class EntryService {
     thought_patterns: Array<string>;
     custom_thought_patterns: string;
     thinking_differently: string;
+    // mood: string;
     creator: string;
     }>("http://localhost:3000/api/entries/" + id);
   }
@@ -83,7 +85,9 @@ getEntry(id: string) {
     intensity2: number,
     thought_patterns: Array<string>,
     custom_thought_patterns: string,
-    thinking_differently: string )
+    thinking_differently: string,
+    // mood: string;
+    )
     {
     const entry: PromptedEntry = {
       id: "",
@@ -98,6 +102,7 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
+      // mood: mood,
       creator: null
     };
     this.http
@@ -130,6 +135,7 @@ getEntry(id: string) {
     thought_patterns: Array<string>,
     custom_thought_patterns: string,
     thinking_differently: string,
+    // mood: string,
   ){
     const entry: PromptedEntry = {
       id: id,
@@ -144,6 +150,7 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
+      // mood: mood,
       creator: null
     };
     this.http.put("http://localhost:3000/api/entries/" + id, entry)

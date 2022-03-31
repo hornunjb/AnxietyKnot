@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { PromptedEntry } from './prompted-entry.model';
 import { Post } from "./post.model";
 
+import { Router } from "@angular/router";
 
 
 @Injectable({ providedIn: "root" })
@@ -18,7 +19,7 @@ export class DisplayService {
 
 
 
-  constructor(private http: HttpClient ) {}
+  constructor(private http: HttpClient, private router: Router ) {}
   getEntries() {
     this.http
       .get<{ message: string; entries: any }>('http://localhost:3000/api/entries')
@@ -71,6 +72,12 @@ export class DisplayService {
     creator: string;
     }>("http://localhost:3000/api/entries/" + id);
   }
+  /*
+getEntry(id: string) {
+    return {...this.entries.find(p => p.id === id)}
+  }
+  */
+
 
   addEntry
   ( date: Date,
@@ -143,7 +150,7 @@ export class DisplayService {
     };
     this.http.put("http://localhost:3000/api/entries/" + id, entry)
     .subscribe(response => console.log(response)
-    // DO NOT USE THIS ROUTER NAVIGATE, USE POPUP HTML AND COMP.TS INSTEAD
+    // NAVIGATES USER AFTER POST UPDATE
        // this.router.navigate(["/"]);
     );
   }
@@ -171,7 +178,7 @@ export class DisplayService {
           return {
             id: post._id,
             date: post.date,
-
+            mood: post.mood,
             title: post.title,
             content: post.content,
             creator: post.creator
@@ -202,16 +209,18 @@ export class DisplayService {
       date: Date;
       title: string;
       content: string;
+      mood: string;
       creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }
 
-  addPost(date: Date, title: string, content: string) {
+  addPost(date: Date, title: string, content: string, mood: string) {
     const post: Post = {
       id: "",
       date: date,
       title: title,
       content: content,
+      mood: mood,
       creator: null
     };
     this.http
@@ -228,21 +237,20 @@ export class DisplayService {
   }
 
   // POST UPDATE ON POST EDIT
-  updatePost(id: string, date: Date, title: string, content: string) {
+  updatePost(id: string, date: Date, title: string, content: string, mood: string) {
     const post: Post = {
       id: id,
       date: date,
       title: title,
       content: content,
+      mood: mood,
       creator: null
      };
     this.http.put("http://localhost:3000/api/posts/" + id, post)
     // OUTPUTS CONSOLE LOG OF SUCCESSFUL POST UPDATE
       .subscribe(response =>
        console.log(response)
-       //        this.router.navigate(['/journalDisplay'])
-
-      // DO NOT USE THIS ROUTER NAVIGATE, USE POPUP HTML AND COMP.TS INSTEAD
+       // NAVIGATES USER AFTER POST UPDATE
        // .subscribe(response => {
      // this.router.navigate(["/"]);
    //});

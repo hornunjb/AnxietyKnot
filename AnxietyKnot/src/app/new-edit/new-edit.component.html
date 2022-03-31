@@ -2,7 +2,7 @@
 
 <div class="grid-container" >
   <mat-card class="blog mat-elevation-z3">
-    <h3 style="text-align: center">Journal Entry</h3>
+    <h3 style="text-align: center">Freeform Journal</h3>
     <mat-form-field class="datepicker" appearance="outline">
       <mat-label>Choose a date</mat-label>
       <input matInput [matDatepicker]="dp" [formControl]="date" />
@@ -14,7 +14,7 @@
 
   <mat-card-content>
 
-    <form (ngSubmit)="onSubmit()" [formGroup]="myForm" >
+    <form (ngSubmit)="onSubmit()" [formGroup]="myForm" *ngIf="!isLoading" >
       <mat-form-field style="padding-bottom: 20px;" class="title">
         <input
           matInput

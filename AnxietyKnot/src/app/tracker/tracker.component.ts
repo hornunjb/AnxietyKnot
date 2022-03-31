@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./tracker.component.css']
 })
 export class TrackerComponent {
- 
+
   }
 

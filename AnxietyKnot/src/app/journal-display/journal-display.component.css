@@ -54,7 +54,7 @@ justify-content: center;
 background-size: cover;
 background-image: url("../../assets/images/bg2.jpg");
 opacity: 0.75;
-background-position: right bottom;
+background-position-x: center;
 }
 #prompted-edit{
 display: none;
@@ -89,3 +89,56 @@ right: 10px;
 /* #edit{
 display: none;
 } */
+
+
+.tip {
+  background-color: rgba(138, 200, 50);
+  z-index: 1;
+  right: 0;
+  margin-right: 5%;
+  margin-top: 2%;
+  position: absolute;
+}
+
+.wave {
+  animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.5s;        /* Change to speed up or slow down */
+  animation-iteration-count: infinite;  /* Never stop waving :) */
+  transform-origin: 70% 70%;       /* Pivot around the bottom-left palm */
+  display: inline-block;
+  font-size: 20px;
+}
+
+.nothingSelected {
+  font-family: arial;
+  font-size: 24px;
+  margin: 20%;
+  height: 200px;
+  /* Setup */
+  position: relative;
+}
+
+.nothingSelectedChild {
+  height: 50px;
+  width: 100%;
+  /* Center vertically and horizontally */
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgba(0, 0, 0, 0.924);
+  font-size: 1.4rem;
+}
+
+
+@keyframes wave-animation {
+    0% { transform: rotate( 0.0deg) }
+   10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+   20% { transform: rotate(-8.0deg) }
+   30% { transform: rotate(14.0deg) }
+   40% { transform: rotate(-4.0deg) }
+   50% { transform: rotate(10.0deg) }
+   60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+  100% { transform: rotate( 0.0deg) }
+}

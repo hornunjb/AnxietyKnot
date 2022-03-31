@@ -1,4 +1,4 @@
-import {HttpInterceptor, HttpRequest, HttpHandler,HttpErrorResponse} from "@angular/common/http";
+import {HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse} from "@angular/common/http";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { Injectable } from "@angular/core";
@@ -7,6 +7,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { ErrorComponent } from "./error/error.component";
 //import { ErrorService } from "./error/error.service";
 
+
+//--THIS HANDLES HTTP ERRORS--//
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 

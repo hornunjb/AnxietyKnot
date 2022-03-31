@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+//--FORM CONTROL AND FORM GROUP CANNOT BE USED WITH NGFORM--//
 
-
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { AsyncSubject, Subject, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
+
 import { AuthService } from "../authenticate/auth.service";
 import {
   MAT_MOMENT_DATE_FORMATS,
@@ -18,6 +19,9 @@ import {
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
+import { DisplayService } from '../display.service';
+import { EventEmitter } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import * as _moment from 'moment';
 const moment = _moment;
 
@@ -34,8 +38,9 @@ const moment = _moment;
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
 })
-export class NewEditComponent implements OnInit, OnDestroy{
 
+export class NewEditComponent implements OnInit, OnDestroy{
+  @Output() newData: EventEmitter<any> = new EventEmitter();
 
   @Input() editPostId = ' ';
   ngOnChanges(){
@@ -45,7 +50,9 @@ export class NewEditComponent implements OnInit, OnDestroy{
   date = new FormControl(moment());
 
 
-  value = 0;
+value = '';
+
+//  value = 0;
   ratingCount = 10;
   enteredTitle = "";
   enteredContent = "";
@@ -76,29 +83,30 @@ export class NewEditComponent implements OnInit, OnDestroy{
   public myForm = new FormGroup(
     {
     title: new FormControl("", Validators.required),
-    body: new FormControl("", Validators.required)
+    body: new FormControl("", Validators.required),
     }
   );
 
-
-
-
-  openDialog() {
-    this.dialogRef.open(PopupComponent);
-  }
+ // openDialog() {
+   // this.dialogRef.open(PopupComponent);
+  //}
 
 
   ///NEW CODING FROM BRANCH NOT YET IMPLEMENTED
-  /*
+
 
   ///Requires removal of onSubmit() coding and in html
- openDialog() {
+
+  //--IMPLEMENT OPENDIALOG AND ONSUBMIT WITH EACHOTHER IF CAN--//
+
+
   async openDialog() {
     const dialogRef = this.dialogRef.open(PopupComponent);
     dialogRef.afterClosed().subscribe(result => {
+      this.isLoading = true;
       console.log('The dialog was closed');
       this.value = result;
-      console.log(this.value);
+      //console.log(this.value);
     });
     await dialogRef.afterClosed().toPromise();
     let date = this.date.value.toDate();
@@ -110,7 +118,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
         date,
         this.myForm.value['title'],
         this.myForm.value['body'],
-        this.value
+       this.value
       );
     } else {
       this.postsService.updatePost(
@@ -120,9 +128,29 @@ export class NewEditComponent implements OnInit, OnDestroy{
         this.myForm.value['body'],
         this.value
       );
+
     }
+    this.myForm.reset();
+
+  /*
+
+  Getting rid of this router prevents duuplicate when saving edits on JD screen
+    Page still refreshes after saving edits
+   New entry submits direct users to JD, but entry will not show until you hit refresh
+This Does Cause the Mood Tracker to delay updates on Input Moods if moviing directly from JournalBook (JD) to Tracker (This Only Affects Creating New entries)
+Tracker fails to load graph on double click in Navigation
+Tracker Mood inputs fail to load In Tracker IF Refreshing the Tracker page
+
+*/
+
+  /*let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+*/
+    this.newData.emit();
   }
-  */
+
   handleEditorInit(e) {
     this.editorSubject.next(e.editor);
     this.editorSubject.complete();
@@ -133,6 +161,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
      public route: ActivatedRoute,
      private dialogRef: MatDialog,
      private authService: AuthService,
+     private router: Router,
 
      ) {}
 
@@ -149,23 +178,23 @@ export class NewEditComponent implements OnInit, OnDestroy{
         {
           this.mode = "edit";
          // this.postId = paramMap.get("postId");
-         if (this.editPostId != ' ')
-         {
-          this.postId = this.editPostId;
-        }
-          else {
+         if (this.editPostId != ' ') {
+           this.postId = this.editPostId;
+          } else {
             this.postId = paramMap.get("postId");
           }
           this.isLoading = true;
           this.postsService.getPost(this.postId).subscribe(postData =>
              {
             this.isLoading = false;
+
             /// POSTDATA PASSES THROUGH POST.SERVICE AND DISPLAY.SERVICE
             this.post = {
               id: postData._id,
               date: postData.date,
               title: postData.title,
               content: postData.content,
+               mood: this.value,
               creator: postData.creator
             };
             /// THIS DOESNT SEEM TO HAVE ANY IMPACT IF REMOVED BUT KEEP FOR DATE
@@ -182,9 +211,9 @@ export class NewEditComponent implements OnInit, OnDestroy{
     }
 
     onSubmit() {
-      
       this.openDialog();
-      let date = this.date.value.toDate();
+
+     /* let date = this.date.value.toDate();
       if (this.myForm.invalid) {
         return;
       }
@@ -205,7 +234,8 @@ export class NewEditComponent implements OnInit, OnDestroy{
           this.myForm.value['body']
           );
       }
-      this.myForm.reset();
+      this.myForm.reset();*/
+
     }
 
      // USED TO PREVENT LOADING ISSUES DUE TO FAILURE

@@ -8,7 +8,7 @@
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
       <mat-datepicker #dp></mat-datepicker>
     </mat-form-field>
-    <form (submit)="onSaveEntry(postForm)" #postForm="ngForm">
+    <form  #postForm="ngForm">
 
       <label for="title">Title</label>
       <mat-form-field>
@@ -142,9 +142,9 @@
                   (change)="changeSelection()">
                 <label for="should_statements">Should Statements</label>
               </div>
-            </fieldset> 
+            </fieldset>
             <button  class="stepbutton" mat-button matStepperNext>Next</button>
-            <button class="stepbutton" mat-button matStepperPrevious>Back</button>     
+            <button class="stepbutton" mat-button matStepperPrevious>Back</button>
           </div>
         </mat-step>
 
@@ -168,14 +168,14 @@
                 placeholder="Change your thoughts" #thinking_differently="ngModel"></textarea>
               <mat-error *ngIf="thinking_differently.invalid">Please describe how you can think differently.</mat-error>
             </mat-form-field>
-            <button class="savebutton"mat-raised-button  (click)="openDialog()" type="submit" [disabled]="!postForm.valid">Save Entry</button>
+            <button class="savebutton"mat-raised-button  (click)="onSaveEntry(postForm)" type="submit" [disabled]="!postForm.valid">Save Entry</button>
             <button class="stepbutton" mat-button matStepperPrevious>Back</button>
           </div>
         </mat-step>
       </mat-horizontal-stepper>
     </form>
   </mat-card>
-</div> 
+</div>
 
 <!-- <div class="grid-container" >
   <mat-card>

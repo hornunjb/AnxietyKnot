@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ModuleWithComponentFactories } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { PromptedEntry } from './prompted-entry.model';
 import { Post } from "./post.model";
+import { MomentDateModule } from '@angular/material-moment-adapter';
 
 
 
@@ -39,7 +40,9 @@ export class DisplayService {
               thought_patterns: entry.thought_patterns,
               custom_thought_patterns: entry.custom_thought_patterns,
               thinking_differently: entry.thinking_differently,
-              creator: entry.creator
+              mood: entry.mood,
+              creator: entry.creator,
+              
             };
           });
         })
@@ -68,7 +71,9 @@ export class DisplayService {
     thought_patterns: Array<string>;
     custom_thought_patterns: string;
     thinking_differently: string;
+    mood: string;
     creator: string;
+    
     }>("http://localhost:3000/api/entries/" + id);
   }
   /*
@@ -89,7 +94,8 @@ getEntry(id: string) {
     intensity2: number,
     thought_patterns: Array<string>,
     custom_thought_patterns: string,
-    thinking_differently: string )
+    thinking_differently: string,
+    mood: string, )
     {
     const entry: PromptedEntry = {
       id: "",
@@ -104,7 +110,9 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
-      creator: null
+      mood: mood,
+      creator: null,
+      
     };
     this.http
       .post<{ message: string, entryId: string }>(
@@ -131,6 +139,7 @@ getEntry(id: string) {
     thought_patterns: Array<string>,
     custom_thought_patterns: string,
     thinking_differently: string,
+    mood: string,
   ){
     const entry: PromptedEntry = {
       id: id,
@@ -145,7 +154,9 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
-      creator: null
+      mood: mood,
+      creator: null,
+      
     };
     this.http.put("http://localhost:3000/api/entries/" + id, entry)
     .subscribe(response => console.log(response)

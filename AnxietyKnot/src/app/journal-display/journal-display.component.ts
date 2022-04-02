@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TrackerService } from '../tracker.service';
 
+
 const allowedEntryLength = 500;
 
 @Component({

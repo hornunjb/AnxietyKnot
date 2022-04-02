@@ -1,27 +1,37 @@
-
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 
 //import { NgForm, NgModel } from "@angular/forms";
-
-
 
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { PostsService } from '../posts.service';
 
 
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DistortionDialogComponent } from '../distortion-dialog/distortion-dialog.component';
 import { FeelingsDialogComponent } from '../feelings-dialog/feelings-dialog.component';
 import { PopupComponent } from '../popup/popup.component';
 import { PromptedEntry } from '../prompted-entry.model';
-import { EntryService } from "../entry.service";
-import { AuthService } from "../authenticate/auth.service";
+import { EntryService } from '../entry.service';
+import { AuthService } from '../authenticate/auth.service';
+import { filter } from 'rxjs/operators';
 
 import {
   MAT_MOMENT_DATE_FORMATS,
@@ -33,10 +43,11 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import * as _moment from 'moment';
-import { DatasetController } from "chart.js";
-import { MatDatepickerContent } from "@angular/material/datepicker";
-const moment = _moment;
+import { DatasetController } from 'chart.js';
+import { MatDatepickerContent } from '@angular/material/datepicker';
+import { DisplayService } from '../display.service';
 
+const moment = _moment;
 
 @Component({
   selector: 'app-prompted-entry',
@@ -51,19 +62,18 @@ const moment = _moment;
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
 })
-
-export class PromptedEntryComponent implements OnInit, OnDestroy{
-
+export class PromptedEntryComponent implements OnInit, OnDestroy {
+  @Output() newData: EventEmitter<any> = new EventEmitter();
   //get input from parent component
   @Input() editEntryId = ' ';
-  ngOnChanges(){
+  ngOnChanges() {
     this.ngOnInit();
   }
 
   date = new FormControl(moment());
-  value = 0;
+  value = '';
   ratingCount = 10;
-  enteredTitle= "";
+  enteredTitle = '';
   enteredContent = '';
   isLoading = false;
   private mode = 'create';
@@ -71,7 +81,7 @@ export class PromptedEntryComponent implements OnInit, OnDestroy{
   public entry: PromptedEntry;
   public static text: string;
   private authStatusSub: Subscription;
-  public intensities: Array<number>= [1,2,3,4,5,6,7,8,9,10];
+  public intensities: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   response = [
     'Rate your mood?',
     'Really?',
@@ -86,55 +96,53 @@ export class PromptedEntryComponent implements OnInit, OnDestroy{
     'Yesir',
   ];
 
-  enteredWhat_happened= "";
-  enteredGoing_through_mind= "";
-  enteredEmotion1= "";
-  enteredIntensity1= "";
-  enteredEmotion2= "";
-  enteredIntensity2= "";
-  enteredThought_patterns= "";
-  enteredCustom_thought_patterns= "";
-  enteredThinking_differently= "";
+  enteredWhat_happened = '';
+  enteredGoing_through_mind = '';
+  enteredEmotion1 = '';
+  enteredIntensity1 = '';
+  enteredEmotion2 = '';
+  enteredIntensity2 = '';
+  enteredThought_patterns = '';
+  enteredCustom_thought_patterns = '';
+  enteredThinking_differently = '';
 
   // adding intensity1 property??
-  intensity1= 0;
-  intensity2= 0;
+  intensity1 = 0;
+  intensity2 = 0;
 
-
-/* PUBLIC FORM = RE-ENFORCES THAT ALL FIELDS WITHIN THE PAGE MUST BE FILLED..
+  /* PUBLIC FORM = RE-ENFORCES THAT ALL FIELDS WITHIN THE PAGE MUST BE FILLED..
     ...BEFORE SUBMIT BUTTON BECOMES AVAILABLE but needs FormGroup
 */
 
-constructor(
+  constructor(
     public entryService: EntryService,
-     public route: ActivatedRoute,
+    public route: ActivatedRoute,
     private dialogRef: MatDialog,
     private authService: AuthService,
-    ) {}
+    public displayService: DisplayService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
 
   ngOnInit() {
-   // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
+    // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
     this.authStatusSub = this.authService
       .getAuthStatusListener()
-      .subscribe(_authStatus => {
+      .subscribe((_authStatus) => {
         this.isLoading = false;
       });
-      this.route.paramMap.subscribe((paramMap: ParamMap) =>
-    {
-      if (paramMap.has('entryId')|| (this.editEntryId != ' '))
-       {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('entryId') || this.editEntryId != ' ') {
         this.mode = 'edit';
-       // this.entryId = paramMap.get('entryId');
-       if (this.editEntryId != ' ')
-       {
-        this.entryId = this.editEntryId;
-      }
-        else {
-          this.entryId = paramMap.get("entryId");
+        // this.entryId = paramMap.get('entryId');
+        if (this.editEntryId != ' ') {
+          this.entryId = this.editEntryId;
+        } else {
+          this.entryId = paramMap.get('entryId');
         }
         this.isLoading = true;
-        this.entryService.getEntry(this.entryId).subscribe(entryData =>
-          {
+        this.entryService.getEntry(this.entryId).subscribe((entryData) => {
           this.isLoading = false;
           this.entry = {
             id: entryData._id,
@@ -149,31 +157,75 @@ constructor(
             thought_patterns: entryData.thought_patterns,
             custom_thought_patterns: entryData.custom_thought_patterns,
             thinking_differently: entryData.thinking_differently,
-            creator: entryData.creator
+            creator: entryData.creator,
+            mood: entryData.mood,
           };
-          this.entry.thought_patterns.forEach(Element =>{
+          this.entry.thought_patterns.forEach((Element) => {
             this.checkedIDs.push(Element);
-             var elem = document.getElementById(Element);
-             elem.setAttribute('checked', 'checked');
-          })
-        //  console.log(this.checkedIDs)
+            var elem = document.getElementById(Element);
+            elem.setAttribute('checked', 'checked');
+          });
+          //  console.log(this.checkedIDs)
           this.intensity1 = this.entry.intensity1;
           this.intensity2 = this.entry.intensity2;
-      //    console.log(this.intensity1)
-          })
+          //    console.log(this.intensity1)
+        });
       } else {
         this.mode = 'create';
         this.entryId = null;
       }
-    })
+    });
   }
 
-  openDialog() {
-    if (this.dialogRef.openDialogs.length == 0) {
-      this.dialogRef.open(PopupComponent, {
-        disableClose: false,
-      });
+  async openDialog() {
+    const dialogRef = this.dialogRef.open(PopupComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.value = result;
+      
+    });
+    await dialogRef.afterClosed().toPromise();
+    let date = this.date.value.toDate();
+    
+    this.isLoading = true;
+    if (this.mode === 'create') {
+      this.entryService.addEntry(
+        date,
+        this.enteredTitle,
+        this.enteredWhat_happened,
+        this.enteredGoing_through_mind,
+        this.enteredEmotion1,
+        this.intensity1,
+        this.enteredEmotion2,
+        this.intensity2,
+        this.checkedIDs,
+        this.enteredCustom_thought_patterns,
+        this.enteredThinking_differently,
+        this.value
+      );
+    } else {
+      this.entryService.updateEntry(
+        this.entryId,
+        date,
+        this.enteredTitle,
+        this.enteredWhat_happened,
+        this.enteredGoing_through_mind,
+        this.enteredEmotion1,
+        this.intensity1,
+        this.enteredEmotion2,
+        this.intensity2,
+        this.checkedIDs,
+        this.enteredCustom_thought_patterns,
+        this.enteredThinking_differently,
+        this.value
+      );
     }
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+    this.newData.emit();
   }
   openDistortionDialog() {
     if (this.dialogRef.openDialogs.length == 0) {
@@ -182,87 +234,50 @@ constructor(
       });
     }
   }
-    openFeelingsDialog() {
-      if (this.dialogRef.openDialogs.length == 0) {
-        this.dialogRef.open(FeelingsDialogComponent, {
-          disableClose: false,
-        });
-      }
+  openFeelingsDialog() {
+    if (this.dialogRef.openDialogs.length == 0) {
+      this.dialogRef.open(FeelingsDialogComponent, {
+        disableClose: false,
+      });
     }
+  }
 
   checkedIDs = [];
 
   changeSelection() {
-    this.fetchCheckedIDs()
+    this.fetchCheckedIDs();
   }
 
   fetchCheckedIDs() {
-    this.checkedIDs = []
-    document.getElementsByName("thought_patterns").forEach(Element =>{
+    this.checkedIDs = [];
+    document.getElementsByName('thought_patterns').forEach((Element) => {
       var elem = document.getElementById(Element.id) as HTMLInputElement;
-      if(elem.checked){
-        this.checkedIDs.push(Element.id)
+      if (elem.checked) {
+        this.checkedIDs.push(Element.id);
       }
-    })
-
+    });
   }
 
   onSaveEntry(form: NgForm) {
+    this.enteredTitle = form.value.title;
+    this.enteredWhat_happened = form.value.what_happened;
+    this.enteredGoing_through_mind = form.value.going_through_mind;
+    this.enteredEmotion1 = form.value.emotion1;
+
+    this.enteredEmotion2 = form.value.emotion2;
+    this.enteredCustom_thought_patterns = form.value.custom_thought_patterns;
+    this.enteredThinking_differently = form.value.thinking_differently;
 
     // openDialog redirects user back to entry-list page after entry create, edit or delete
-    let date = this.date.value.toDate();
-    if (form.invalid) {
-      return;
-    }
-     this.isLoading = true;
-     if (this.mode === 'create')
-      {
-        this.entryService.addEntry(
-          date,
-          form.value.title,
-          form.value.what_happened,
-          form.value.going_through_mind,
-          form.value.emotion1,
-          this.intensity1,
-          form.value.emotion2,
-          this.intensity2,
-          this.checkedIDs,
-          form.value.custom_thought_patterns,
-          form.value.thinking_differently,
-          );
-      }
-      else {
-        this.entryService.updateEntry(
-          this.entryId,
-          date,
-          form.value.title,
-          form.value.what_happened,
-          form.value.going_through_mind,
-          form.value.emotion1,
-          this.intensity1,
-          form.value.emotion2,
-          this.intensity2,
-          this.checkedIDs,
-          form.value.custom_thought_patterns,
-          form.value.thinking_differently,
-          );
-      }
-      // form.resetForm();
-    }
+    this.openDialog();
+    // form.resetForm();
+    
 
+    
+  }
 
   // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }
 }
-
-
-
-
-
-
-
-
-
-

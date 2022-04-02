@@ -12,6 +12,9 @@ export class ChartsComponent implements OnInit {
   chart: any;
 
   constructor(private trackerService: TrackerService) {}
+  ngOnchanges() {
+    this.ngOnInit();
+  }
 
   ngOnInit(): void {
     this.chart = document.getElementById('my_chart');

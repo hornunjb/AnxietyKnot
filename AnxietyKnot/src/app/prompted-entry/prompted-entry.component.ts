@@ -183,11 +183,11 @@ export class PromptedEntryComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       this.value = result;
-      
+
     });
     await dialogRef.afterClosed().toPromise();
     let date = this.date.value.toDate();
-    
+
     this.isLoading = true;
     if (this.mode === 'create') {
       this.entryService.addEntry(
@@ -221,10 +221,8 @@ export class PromptedEntryComponent implements OnInit, OnDestroy {
         this.value
       );
     }
-    let currentUrl = this.router.url;
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
+    window.location.reload();
+
     this.newData.emit();
   }
   openDistortionDialog() {
@@ -271,9 +269,9 @@ export class PromptedEntryComponent implements OnInit, OnDestroy {
     // openDialog redirects user back to entry-list page after entry create, edit or delete
     this.openDialog();
     // form.resetForm();
-    
 
-    
+
+
   }
 
   // USED TO PREVENT LOADING ISSUES DUE TO FAILURE

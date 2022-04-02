@@ -90,6 +90,7 @@ export class NewEditComponent implements OnInit, OnDestroy {
     if (this.myForm.invalid) {
       return;
     }
+    this.isLoading = true;
     if (this.mode === 'create') {
       this.postsService.addPost(
         date,
@@ -106,11 +107,8 @@ export class NewEditComponent implements OnInit, OnDestroy {
         this.value
       );
     }
-    this.myForm.reset();
-    let currentUrl = this.router.url;
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
+    window.location.reload();
+
     this.newData.emit();
   }
 

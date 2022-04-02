@@ -74,8 +74,7 @@ router.put("/:id", checkAuth, (req, res, _next) =>
 router.get("", (_req, res, _next) => {
   const postQuery = Post.find();
     let fetchedPosts;
-    postQuery
-    .then(documents =>
+    postQuery.then(documents =>
       {
       fetchedPosts = documents;
       return Post.count();
@@ -86,18 +85,14 @@ router.get("", (_req, res, _next) => {
         message: "Journal Posts Fetched Successfully!",
         posts: fetchedPosts,
         maxPosts: count
-
       });
-    })
-      /* -----TECH ERROR PROMPT ----*/
+    }) /* -----TECH ERROR PROMPT ----*/
     .catch(_error => {
       res.status(500).json({
         message: "Technical Error: Journal Posts Failed To Fetch"
       });
     });
 });
-
-
 
 /// GET POSTs for Journal Display
 router.get("/:id", (req, res, _next) => {
@@ -108,15 +103,13 @@ router.get("/:id", (req, res, _next) => {
     } else {
       res.status(404).json({ message: "Journal Post Not Found!" });
     }
-  })
-    /* -----TECH ERROR PROMPT ----*/
+  })/* -----TECH ERROR PROMPT ----*/
   .catch(_error => {
     res.status(500).json({
       message: "Technical Error: Could Not Fetch This Journal Post!"
     });
   });
 });
-
 
 router.delete("/:id", checkAuth, (req, res, _next) => {
   // mongoose's 'deleteOne' allows us to specify which entry we want to delete

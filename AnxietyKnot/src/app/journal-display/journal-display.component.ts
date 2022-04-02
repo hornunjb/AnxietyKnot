@@ -63,13 +63,11 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       this.displaysSub = this.displayService
       .getEntryUpdateListener()
       .subscribe((entries: PromptedEntry[]) =>
-      {
-        this.entries = entries;
+      { this.entries = entries;
         this.isLoading = false;
         entries.forEach(Element =>
-          {
-            Element.date = new Date(Element.date);
-          var x = [
+          { Element.date = new Date(Element.date);
+            var x = [
             Element.id,
             Element.date,
             Element.title,
@@ -88,9 +86,8 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
           this.isLoading = false;
          this.posts = posts;
           posts.forEach(Element =>
-            {
-              Element.date = new Date(Element.date);
-              var x = [
+            { Element.date = new Date(Element.date);
+                var x = [
                 Element.id,
                 Element.date,
                 Element.title,
@@ -105,7 +102,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         .subscribe(isAuthenticated =>
           {
           this.userIsAuthenticated = isAuthenticated;
-         this.userId = this.authService.getUserId();
+          this.userId = this.authService.getUserId();
         });
       }
 
@@ -150,15 +147,9 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     //---CAUSES ERROR IN FIREFOX--//
    // window.location.reload();
-
-    // METHOD CALLED FROM entry.service.ts
-         // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE ENTRIES
-         //---      this.entriesService.deletePost(Id) causes duplicate posts
       this.entriesService.deleteEntry(Id);
-
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );
-
       let currentUrl = this.router.url;
      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
      this.router.onSameUrlNavigation = 'reload';
@@ -169,15 +160,9 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       //---CAUSES ERROR IN FIREFOX--//
      // window.location.reload();
-
-     //METHOD CALLED FROM posts.service.ts
-     // DO NOT CHANGE SERVICE FOR DELETE, PREVENTS DUPLICATE POSTS
-     //---      this.displayService.deletePost(Id) causes duplicate posts
-
       this.postsService.deletePost(Id)
       const removeIndex = this.displays.findIndex( item => item.id === Id );
       this.displays.splice( removeIndex, 1 );
-
      let currentUrl = this.router.url;
      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
      this.router.onSameUrlNavigation = 'reload';
@@ -206,20 +191,6 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         }
       }
     }
-
-    /*openSnackBar() {
-    if (this.counter > 2 && this.counter < 4) {
-      if (this.counter > 10) {
-        this.tip = "Develop a routine so that you're physically active most days of the week. Exercise is a powerful stress reducer. It can improve your mood and help you stay healthy. Start out slowly, and gradually increase the amount and intensity of your activities";
-        return true;
-      }
-      if (this.counter == 5) {
-        this.tip = "Nicotine and caffeine can worsen anxiety.";
-        return true;
-      }
-    }
-    return false;
-  }*/
 }
 
 

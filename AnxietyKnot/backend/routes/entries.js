@@ -23,6 +23,7 @@ router.post("", checkAuth, (req, res, _next) => {
     thought_patterns: req.body.thought_patterns,
     custom_thought_patterns: req.body.custom_thought_patterns,
     thinking_differently: req.body.thinking_differently,
+    mood: req.body.mood,
     creator: req.userData.userId
   });
   entry.save().then(createdEntry => {
@@ -55,6 +56,7 @@ router.put("/:id", checkAuth, (req, res, _next)=> {
     thought_patterns: req.body.thought_patterns,
     custom_thought_patterns: req.body.custom_thought_patterns,
     thinking_differently: req.body.thinking_differently,
+    mood: req.body.mood,
    creator: req.userData.userId
   });
     Entry.updateOne(
@@ -92,11 +94,9 @@ router.get("", (_req, res, _next) => {
         /////MESSAGE ONLY DISPLAYS IN http://localhost:3000/api/entries
         message: "Prompted Entry Fetched Successfully!",
         entries: fetchedEntries,
-        maxEntries: count,
-
+        maxEntries: count
       });
-    })
-      /* -----TECH ERROR PROMPT ----*/
+    })/* -----TECH ERROR PROMPT ----*/
     .catch(_error => {
       res.status(500).json({
         message: "Technical Error: Could Not Fetch Prompted Entries!"
@@ -113,8 +113,7 @@ router.get("/:id", (req, res, _next) => {
     } else {
       res.status(404).json({ message: "Prompted Entry Not Found!" });
     }
-  })
-    /* -----TECH ERROR PROMPT ----*/
+  })/* -----TECH ERROR PROMPT ----*/
   .catch(_error => {
     res.status(500).json({
       message: "Technical Error: Could Not Fetch Prompted Entry!"
@@ -133,8 +132,7 @@ router.delete("/:id", checkAuth, (req, res, _next)=> {
     } else {
       res.status(401).json({ message: "You Are Not Authorized To Delete!" });
     }
-  })
-    /* -----TECH ERROR PROMPT ----*/
+  }) /* -----TECH ERROR PROMPT ----*/
   .catch(_error => {
     res.status(500).json({
       message: "Technical Error: Could Not Delete Prompted Entry!"

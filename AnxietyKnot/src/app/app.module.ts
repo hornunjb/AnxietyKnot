@@ -20,7 +20,6 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { JournalBookComponent } from './journal-book/journal-book.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ResourceComponent } from './resource/resource.component';
@@ -67,7 +66,6 @@ import { JournalOptionComponent } from './journal-option/journal-option.componen
   declarations: [
     AppComponent,
     NavComponent,
-    JournalBookComponent,
     ResourceComponent,
     TrackerComponent,
     PopupComponent,
@@ -139,7 +137,6 @@ import { JournalOptionComponent } from './journal-option/journal-option.componen
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-
   entryComponents: [ErrorComponent]
 })
 export class AppModule { }

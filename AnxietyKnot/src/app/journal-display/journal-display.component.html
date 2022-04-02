@@ -17,7 +17,7 @@
  id="body"
  class="flex-container"
  multi="true"
- *ngIf="!isLoading"
+ *ngIf="posts.length > 0 &&!isLoading"
 >
     <div id="display-list" class="flex-child display"  >
         <div *ngFor="let display of displays">
@@ -26,7 +26,7 @@
           (click)="selectCard(display)"
           *ngIf="userIsAuthenticated && userId === display.creator"
         >
-            <mat-card class="card-style" *ngIf="posts.length > 0">
+            <mat-card *ngIf="posts.length > 0">
               <mat-card-subtitle>
                 {{ display.date  | date:'fullDate' }} </mat-card-subtitle>
               <mat-card-title>

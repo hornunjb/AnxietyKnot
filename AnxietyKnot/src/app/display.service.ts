@@ -17,15 +17,18 @@ export class DisplayService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-
-
   constructor(private http: HttpClient, private router: Router ) {}
+
   getEntries() {
     this.http
-      .get<{ message: string; entries: any }>('http://localhost:3000/api/entries')
+      .get<{ message: string; entries: any; maxEntries: number}>(
+        'http://localhost:3000/api/entries'
+        //"http://nodejsangular-env.eba-3fswygyg.us-east-2.elasticbeanstalk.com/api/posts"
+        )
       .pipe(
         map(entryData => {
-          return entryData.entries.map(entry => {
+          return {
+            entries: entryData.entries.map(entry => {
             return {
               id: entry._id,
               date: entry.date,
@@ -36,17 +39,19 @@ export class DisplayService {
               intensity1: entry.intensity1,
               emotion2: entry.emotion2,
               intensity2: entry.intensity2,
-
               thought_patterns: entry.thought_patterns,
               custom_thought_patterns: entry.custom_thought_patterns,
               thinking_differently: entry.thinking_differently,
+              mood: entry.mood,
               creator: entry.creator
             };
-          });
-        })
-      )
-      .subscribe((transformedEntries) => {
-        this.entries = transformedEntries;
+          }),
+          maxEntries: entryData.maxEntries
+        };
+      })
+    )
+      .subscribe(transformedEntryData => {
+        this.entries = transformedEntryData.entries;
         this.entriesUpdated.next([...this.entries]);
       });
   }
@@ -69,15 +74,10 @@ export class DisplayService {
     thought_patterns: Array<string>;
     custom_thought_patterns: string;
     thinking_differently: string;
+    mood: string;
     creator: string;
     }>("http://localhost:3000/api/entries/" + id);
   }
-  /*
-getEntry(id: string) {
-    return {...this.entries.find(p => p.id === id)}
-  }
-  */
-
 
   addEntry
   ( date: Date,
@@ -90,7 +90,9 @@ getEntry(id: string) {
     intensity2: number,
     thought_patterns: Array<string>,
     custom_thought_patterns: string,
-    thinking_differently: string )
+    thinking_differently: string,
+    mood: string,
+    )
     {
     const entry: PromptedEntry = {
       id: "",
@@ -105,6 +107,7 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
+      mood: mood,
       creator: null
     };
     this.http
@@ -132,6 +135,7 @@ getEntry(id: string) {
     thought_patterns: Array<string>,
     custom_thought_patterns: string,
     thinking_differently: string,
+    mood: string,
   ){
     const entry: PromptedEntry = {
       id: id,
@@ -146,11 +150,13 @@ getEntry(id: string) {
       thought_patterns: thought_patterns,
       custom_thought_patterns: custom_thought_patterns,
       thinking_differently: thinking_differently,
+      mood: mood,
       creator: null
     };
     this.http.put("http://localhost:3000/api/entries/" + id, entry)
     .subscribe(response => console.log(response)
     // NAVIGATES USER AFTER POST UPDATE
+    //ONLY WORKS IF NAVIGATE TO A DIFFERENT PAGE
        // this.router.navigate(["/"]);
     );
   }
@@ -163,7 +169,6 @@ getEntry(id: string) {
         this.entriesUpdated.next([...this.entries]);
       });
   }
-
 
   getPosts() {
     this.http
@@ -178,9 +183,9 @@ getEntry(id: string) {
           return {
             id: post._id,
             date: post.date,
-            mood: post.mood,
             title: post.title,
             content: post.content,
+            mood: post.mood,
             creator: post.creator
           };
         }),
@@ -237,8 +242,8 @@ getEntry(id: string) {
   }
 
   // POST UPDATE ON POST EDIT
-  updatePost(id: string, date: Date, title: string, content: string, mood: string) {
-    const post: Post = {
+  updatePost(id: string, date: Date, title: string, content: string, mood: string)
+  { const post: Post = {
       id: id,
       date: date,
       title: title,
@@ -250,13 +255,13 @@ getEntry(id: string) {
     // OUTPUTS CONSOLE LOG OF SUCCESSFUL POST UPDATE
       .subscribe(response =>
        console.log(response)
-       // NAVIGATES USER AFTER POST UPDATE
+       // NAVIGATES USER AFTER POST UPDATE,
+       // ONLY WORKS IF NAVIGATE TO A DIFFERENT PAGE
        // .subscribe(response => {
      // this.router.navigate(["/"]);
    //});
        );
    }
-
 
   deletePost(postId: string) {
     return this.http

@@ -26,8 +26,8 @@ button {
 }
 
 .active-list-item {
-  color: #673ab7 !important;
-  font-weight: bold;
+  color: #0275d8 !important;
+    font-weight: bold;
 }
 
 .mat-list-item {

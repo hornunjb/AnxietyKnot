@@ -48,11 +48,7 @@ export class NewEditComponent implements OnInit, OnDestroy{
   }
 
   date = new FormControl(moment());
-
-
-value = '';
-
-//  value = 0;
+  value = '';
   ratingCount = 10;
   enteredTitle = "";
   enteredContent = "";
@@ -87,23 +83,9 @@ value = '';
     }
   );
 
- // openDialog() {
-   // this.dialogRef.open(PopupComponent);
-  //}
-
-
-  ///NEW CODING FROM BRANCH NOT YET IMPLEMENTED
-
-
-  ///Requires removal of onSubmit() coding and in html
-
-  //--IMPLEMENT OPENDIALOG AND ONSUBMIT WITH EACHOTHER IF CAN--//
-
-
   async openDialog() {
     const dialogRef = this.dialogRef.open(PopupComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.isLoading = true;
       console.log('The dialog was closed');
       this.value = result;
       //console.log(this.value);
@@ -112,7 +94,8 @@ value = '';
     let date = this.date.value.toDate();
     if (this.myForm.invalid) {
       return;
-    }
+    }     
+	this.isLoading = true;
     if (this.mode === 'create') {
       this.postsService.addPost(
         date,
@@ -130,26 +113,28 @@ value = '';
       );
 
     }
-    this.myForm.reset();
+   // this.myForm.reset();
 
   /*
+  1. Getting rid of this router prevents duuplicate when saving edits on JD screen
+  2. Journal Book Page still refreshes after saving edits
+  3.  New entry submits direct users to JD, but entry will not show until you hit refresh
+  4. This Does Cause the Mood Tracker to delay updates on Input Moods if moviing directly from JournalBook (JD) to Tracker (This Only Affects Creating New entries)
+     Update: No Longer an issue if using 'window.location.reload()'
+  5. Double clicking Tracker tab no longer causes mood graph to fail on loading.
 
-  Getting rid of this router prevents duuplicate when saving edits on JD screen
-    Page still refreshes after saving edits
-   New entry submits direct users to JD, but entry will not show until you hit refresh
-This Does Cause the Mood Tracker to delay updates on Input Moods if moviing directly from JournalBook (JD) to Tracker (This Only Affects Creating New entries)
-Tracker fails to load graph on double click in Navigation
-Tracker Mood inputs fail to load In Tracker IF Refreshing the Tracker page
-
+  Side Note: Tracker fails to load graph on double click in Navigation and during re-complile.
+  Side Note: Tracker Mood inputs fail to load In Tracker IF Refreshing the Tracker page
 */
-
  /* let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]); */
+
+    //THIS ONLY WORKS WITH CHROME. HTTP ERROR IN FIREFOX AND WILL NOT CREATE POSTS
     window.location.reload();
 
-
+    //window.location.reload();
     this.newData.emit();
   }
 
@@ -163,8 +148,7 @@ Tracker Mood inputs fail to load In Tracker IF Refreshing the Tracker page
      public route: ActivatedRoute,
      private dialogRef: MatDialog,
      private authService: AuthService,
-     private router: Router,
-
+     private router: Router
      ) {}
 
      ngOnInit() {
@@ -189,14 +173,13 @@ Tracker Mood inputs fail to load In Tracker IF Refreshing the Tracker page
           this.postsService.getPost(this.postId).subscribe(postData =>
              {
             this.isLoading = false;
-
             /// POSTDATA PASSES THROUGH POST.SERVICE AND DISPLAY.SERVICE
             this.post = {
               id: postData._id,
               date: postData.date,
               title: postData.title,
               content: postData.content,
-               mood: this.value,
+              mood: this.value,
               creator: postData.creator
             };
             /// THIS DOESNT SEEM TO HAVE ANY IMPACT IF REMOVED BUT KEEP FOR DATE
@@ -214,34 +197,9 @@ Tracker Mood inputs fail to load In Tracker IF Refreshing the Tracker page
 
     onSubmit() {
       this.openDialog();
-
-     /* let date = this.date.value.toDate();
-      if (this.myForm.invalid) {
-        return;
-      }
-      this.isLoading = true;
-      if (this.mode === 'create')
-      {
-        this.postsService.addPost(
-          date,
-          this.myForm.value['title'],
-          this.myForm.value['body']
-          );
-      }
-      else {
-        this.postsService.updatePost(
-          this.postId,
-          date,
-          this.myForm.value['title'],
-          this.myForm.value['body']
-          );
-      }
-      this.myForm.reset();*/
-
     }
 
-     // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
-
+ // USED TO PREVENT LOADING ISSUES DUE TO FAILURE
     ngOnDestroy() {
       this.authStatusSub.unsubscribe();
     }

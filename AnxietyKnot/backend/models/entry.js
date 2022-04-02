@@ -23,7 +23,7 @@ const entrySchema = mongoose.Schema({
   thought_patterns: {type: Array, required: true},
   custom_thought_patterns: { type: String, required: true},
   thinking_differently: { type: String, required: true},
-  //mood: {type: String, required: true},
+  mood: {type: String, required: true},
 
  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });

@@ -64,7 +64,9 @@ router.post("/login",(req, res, _next) => {
         //SERVER SIGNATURE
         "keep_this_secret",
         //USER LOGGED OUT AFTER 1 HR
-        { expiresIn: "1h" }
+        { expiresIn: "1h",
+     algorithm: 'HS512'
+    }
         // sends token to frontend at this point
       );
       res.status(200).json({

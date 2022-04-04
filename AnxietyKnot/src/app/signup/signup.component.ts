@@ -20,16 +20,14 @@ import { CustomValidators } from '../providers/CustomValidators';
 export class SignupComponent implements OnInit, OnDestroy {
 
 
- // success = '';
+  success = '';
   submitted = false;
   isLoading = false;
   private authStatusSub: Subscription;
 
  public signupForm = new FormGroup
   ({
-  username: new FormControl ("", [Validators.required]),
- // firstName: new FormControl('', [Validators.required]),
-  //lastName: new FormControl('', [Validators.required]),
+  username: new FormControl ("", [Validators.required, Validators.minLength(6)]),
   email: new FormControl ("", [Validators.required, Validators.email]),
   password: new FormControl ("", [Validators.required, Validators.minLength(8)]),
   confirmPassword: new FormControl ("", [Validators.required])
@@ -50,9 +48,9 @@ constructor(public authService: AuthService){}
     }
 
     // convenience getter for easy access to form fields
-  //get f() {
- //   return this.signupForm.controls;
- // }
+  get f() {
+    return this.signupForm.controls;
+  }
 
   onSignup(){
     this.submitted = true;
@@ -60,7 +58,7 @@ constructor(public authService: AuthService){}
       return;
     }
     this.isLoading = true;
-   // this.success = JSON.stringify(this.signupForm.value);
+    this.success = JSON.stringify(this.signupForm.value);
 
     this.authService
       .createUser(

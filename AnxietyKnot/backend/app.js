@@ -6,18 +6,6 @@ const express = require('express');
 // parses incoming request bodies and extracts the stream of data
 const bodyParser = require('body-parser');
 
-
-// imports our Post model from our mongoose blueprint
-////////////// const Post = require('./models/post')
-
-// imports our Entry model from our mongoose blueprint
-//const Entry = require('./models/entry')
-
-//const Post = require('./models/post')
-
-
-
-
 // we are using mongoose instead of mongodb's drivers to connect and interact with our database
 // mongoose also uses schemas, that will allow us to store structured data and fetch it easily
 const mongoose = require('mongoose');
@@ -46,8 +34,9 @@ mongoose.connect(
 
 
 /// DELETING WILL DISCONNECT HTTP://LOCALHOST:3000/API
+/// Gives EXPRESS ABILITY TO READ JSON PAYLOADS FROM HTTP REQUEST BODY
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 /* 'use' uses middleware on incoming request - takes a function that takes a request and response
   along with 'next' which allows a request to continue its journey if you are using the response

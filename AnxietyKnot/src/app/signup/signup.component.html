@@ -19,8 +19,9 @@
           <form [formGroup]="signupForm" (ngSubmit)="onSignup()"  >
 
       <input formControlName="username" type="username" name="username"  placeholder="Username">
-          <span class="text-danger" *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">
-            *Username is required!</span>
+          <span class="text-danger" *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username') ||
+          signupForm.controls['username'].hasError('minlength') ">
+            *Username Requires At Least 6 Characters!</span>
 
       <input formControlName="email" type="email" name="email"  placeholder="E-mail Address" >
            <span class="text-danger" *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email') ||
@@ -42,7 +43,7 @@
               *Enter At Least 8 Characters!</span>
 
           <div>
-            <button type="submit" *ngIf="!isLoading" [disabled]="!signupForm.valid">Sign Up</button>
+            <button type="submit" *ngIf="!isLoading">Sign Up</button>
 
           </div>
         </form>

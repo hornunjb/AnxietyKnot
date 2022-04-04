@@ -3,3 +3,25 @@
   margin-left: auto;
   margin-right: auto;
 }
+.roate {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-animation: spin 50s linear infinite;
+  -moz-animation: spin 50s linear infinite;
+  animation: spin 80s linear infinite;
+}
+
+@-webkit-keyframes spin{
+  100%{-webkit-transform: rotate(-360deg);}
+}
+@-moz-keyframes spin{
+  100%{-webkit-transform: rotate(-360deg);}
+}
+@keyframes spin{
+  100%{-webkit-transform: rotate(-360deg);}
+}
+
+#feelings-wheel {
+  padding: auto;
+}

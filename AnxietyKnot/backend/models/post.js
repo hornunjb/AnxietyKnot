@@ -10,7 +10,7 @@ const postSchema = mongoose.Schema({
   date: { type: Date, required: true },
   title: { type: String, required: true },
   content: { type: String, required: true },
- mood: {type: String, required: true},
+  mood: {type: String, required: true},
 
   /// USER AUTHORIZATION
   creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }

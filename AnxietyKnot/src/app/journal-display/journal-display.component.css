@@ -97,7 +97,7 @@ display: none;
   right: 0;
   margin-right: 5%;
   margin-top: 2%;
-  position: absolute;
+  position: fixed;
 }
 
 .wave {

@@ -74,9 +74,6 @@ export class AuthService {
             this.saveAuthData(token, expirationDate, this.userId);
             ///REDIRECT USER AFTER LOGIN
             this.router.navigate(["/home"]);
-
-        /// WILL DISPLAY TOKEN IN CONSOLE UPON LOGIN
-            //console.log(token);
         }
       }, _error => {
         this.authStatusListener.next(false);

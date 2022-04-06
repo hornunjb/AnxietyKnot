@@ -133,20 +133,16 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
     this.entriesService.deleteEntry(Id);
     const removeIndex = this.displays.findIndex((item) => item.id === Id);
     this.displays.splice(removeIndex, 1);
-    let currentUrl = this.router.url;
-     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-     this.router.onSameUrlNavigation = 'reload';
-     this.router.navigate([currentUrl]);
+    this.refreshPage();
+
   }
 
   onDeletePost(Id: string) {
     this.postsService.deletePost(Id);
     const removeIndex = this.displays.findIndex((item) => item.id === Id);
     this.displays.splice(removeIndex, 1);
-    let currentUrl = this.router.url;
-     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-     this.router.onSameUrlNavigation = 'reload';
-     this.router.navigate([currentUrl]);
+    this.refreshPage();
+
   }
 
   ngOnDestroy() {
@@ -167,7 +163,7 @@ export class JournalDisplayComponent implements OnInit, OnDestroy {
         this.counter++;
         this.thisUsersEntries.push(parseInt((displays[i].mood)));
         this.trackerService.addMoods(this.thisUsersEntries);
-        console.log(this.thisUsersEntries);
+       // console.log(this.thisUsersEntries);
       }
     }
   }

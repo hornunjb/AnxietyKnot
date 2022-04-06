@@ -1,14 +1,16 @@
 import { Component, OnDestroy, OnInit} from "@angular/core";
 import { Subscription } from "rxjs";
 import { AuthService } from "../authenticate/auth.service";
-import { FormGroup, Validators, FormBuilder, FormControl} from "@angular/forms"
+import { FormGroup, Validators, FormControl, NgForm} from "@angular/forms"
+//--FORM CONTROL AND FORM GROUP CANNOT BE USED WITH NGFORM--//
 
-
+import { CustomValidators } from '../providers/CustomValidators';
 ///AUTH CREATE REDIRECTS TO 'auth.service.ts' WHICH CONTAINS HTTPCLIENT
-import { HttpClient } from '@angular/common/http';
 
 
-import { Router } from '@angular/router';
+
+///https://readerstacks.com/password-and-confirm-password-validation-in-angular/
+
 
 @Component({
   selector: 'app-signup',
@@ -17,36 +19,46 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit, OnDestroy {
 
+  success = '';
+  submitted = false;
   isLoading = false;
   private authStatusSub: Subscription;
 
-public signupForm = new FormGroup (
-  {
-  username: new FormControl ("", Validators.required),
-  email: new FormControl ("", Validators.required),
-  password: new FormControl ("", Validators.required),
-  repassword: new FormControl ("", Validators.required),
-});
+ public signupForm = new FormGroup
+  ({
+  username: new FormControl ("", [Validators.required, Validators.minLength(6)]),
+  email: new FormControl ("", [Validators.required, Validators.email]),
+  password: new FormControl ("", [Validators.required, Validators.minLength(8)]),
+  confirmPassword: new FormControl ("", [Validators.required])
+    },
+    /// CustomValidator located in /providers
+  CustomValidators.mustMatch('password', 'confirmPassword')
+);
+
 
 constructor(public authService: AuthService){}
 
   ngOnInit() {
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
-      _authStatus => {
+    this.authStatusSub = this.authService.
+    getAuthStatusListener()
+    .subscribe(_authStatus => {
         this.isLoading = false;
-      }
-    );
-  }
+      });
+    }
 
   onSignup(){
+    this.submitted = true;
     if (this.signupForm.invalid) {
       return;
     }
     this.isLoading = true;
-    this.authService.createUser(this.signupForm.value.email, this.signupForm.value.password);
-  }
+    this.success = JSON.stringify(this.signupForm.value);
 
-
+    this.authService
+      .createUser(
+        this.signupForm.value.email, this.signupForm.value.password
+    )
+      }
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

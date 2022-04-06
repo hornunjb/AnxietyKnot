@@ -22,8 +22,9 @@ mat-spinner {
 
 .flex-container {
   display: flex;
-  height: (100vh - 64px);
+  height: 94.3%;
   width: (100vw - 200px);
+
 }
 
 .flex-child.display {
@@ -43,6 +44,10 @@ mat-spinner {
   overflow-y: auto;
   max-height: 100vh;
   width: auto;
+  background-image: url("../../assets/images/bg2.jpg");
+  background-size: cover;
+  background-position: right;
+  opacity: 0.75;
 }
 #prompted-edit {
   display: none;
@@ -83,7 +88,7 @@ mat-spinner {
   right: 0;
   margin-right: 5%;
   margin-top: 2%;
-  position: absolute;
+  position: fixed;
 }
 
 .wave {

@@ -1,8 +1,9 @@
 body {
-  --def: white; 
+  --def: white;
   --inv: rgb(42, 42, 43);
   background-image: url("../../assets/images/bg4.jpg");
   background-size: cover;
+  background-position-x: center;
   height: 92.3%;
   opacity: 0.75;
   display: flex;
@@ -11,7 +12,6 @@ body {
   flex-direction: column;
   width: 100%;
   }
-  
 
   .btn {
     margin-bottom: 35%;
@@ -26,23 +26,19 @@ body {
     cursor: pointer;
     user-select: none;
     }
-    
     .btn:before, .btn:after {
     content: '';
     position: absolute;
     transition: inherit;
     z-index: -1;
     }
-    
     .btn:hover {
     color: var(--def);
     transition-delay: .5s;
     }
-    
     .btn:hover:before {
     transition-delay: 0s;
     }
-    
     .btn:hover:after {
     background: var(--inv);
     transition-delay: .35s;
@@ -55,7 +51,7 @@ body {
     align-items:center
    }
 
-.from-left:before, 
+.from-left:before,
 .from-left:after {
 top: 0;
 width: 0;
@@ -67,15 +63,20 @@ right: 0;
 border: 1px solid var(--inv);
 border-left: 0;
 border-right: 0;
+border-radius: 6px;
+
 }
 
 .from-left:after {
 left: 0;
+border-radius: 6px;
+
 }
 
 .from-left:hover:before,
 .from-left:hover:after {
 width: 100%;
+border-radius: 6px;
 }
    a:link, a:visited {
     position:relative;
